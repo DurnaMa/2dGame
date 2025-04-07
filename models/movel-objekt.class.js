@@ -1,12 +1,11 @@
 class MoveleObjekt {
-    x  = 120;
-    y = 400;
+    x = 120;
+    y = 120;
     img;
 
-    moveRight() {
-        console.log("Moveng right")
-    }
-    // constructor(parameters) {
-        
-    // }
+    moveRight(){}
+
+    moveLeft(){}
+
+
 }
