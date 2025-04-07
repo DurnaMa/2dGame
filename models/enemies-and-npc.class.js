@@ -1,0 +1,3 @@
+class enemiesAndNpc extends MoveleObjekt {
+  
+}
