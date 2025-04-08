@@ -1,11 +1,16 @@
 class MoveleObjekt {
-    x = 120;
-    y = 120;
-    img;
+  x = 120;
+  y = 120;
+  img;
+  height = 150;
+  width = 100
 
-    moveRight(){}
+  loadImage(path) {
+    this.img = new Image();
+    this.img.src = path;
+  }
 
-    moveLeft(){}
+  moveRight() {}
 
-
+  moveLeft() {}
 }
