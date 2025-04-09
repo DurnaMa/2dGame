@@ -1,6 +1,6 @@
 class MoveleObjekt {
   x = 120;
-  y = 120;
+  y = 520;
   img;
   height = 150;
   width = 100
