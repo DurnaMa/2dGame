@@ -2,7 +2,7 @@ class World {
   character = new Character();
   enemiesAnt = [new EnemiesAnt(), new EnemiesAnt(), new EnemiesAnt()];
   clouds = [new Cloud(), new Cloud(), new Cloud()];
-  backgraundObjeckt = [new BackgraundObjeckt('/assets/Environments/Day-Platformer/PNG/trees.png')];
+  backgraundObjeckt = [new BackgraundObjeckt('/assets/mountain-platformer-pixel-art-tileset/PNG/Background/bright/rocks.png')];
   canvas;
   ctx;
 

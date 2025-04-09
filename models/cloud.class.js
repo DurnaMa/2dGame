@@ -6,7 +6,7 @@ class Cloud extends MoveleObjekt {
 //width = 1000;
 
   constructor() {
-    super().loadImage('/assets/Environments/Day-Platformer/PNG/clouds.png');
+    super().loadImage('/assets/mountain-platformer-pixel-art-tileset/PNG/Background/bright/clouds1.png');
 
     //this.height = 250;
     
