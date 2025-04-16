@@ -12,8 +12,7 @@ class Character extends MoveleObjekt {
     '/assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Walk/walk5.png',
     '/assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Walk/walk6.png',
   ];
-
-  currentImage = 0;
+  world;
 
   constructor() {
     super().loadImage('/assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/rogue.png');
@@ -25,10 +24,12 @@ class Character extends MoveleObjekt {
 
   animate() {
     setInterval(() => {
-      let index = this.currentImage % this.IMAGES_WALKING.length;
-      let path = this.IMAGES_WALKING[index];
-      this.img = this.imageCache[path];
-      this.currentImage++;
+      if (this.world.keyboard.RIGHT) {
+        let index = this.currentImage % this.IMAGES_WALKING.length;
+        let path = this.IMAGES_WALKING[index];
+        this.img = this.imageCache[path];
+        this.currentImage++;
+      }
     }, 100 / 0.5);
   }
 
