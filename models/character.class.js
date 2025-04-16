@@ -13,8 +13,6 @@ class Character extends MoveleObjekt {
     '/assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Walk/walk6.png',
   ];
 
-  currentImage = 0;
-
   constructor() {
     super().loadImage('/assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/rogue.png');
     this.loadImages(this.IMAGES_WALKING);

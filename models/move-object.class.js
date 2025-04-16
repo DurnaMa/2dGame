@@ -5,7 +5,9 @@ class MoveleObjekt {
   height = 150;
   width = 100;
   imageCache = {};
-
+  currentImage = 0;
+  speed = 0.15;
+  
   loadImage(path) {
     this.img = new Image();
     this.img.src = path;
@@ -25,7 +27,11 @@ class MoveleObjekt {
 
   }
 
-  moveRight() {}
+  moveLeft() {
+    setInterval(() => {
+      this.x -= this.speed;
+    }, 1000 / 60);
+  }
 
-  moveLeft() {}
+  moveRight() {}
 }
