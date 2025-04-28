@@ -1,19 +1,10 @@
 class World {
   character = new Character();
-  enemiesAnt = [new EnemiesAnt(), new EnemiesAnt(), new EnemiesAnt()];
-  clouds = [new Cloud()];
-  backgraundObjecktRocks = [
-    new BackgraundObjeckt('assets/mountain-platformer-pixel-art-tileset/PNG/Background/bright/sky.png'),
-    new BackgraundObjeckt('assets/mountain-platformer-pixel-art-tileset/PNG/Background/bright/clouds1.png'),
-    new BackgraundObjeckt('assets/mountain-platformer-pixel-art-tileset/PNG/Background/bright/clouds2.png'),
-    new BackgraundObjeckt('assets/mountain-platformer-pixel-art-tileset/PNG/Background/bright/rocks.png'),
-    new BackgraundObjeckt('assets/mountain-platformer-pixel-art-tileset/PNG/Background/bright/rocks2.png'),
-    new BackgraundObjeckt('assets/mountain-platformer-pixel-art-tileset/PNG/Background/bright/rocks3.png'),
-  ];
-
+  level = level1
   canvas;
   ctx;
   keyboard;
+  camera_x = 0;
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext('2d');
@@ -29,11 +20,14 @@ class World {
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.ctx.translate(this.camera_x, 0);
 
-    this.addObjectesToMap(this.backgraundObjecktRocks);
-    this.addObjectesToMap(this.clouds);
+    this.addObjectesToMap(this.level.backgroundObjecktRocks);
+    this.addObjectesToMap(this.level.clouds);
     this.addToMap(this.character);
-    this.addObjectesToMap(this.enemiesAnt);
+    this.addObjectesToMap(this.level.enemiesAnt);
+
+    this.ctx.translate(-this.camera_x, 0);
 
     self = this;
     requestAnimationFrame(function () {
@@ -42,7 +36,18 @@ class World {
   }
 
   addToMap(mo) {
+    if (mo.otherDirection) {
+      this.ctx.save();
+      this.ctx.translate(mo.width, 0);
+      this.ctx.scale(-1, 1);
+      mo.x = mo.x * -1;
+    }
     this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
+
+    if (mo.otherDirection) {
+      this.ctx.restore();
+      mo.x = mo.x * -1;
+    }
   }
 
   addCloudToMap(cloud) {

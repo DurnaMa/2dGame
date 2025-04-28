@@ -7,7 +7,8 @@ class MoveleObjekt {
   imageCache = {};
   currentImage = 0;
   speed = 0.15;
-  
+  otherDirection = false;
+
   loadImage(path) {
     this.img = new Image();
     this.img.src = path;
@@ -19,12 +20,11 @@ class MoveleObjekt {
    * '/assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Walk/walk2.png' ...]
    */
   loadImages(arr) {
-    arr.forEach( (path) => {
+    arr.forEach((path) => {
       let img = new Image();
       img.src = path;
       this.imageCache[path] = img;
     });
-
   }
 
   moveLeft() {
