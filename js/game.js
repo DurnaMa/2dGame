@@ -23,36 +23,36 @@ window.addEventListener('keydown', (event) => {
   }
 
   if (event.keyCode == 37) {
-    keyboard.LEFT == true;
+    keyboard.LEFT = true;
   }
 
   if (event.keyCode == 32) {
     keyboard.SPACE = true;
   }
 
-  console.log(event)
+  // console.log(event)
 
 });
 
 window.addEventListener('keyup', (event) => {
   if (event.keyCode == 38) {
-    keyboard.UP = true;
+    keyboard.UP = false;
   }
 
   if (event.keyCode == 39) {
-    keyboard.RIGHT = true;
+    keyboard.RIGHT = false;
   }
 
   if (event.keyCode == 40) {
-    keyboard.UP = true;
+    keyboard.UP = false;
   }
 
   if (event.keyCode == 37) {
-    keyboard.LEFT == true;
+    keyboard.LEFT = false;
   }
 
   if (event.keyCode == 32) {
-    keyboard.SPACE = true;
+    keyboard.SPACE = false;
   }
-  console.log(event)
+  // console.log(event)
 });
