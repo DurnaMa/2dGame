@@ -8,7 +8,7 @@ class Cloud extends MoveleObjekt {
   constructor() {
     super().loadImage('/assets/mountain-platformer-pixel-art-tileset/PNG/Background/bright/clouds4.png');
 
-    (this.x = 0), this.x;
+    this.x = 0;
     this.y = 520 - this.y;
 
     this.x = Math.random() * 500;

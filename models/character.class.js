@@ -1,6 +1,6 @@
 class Character extends MoveleObjekt {
   y = 420;
-  x = 40;
+  x = 0;
   height = 300;
   width = 300;
 
@@ -19,7 +19,7 @@ class Character extends MoveleObjekt {
   constructor() {
     super().loadImage('/assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/rogue.png');
     this.loadImages(this.IMAGES_WALKING);
-    (this.x = 0), this.x;
+    this.x = 0
 
     this.animate();
   }
@@ -30,20 +30,17 @@ class Character extends MoveleObjekt {
         this.x += this.speed;
         this.otherDirection = false;
       }
-
+      //console.log(this.world.level.level_end_x)
       if (this.world.keyboard.LEFT && this.x > 0) {
         this.x -= this.speed;
         this.otherDirection = true;
       }
-      this.world.camera_x = -this.x ;
+      this.world.camera_x = -this.x +150;
     }, 100 / 60);
 
     setInterval(() => {
       if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-        let index = this.currentImage % this.IMAGES_WALKING.length;
-        let path = this.IMAGES_WALKING[index];
-        this.img = this.imageCache[path];
-        this.currentImage++;
+          this.playAnimation(this.IMAGES_WALKING)
       }
     }, 100);
   }

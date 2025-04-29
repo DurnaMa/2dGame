@@ -3,9 +3,9 @@ class BackgroundObjeckt extends MoveleObjekt {
   height = 700;
   x = 0;
 
-  constructor(imgePath, x) {
+  constructor(imgePath, x, y) {
     super().loadImage(imgePath);
     this.x = x;
-    this.y = 520 - this.y; //300
+    this.y = y; 
   }
 }
