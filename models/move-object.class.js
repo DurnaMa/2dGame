@@ -34,4 +34,11 @@ class MoveleObjekt {
   }
 
   moveRight() {}
+
+  playAnimation(images) {
+    let index = this.currentImage % this.IMAGES_WALKING.length;
+    let path = images[index];
+    this.img = this.imageCache[path];
+    this.currentImage++;
+  }
 }

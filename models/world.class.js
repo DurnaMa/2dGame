@@ -1,6 +1,6 @@
 class World {
   character = new Character();
-  level = level1
+  level = level1;
   canvas;
   ctx;
   keyboard;
@@ -50,13 +50,13 @@ class World {
     }
   }
 
-  addCloudToMap(cloud) {
-    this.ctx.drawImage(cloud.img, cloud.x, cloud.y, cloud.width, cloud.height);
-  }
-
   addObjectesToMap(Objectes) {
     Objectes.forEach((o) => {
       this.addToMap(o);
     });
+  }
+
+  addCloudToMap(cloud) {
+    this.ctx.drawImage(cloud.img, cloud.x, cloud.y, cloud.width, cloud.height);
   }
 }
