@@ -1,7 +1,7 @@
 class Endboss extends MoveleObjekt {
-  height = 500;
-  width = 300;
-  y = 275;
+  height = 700;
+  width = 650;
+  y = 116;
   x = 0;
 
   IMAGES_WALKING = [
@@ -17,13 +17,14 @@ class Endboss extends MoveleObjekt {
   constructor() {
     super().loadImage(this.IMAGES_WALKING[0]);
     this.loadImages(this.IMAGES_WALKING);
-    this.x = 700;
+    this.x = 2700;
     this.animate();
   }
 
   animate() {
     setInterval(() => {
       this.playAnimation(this.IMAGES_WALKING);
+      this.otherDirection = true;
     }, 200);
   }
 }

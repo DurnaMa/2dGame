@@ -2,7 +2,7 @@ class Level {
   enemiesAnt;
   clouds;
   backgroundObjecktRocks;
-  level_end_x = 3000;
+  level_end_x = 3750;
   
 
   constructor(enemiesAnt, clouds, backgroundObjecktRocks) {
