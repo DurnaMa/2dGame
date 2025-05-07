@@ -41,4 +41,12 @@ class MoveleObjekt {
     this.img = this.imageCache[path];
     this.currentImage++;
   }
+
+  playItems(images) {
+    let index = this.currentImage % images.length;
+    let path = images[index];
+    this.img = this.imageCache[path];
+    this.currentImage++;
+  }
+
 }

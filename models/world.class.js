@@ -5,6 +5,7 @@ class World {
   ctx;
   keyboard;
   camera_x = 0;
+  coins;
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext('2d');
@@ -26,6 +27,7 @@ class World {
     this.addObjectesToMap(this.level.clouds);
     this.addToMap(this.character);
     this.addObjectesToMap(this.level.enemiesAnt);
+    this.addObjectesToMap(this.level.coins)
 
     this.ctx.translate(-this.camera_x, 0);
 
@@ -58,5 +60,6 @@ class World {
 
   addCloudToMap(cloud) {
     this.ctx.drawImage(cloud.img, cloud.x, cloud.y, cloud.width, cloud.height);
+    //this.ctx.drawImage(coins.img, coins.x, coins.y, coins.width, coins.height);
   }
 }
