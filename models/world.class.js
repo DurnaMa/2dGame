@@ -60,6 +60,5 @@ class World {
 
   addCloudToMap(cloud) {
     this.ctx.drawImage(cloud.img, cloud.x, cloud.y, cloud.width, cloud.height);
-    //this.ctx.drawImage(coins.img, coins.x, coins.y, coins.width, coins.height);
   }
 }
