@@ -1,9 +1,9 @@
 class Bottle extends Item {
     ITEMS = [
-        '/assets/mountain-platformer-pixel-art-tileset/PNG/items/Bottle/bottle1.png',
-        '/assets/mountain-platformer-pixel-art-tileset/PNG/items/Bottle/bottle2.png',
-        '/assets/mountain-platformer-pixel-art-tileset/PNG/items/Bottle/bottle3.png',
-        '/assets/mountain-platformer-pixel-art-tileset/PNG/items/Bottle/bottle4.png',
+        'assets/sprite-effects/1_0027_Bottle28.png',
+        'assets/sprite-effects/1_0027_Bottle28.png',
+        'assets/sprite-effects/1_0027_Bottle28.png',
+        'assets/sprite-effects/1_0027_Bottle28.png'
     ];
 
     constructor() {

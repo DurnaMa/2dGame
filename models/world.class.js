@@ -6,6 +6,7 @@ class World {
   keyboard;
   camera_x = 0;
   coins;
+  bottles;
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext('2d');
@@ -27,7 +28,8 @@ class World {
     this.addObjectesToMap(this.level.clouds);
     this.addToMap(this.character);
     this.addObjectesToMap(this.level.enemiesAnt);
-    this.addObjectesToMap(this.level.coins)
+    this.addObjectesToMap(this.level.coins);
+    this.addObjectesToMap(this.level.bottles);
 
     this.ctx.translate(-this.camera_x, 0);
 
