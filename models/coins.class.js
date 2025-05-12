@@ -1,4 +1,4 @@
-class Coins extends MoveleObjekt {
+class Coins extends Item {
   y = 450;
   height = 50;
   width = 50;
