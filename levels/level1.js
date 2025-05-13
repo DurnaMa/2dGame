@@ -30,6 +30,7 @@ const level1 = new Level(
     new BackgroundObjeckt('/assets/mountain-platformer-pixel-art-tileset/PNG/Background/bright/rocks2.png', 1800 *2, 0),
     new BackgroundObjeckt('/assets/mountain-platformer-pixel-art-tileset/PNG/Background/bright/rocks3.png', 1800 *2, 0),
   ],
-  [new Coins(), new Coins(), new Coins(), new Coins(), new Coins(), new Coins() ]
+  [new Coin(), new Coin(), new Coin(), new Coin(), new Coin(), new Coin() ],
+  [new Bottle(), new Bottle(), new Bottle(), new Bottle(), new Bottle(),]
 
 );

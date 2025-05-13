@@ -6,6 +6,7 @@ class World {
   keyboard;
   camera_x = 0;
   coins;
+  bottle;
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext('2d');
@@ -27,7 +28,8 @@ class World {
     this.addObjectesToMap(this.level.clouds);
     this.addToMap(this.character);
     this.addObjectesToMap(this.level.enemiesAnt);
-    this.addObjectesToMap(this.level.coins)
+    this.addObjectesToMap(this.level.coins);
+    this.addObjectesToMap(this.level.bottle);
 
     this.ctx.translate(-this.camera_x, 0);
 
@@ -38,17 +40,22 @@ class World {
   }
 
   addToMap(mo) {
-    if (mo.otherDirection) {
-      this.ctx.save();
-      this.ctx.translate(mo.width, 0);
-      this.ctx.scale(-1, 1);
-      mo.x = mo.x * -1;
-    }
-    this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
+    try {
+      if (mo.otherDirection) {
+        this.ctx.save();
+        this.ctx.translate(mo.width, 0);
+        this.ctx.scale(-1, 1);
+        mo.x = mo.x * -1;
+      }
+      this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
 
-    if (mo.otherDirection) {
-      this.ctx.restore();
-      mo.x = mo.x * -1;
+      if (mo.otherDirection) {
+        this.ctx.restore();
+        mo.x = mo.x * -1;
+      }
+    } catch (e) {
+      console.warn('Element konnte nicht geladen werden', e);
+      console.log(mo);
     }
   }
 
