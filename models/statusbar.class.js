@@ -9,6 +9,6 @@ class Statusbar extends MoveleObjekt {
     super();
     this.loadImages(this.CHARACKTER_STATUSBAR);
     this.y = 150;
-    console.log('Statusbar liegt auf der y-Achse (y = ' + this.y + ')')
+    console.log('Statusbar liegt auf der y-Achse (y = ' + this.y + ')');
   }
 }

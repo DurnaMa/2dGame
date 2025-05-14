@@ -4,16 +4,16 @@ class Coins extends Item {
   width = 50;
 
   ITEMS = [
-    '/assets/mountain-platformer-pixel-art-tileset/PNG/items/Coin/coin1.png',
-    '/assets/mountain-platformer-pixel-art-tileset/PNG/items/Coin/coin2.png',
-    '/assets/mountain-platformer-pixel-art-tileset/PNG/items/Coin/coin3.png',
-    '/assets/mountain-platformer-pixel-art-tileset/PNG/items/Coin/coin4.png',
-    '/assets/mountain-platformer-pixel-art-tileset/PNG/items/Coin/coin5.png',
-    '/assets/mountain-platformer-pixel-art-tileset/PNG/items/Coin/coin6.png',
-    '/assets/mountain-platformer-pixel-art-tileset/PNG/items/Coin/coin7.png',
-    '/assets/mountain-platformer-pixel-art-tileset/PNG/items/Coin/coin8.png',
-    '/assets/mountain-platformer-pixel-art-tileset/PNG/items/Coin/coin9.png',
-    '/assets/mountain-platformer-pixel-art-tileset/PNG/items/Coin/coin10.png',
+    'assets/mountain-platformer-pixel-art-tileset/PNG/items/Coin/coin1.png',
+    'assets/mountain-platformer-pixel-art-tileset/PNG/items/Coin/coin2.png',
+    'assets/mountain-platformer-pixel-art-tileset/PNG/items/Coin/coin3.png',
+    'assets/mountain-platformer-pixel-art-tileset/PNG/items/Coin/coin4.png',
+    'assets/mountain-platformer-pixel-art-tileset/PNG/items/Coin/coin5.png',
+    'assets/mountain-platformer-pixel-art-tileset/PNG/items/Coin/coin6.png',
+    'assets/mountain-platformer-pixel-art-tileset/PNG/items/Coin/coin7.png',
+    'assets/mountain-platformer-pixel-art-tileset/PNG/items/Coin/coin8.png',
+    'assets/mountain-platformer-pixel-art-tileset/PNG/items/Coin/coin9.png',
+    'assets/mountain-platformer-pixel-art-tileset/PNG/items/Coin/coin10.png',
   ];
 
   constructor() {
@@ -28,7 +28,6 @@ class Coins extends Item {
   animate() {
     setInterval(() => {
       this.playItems(this.ITEMS);
-    }, 150 );
+    }, 150);
   }
-
 }
