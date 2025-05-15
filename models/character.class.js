@@ -23,7 +23,6 @@ class Character extends MoveleObjekt {
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Jump/jump5.png',
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Jump/jump6.png',
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Jump/jump7.png',
-    'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/rogue.png',
   ];
   world;
 
@@ -39,15 +38,18 @@ class Character extends MoveleObjekt {
   animate() {
     setInterval(() => {
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-        this.x += this.speed;
-        this.otherDirection = false;
+        this.moveRight()
       }
       //console.log(this.world.level.level_end_x)
       if (this.world.keyboard.LEFT && this.x > 150) {
-        this.x -= this.speed;
-        this.otherDirection = true;
+        this.moveLeft()
       }
       //console.log("Aktuelle Position:", this.x.toFixed(0), "px");
+
+      if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+        this.jump();
+      }
+      //console.log('Aktuelle Position:', this.y.toFixed(0), 'px');
 
       this.world.camera_x = -this.x + 150;
     }, 100 / 60);
@@ -55,16 +57,11 @@ class Character extends MoveleObjekt {
     setInterval(() => {
       if (this.isAboveGround()) {
         this.playAnimation(this.IMAGES_JUPING);
-        this.speedY = 30;
       } else {
-        //console.log('Aktuelle Position:', this.y.toFixed(0), 'px');
-
         if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
           this.playAnimation(this.IMAGES_WALKING);
         }
       }
     }, 100);
   }
-
-  jump() {}
 }

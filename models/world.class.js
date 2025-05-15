@@ -41,17 +41,26 @@ class World {
 
   addToMap(mo) {
     if (mo.otherDirection) {
-      this.ctx.save();
-      this.ctx.translate(mo.width, 0);
-      this.ctx.scale(-1, 1);
-      mo.x = mo.x * -1;
+      this.filpImage(mo);
     }
-    this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
+    mo.draw(this.ctx);
+    mo.drawBorder(this.ctx);
 
     if (mo.otherDirection) {
-      this.ctx.restore();
-      mo.x = mo.x * -1;
+      this.filpImageBack(mo);
     }
+  }
+
+  filpImage(mo) {
+    this.ctx.save();
+    this.ctx.translate(mo.width, 0);
+    this.ctx.scale(-1, 1);
+    mo.x = mo.x * -1;
+  }
+
+  filpImageBack(mo) {
+    mo.x = mo.x * -1;
+    this.ctx.restore();
   }
 
   addObjectesToMap(Objectes) {
