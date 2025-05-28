@@ -43,6 +43,10 @@ class MoveleObjekt {
     }
   }
 
+  isColliding(mo) {
+    return this.x + this.width > mo.x && this.y + this.height > mo.y && this.y < mo.y + mo.height;
+  }
+
   /**
    *
    * @param {Array} arr - ['/assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Walk/walk1.png',
