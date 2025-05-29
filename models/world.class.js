@@ -25,7 +25,8 @@ class World {
     setInterval(() => {
       this.level.enemiesAnt.forEach((enemy) => {
         if (this.character.isColliding(enemy) ) {
-          console.log('Collision with Chracter', enemy)
+          this.character.energy -= 5;
+          console.log('Collision with Chracter, enery ', this.character.energy)
         };
       });
     }, 200);
@@ -56,6 +57,7 @@ class World {
     }
     mo.draw(this.ctx);
     mo.drawBorder(this.ctx);
+    mo.drawCollisionBorder(this.ctx)
 
     if (mo.otherDirection) {
       this.filpImageBack(mo);

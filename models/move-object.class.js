@@ -10,6 +10,14 @@ class MoveleObjekt {
   otherDirection = false;
   speedY = 0;
   acceleration = 1;
+  energy = 100;
+
+  offset = {
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  };
 
   applyGravity() {
     setInterval(() => {
@@ -34,17 +42,42 @@ class MoveleObjekt {
   }
 
   drawBorder(ctx) {
-    if (this instanceof Character || this instanceof EnemiesAnt) {
-    ctx.beginPath();
-    ctx.lineWidth = '3';
-    ctx.strokeStyle = 'blue';
-    ctx.rect(this.x, this.y, this.width, this.height);
-    ctx.stroke();
+    if (
+      this instanceof Character ||
+      this instanceof EnemiesAnt ||
+      this instanceof Endboss ||
+      this instanceof Bottle ||
+      this instanceof Coins
+    ) {
+      ctx.beginPath();
+      ctx.lineWidth = '1';
+      ctx.strokeStyle = 'blue';
+      ctx.rect(this.x, this.y, this.width, this.height);
+      ctx.stroke();
+    }
+  }
+
+  drawCollisionBorder(ctx) {
+    if (this instanceof Character || this instanceof EnemiesAnt || this instanceof Endboss || this instanceof Bottle || this instanceof Coins) {
+      ctx.beginPath();
+      ctx.lineWidth = '1';
+      ctx.strokeStyle = 'red';
+      ctx.rect(this.x, this.y, this.width, this.height);
+      // ctx.rect(
+      //       Math.max(this.x, mo.x), // Start X im Kollisionsbereich
+      //       Math.max(this.y, mo.y), // Start Y im Kollisionsbereich
+      //       Math.min(this.x + this.width, mo.x + mo.width) - Math.max(this.x, mo.x), // Kollisionsbreite
+      //       Math.min(this.y + this.height, mo.y + mo.height) - Math.max(this.y, mo.y) // Kollisionshöhe
+      //   );
+      ctx.stroke();
     }
   }
 
   isColliding(mo) {
-    return this.x + this.width > mo.x && this.y + this.height > mo.y && this.y < mo.y + mo.height;
+    return this.x + this.width - this.offset.right > mo.x + mo.offset.left && 
+    this.y + this.height - this.offset.bottom > mo.y + mo.offset.top && 
+    this.x + this.offset.left < mo.x + mo.width - mo.offset.right && 
+    this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom;
   }
 
   /**

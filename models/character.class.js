@@ -6,6 +6,13 @@ class Character extends MoveleObjekt {
 
   speed = 1.5;
 
+  offset = {
+    top: 50,
+    left: 50,
+    right: 50,
+    bottom: 50,
+  };
+
   IMAGES_WALKING = [
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Walk/walk1.png',
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Walk/walk2.png',
@@ -38,11 +45,11 @@ class Character extends MoveleObjekt {
   animate() {
     setInterval(() => {
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-        this.moveRight()
+        this.moveRight();
       }
       //console.log(this.world.level.level_end_x)
       if (this.world.keyboard.LEFT && this.x > 150) {
-        this.moveLeft()
+        this.moveLeft();
       }
       //console.log("Aktuelle Position:", this.x.toFixed(0), "px");
 
