@@ -62,13 +62,7 @@ class MoveleObjekt {
       ctx.beginPath();
       ctx.lineWidth = '1';
       ctx.strokeStyle = 'red';
-      ctx.rect(this.x, this.y, this.width, this.height);
-      // ctx.rect(
-      //       Math.max(this.x, mo.x), // Start X im Kollisionsbereich
-      //       Math.max(this.y, mo.y), // Start Y im Kollisionsbereich
-      //       Math.min(this.x + this.width, mo.x + mo.width) - Math.max(this.x, mo.x), // Kollisionsbreite
-      //       Math.min(this.y + this.height, mo.y + mo.height) - Math.max(this.y, mo.y) // Kollisionshöhe
-      //   );
+      ctx.rect(this.x + this.offset.left, this.y + this.offset.top, this.width + this.offset.right, this.height);
       ctx.stroke();
     }
   }

@@ -4,6 +4,13 @@ class EnemiesAnt extends MoveleObjekt {
   height = 500;
   width = 500;
 
+  offset = {
+    top: 50,
+    left: 50,
+    right: -150,
+    bottom: 50,
+  };
+
   IMAGES_WALKING = [
     'assets/2d-pixel-art-evil-monster-sprites/PNG/Big_knight/big_knight04_walk1.png',
     'assets/2d-pixel-art-evil-monster-sprites/PNG/Big_knight/big_knight05_walk2.png',

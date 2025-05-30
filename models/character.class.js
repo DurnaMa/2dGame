@@ -9,7 +9,7 @@ class Character extends MoveleObjekt {
   offset = {
     top: 50,
     left: 50,
-    right: 50,
+    right: -150,
     bottom: 50,
   };
 

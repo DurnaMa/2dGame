@@ -12,8 +12,8 @@ class World {
     this.ctx = canvas.getContext('2d');
     this.canvas = canvas;
     this.keyboard = keyboard;
-    this.draw();
     this.setWorld();
+    this.draw();
     this.checkCollisions();
   }
 
@@ -24,10 +24,10 @@ class World {
   checkCollisions() {
     setInterval(() => {
       this.level.enemiesAnt.forEach((enemy) => {
-        if (this.character.isColliding(enemy) ) {
+        if (this.character.isColliding(enemy)) {
           this.character.energy -= 5;
-          console.log('Collision with Chracter, enery ', this.character.energy)
-        };
+          console.log('Collision with Chracter, enery ', this.character.energy);
+        }
       });
     }, 200);
   }
