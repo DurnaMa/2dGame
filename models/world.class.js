@@ -29,7 +29,7 @@ class World {
           console.log('Collision with Chracter, enery ', this.character.energy);
         }
       });
-    }, 200);
+    }, 1000 / 60);
   }
 
   draw() {

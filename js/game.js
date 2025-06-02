@@ -19,7 +19,7 @@ window.addEventListener('keydown', (event) => {
   }
 
   if (event.keyCode == 40) {
-    keyboard.UP = true;
+    keyboard.DOWN = true;
   }
 
   if (event.keyCode == 37) {

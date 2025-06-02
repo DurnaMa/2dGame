@@ -6,13 +6,6 @@ class Character extends MoveleObjekt {
 
   speed = 1.5;
 
-  offset = {
-    top: 50,
-    left: 50,
-    right: -150,
-    bottom: 50,
-  };
-
   IMAGES_WALKING = [
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Walk/walk1.png',
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Walk/walk2.png',
@@ -35,6 +28,12 @@ class Character extends MoveleObjekt {
 
   constructor() {
     super().loadImage('assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/rogue.png');
+    this.offset = {
+      top: 140,
+      left: 50,
+      right: 135,
+      bottom: 0,
+    };
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_JUPING);
     this.x = 150;

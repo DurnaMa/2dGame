@@ -6,8 +6,8 @@ class EnemiesAnt extends MoveleObjekt {
 
   offset = {
     top: 50,
-    left: 50,
-    right: -150,
+    left: 190,
+    right: 175,
     bottom: 50,
   };
 

@@ -1,5 +1,5 @@
 const level1 = new Level(
-  [new EnemiesAnt(), new EnemiesAnt(), new EnemiesAnt(), new Endboss()],
+  [new EnemiesAnt(), new Endboss()],
   [new Cloud()],
   [
     new BackgroundObjeckt('/assets/mountain-platformer-pixel-art-tileset/PNG/Background/bright/sky.png', 0, 0),

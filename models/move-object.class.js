@@ -38,7 +38,11 @@ class MoveleObjekt {
   }
 
   draw(ctx) {
-    ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    try {
+      ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    } catch (e) {
+      console.warn('Dieses Element konnte nicht gezeichnet werden:', this);
+    }
   }
 
   drawBorder(ctx) {
@@ -58,20 +62,33 @@ class MoveleObjekt {
   }
 
   drawCollisionBorder(ctx) {
-    if (this instanceof Character || this instanceof EnemiesAnt || this instanceof Endboss || this instanceof Bottle || this instanceof Coins) {
+    if (
+      this instanceof Character ||
+      this instanceof EnemiesAnt ||
+      this instanceof Endboss ||
+      this instanceof Bottle ||
+      this instanceof Coins
+    ) {
       ctx.beginPath();
       ctx.lineWidth = '1';
       ctx.strokeStyle = 'red';
-      ctx.rect(this.x + this.offset.left, this.y + this.offset.top, this.width + this.offset.right, this.height);
+      ctx.rect(
+        this.x + this.offset.left,
+        this.y + this.offset.top,
+        this.width - this.offset.right - this.offset.left,
+        this.height - this.offset.bottom - this.offset.top
+      );
       ctx.stroke();
     }
   }
 
   isColliding(mo) {
-    return this.x + this.width - this.offset.right > mo.x + mo.offset.left && 
-    this.y + this.height - this.offset.bottom > mo.y + mo.offset.top && 
-    this.x + this.offset.left < mo.x + mo.width - mo.offset.right && 
-    this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom;
+    return (
+      this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
+      this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
+      this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
+      this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom
+    );
   }
 
   /**
