@@ -4,13 +4,6 @@ class EnemiesAnt extends MoveleObjekt {
   height = 500;
   width = 500;
 
-  offset = {
-    top: 50,
-    left: 190,
-    right: 175,
-    bottom: 50,
-  };
-
   IMAGES_WALKING = [
     'assets/2d-pixel-art-evil-monster-sprites/PNG/Big_knight/big_knight04_walk1.png',
     'assets/2d-pixel-art-evil-monster-sprites/PNG/Big_knight/big_knight05_walk2.png',
@@ -26,6 +19,12 @@ class EnemiesAnt extends MoveleObjekt {
     this.speed = 0.15 + Math.random() * 0.55;
     this.loadImages(this.IMAGES_WALKING);
     this.animate();
+    this.offset = {
+      top: 155,
+      left: 190,
+      right: 170,
+      bottom: 170,
+    };
   }
 
   animate() {

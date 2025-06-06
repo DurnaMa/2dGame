@@ -51,30 +51,48 @@ class World {
     });
   }
 
-  addToMap(mo) {
-    if (mo.otherDirection) {
-      this.filpImage(mo);
-    }
+  // addToMap(mo) {
+  //   if (mo.otherDirection) {
+  //     this.filpImage(mo);
+  //   }
+  //   mo.draw(this.ctx);
+  //   mo.drawBorder(this.ctx);
+  //   mo.drawCollisionBorder(this.ctx)
+
+  //   if (mo.otherDirection) {
+  //     this.filpImageBack(mo);
+  //   }
+  // }
+
+addToMap(mo) {
+  this.ctx.save();
+  if (mo.otherDirection) {
+    this.ctx.translate(mo.x + mo.width, mo.y);
+    this.ctx.scale(-1, 1);
     mo.draw(this.ctx);
     mo.drawBorder(this.ctx);
-    mo.drawCollisionBorder(this.ctx)
-
-    if (mo.otherDirection) {
-      this.filpImageBack(mo);
-    }
+    mo.drawCollisionBorder(this.ctx);
+  } else {
+    mo.draw(this.ctx);
+    mo.drawBorder(this.ctx);
+    mo.drawCollisionBorder(this.ctx);
   }
+  this.ctx.restore();
+}
 
-  filpImage(mo) {
-    this.ctx.save();
-    this.ctx.translate(mo.width, 0);
-    this.ctx.scale(-1, 1);
-    mo.x = mo.x * -1;
-  }
 
-  filpImageBack(mo) {
-    mo.x = mo.x * -1;
-    this.ctx.restore();
-  }
+
+  // filpImage(mo) {
+  //   this.ctx.save();
+  //   this.ctx.translate(mo.width, 0);
+  //   this.ctx.scale(-1, 1);
+  //   mo.x = mo.x * -1;
+  // }
+
+  // filpImageBack(mo) {
+  //   mo.x = mo.x * -1;
+  //   this.ctx.restore();
+  // }
 
   addObjectesToMap(Objectes) {
     Objectes.forEach((o) => {

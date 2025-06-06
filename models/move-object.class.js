@@ -37,9 +37,21 @@ class MoveleObjekt {
     this.img.src = path;
   }
 
+  // draw(ctx) {
+  //   try {
+  //     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+  //   } catch (e) {
+  //     console.warn('Dieses Element konnte nicht gezeichnet werden:', this);
+  //   }
+  // }
+
   draw(ctx) {
     try {
-      ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+      if (this.otherDirection) {
+        ctx.drawImage(this.img, 0, 0, this.width, this.height);
+      } else {
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+      }
     } catch (e) {
       console.warn('Dieses Element konnte nicht gezeichnet werden:', this);
     }
@@ -61,6 +73,26 @@ class MoveleObjekt {
     }
   }
 
+  // drawCollisionBorder(ctx) {
+  //   if (
+  //     this instanceof Character ||
+  //     this instanceof EnemiesAnt ||
+  //     this instanceof Endboss ||
+  //     this instanceof Bottle ||
+  //     this instanceof Coins
+  //   ) {
+  //     ctx.beginPath();
+  //     ctx.lineWidth = '1';
+  //     ctx.strokeStyle = 'red';
+  //     ctx.rect(
+  //       this.x + this.offset.left,
+  //       this.y + this.offset.top,
+  //       this.width - this.offset.right - this.offset.left,
+  //       this.height - this.offset.bottom - this.offset.top
+  //     );
+  //     ctx.stroke();
+  //   }
+  // }
   drawCollisionBorder(ctx) {
     if (
       this instanceof Character ||
@@ -72,23 +104,30 @@ class MoveleObjekt {
       ctx.beginPath();
       ctx.lineWidth = '1';
       ctx.strokeStyle = 'red';
-      ctx.rect(
-        this.x + this.offset.left,
-        this.y + this.offset.top,
-        this.width - this.offset.right - this.offset.left,
-        this.height - this.offset.bottom - this.offset.top
-      );
+
+      const relWidth = this.width - this.offset.right - this.offset.left;
+      const relHeight = this.height - this.offset.bottom - this.offset.top;
+
+      if (this.otherDirection) {
+        // Im bereits gestarteten Flip‐Kontext zeichnen wir das Kollisionsrechteck
+        // bei (offset.right, offset.top), damit es korrekt gespiegelt landet.
+        ctx.rect(this.offset.right, this.offset.top, relWidth, relHeight);
+      } else {
+        // Normal‐Fall: einfach an den echten Koordinaten zeichnen.
+        ctx.rect(this.x + this.offset.left, this.y + this.offset.top, relWidth, relHeight);
+      }
+
       ctx.stroke();
     }
   }
 
   isColliding(mo) {
     return (
-      this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
-      this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
-      this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
+      this.x + this.width - this.offset.right > mo.x + mo.offset.left && // R → L
+      this.y + this.height - this.offset.bottom > mo.y + mo.offset.top && // T → B
+      this.x + this.offset.left < mo.x + mo.width - mo.offset.right && // L → R
       this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom
-    );
+    ); // B → T
   }
 
   /**
