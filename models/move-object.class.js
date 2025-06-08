@@ -68,7 +68,13 @@ class MoveleObjekt {
       ctx.beginPath();
       ctx.lineWidth = '1';
       ctx.strokeStyle = 'blue';
-      ctx.rect(this.x, this.y, this.width, this.height);
+
+      if (this.otherDirection) {
+        //ctx.rect(this.x, this.y, this.width, this.height);
+        ctx.rect(0, 0, this.width, this.height);
+      } else {
+        ctx.rect(this.x, this.y, this.width, this.height);
+      }
       ctx.stroke();
     }
   }
@@ -109,25 +115,21 @@ class MoveleObjekt {
       const relHeight = this.height - this.offset.bottom - this.offset.top;
 
       if (this.otherDirection) {
-        // Im bereits gestarteten Flip‐Kontext zeichnen wir das Kollisionsrechteck
-        // bei (offset.right, offset.top), damit es korrekt gespiegelt landet.
         ctx.rect(this.offset.right, this.offset.top, relWidth, relHeight);
       } else {
-        // Normal‐Fall: einfach an den echten Koordinaten zeichnen.
         ctx.rect(this.x + this.offset.left, this.y + this.offset.top, relWidth, relHeight);
       }
-
       ctx.stroke();
     }
   }
 
   isColliding(mo) {
     return (
-      this.x + this.width - this.offset.right > mo.x + mo.offset.left && // R → L
-      this.y + this.height - this.offset.bottom > mo.y + mo.offset.top && // T → B
-      this.x + this.offset.left < mo.x + mo.width - mo.offset.right && // L → R
+      this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
+      this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
+      this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
       this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom
-    ); // B → T
+    );
   }
 
   /**
