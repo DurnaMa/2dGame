@@ -7,11 +7,13 @@ class World {
   camera_x = 0;
   coins;
   bottles;
+  collisionManager;
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext('2d');
     this.canvas = canvas;
     this.keyboard = keyboard;
+    this.collisionManager = new CollisionManager(this);
     this.setWorld();
     this.draw();
     this.checkCollisions();
@@ -23,12 +25,7 @@ class World {
 
   checkCollisions() {
     setInterval(() => {
-      this.level.enemiesAnt.forEach((enemy) => {
-        if (this.character.isColliding(enemy)) {
-          this.character.energy -= 5;
-          console.log('Collision with Chracter, enery ', this.character.energy);
-        }
-      });
+      this.collisionManager.checkAllCollisions();
     }, 1000 / 60);
   }
 
@@ -64,35 +61,21 @@ class World {
   //   }
   // }
 
-addToMap(mo) {
-  this.ctx.save();
-  if (mo.otherDirection) {
-    this.ctx.translate(mo.x + mo.width, mo.y);
-    this.ctx.scale(-1, 1);
-    mo.draw(this.ctx);
-    mo.drawBorder(this.ctx);
-    mo.drawCollisionBorder(this.ctx);
-  } else {
-    mo.draw(this.ctx);
-    mo.drawBorder(this.ctx);
-    mo.drawCollisionBorder(this.ctx);
+  addToMap(mo) {
+    this.ctx.save();
+    if (mo.otherDirection) {
+      this.ctx.translate(mo.x + mo.width, mo.y);
+      this.ctx.scale(-1, 1);
+      mo.draw(this.ctx);
+      mo.drawBorder(this.ctx);
+      mo.drawCollisionBorder(this.ctx);
+    } else {
+      mo.draw(this.ctx);
+      mo.drawBorder(this.ctx);
+      mo.drawCollisionBorder(this.ctx);
+    }
+    this.ctx.restore();
   }
-  this.ctx.restore();
-}
-
-
-
-  // filpImage(mo) {
-  //   this.ctx.save();
-  //   this.ctx.translate(mo.width, 0);
-  //   this.ctx.scale(-1, 1);
-  //   mo.x = mo.x * -1;
-  // }
-
-  // filpImageBack(mo) {
-  //   mo.x = mo.x * -1;
-  //   this.ctx.restore();
-  // }
 
   addObjectesToMap(Objectes) {
     Objectes.forEach((o) => {

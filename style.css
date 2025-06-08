@@ -9,7 +9,40 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  gap: 50px;
+  min-height: 100vh;
+  background-image: url('assets/fantasy-platformer-game-ui/PNG/01main/bg.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: 'Uncial Antiqua';
 }
 canvas {
   background-color: #000;
+  display: block;
+}
+
+@font-face {
+  font-display: swap; 
+  font-family: 'Uncial Antiqua';
+  font-style: normal;
+  font-weight: 400;
+  src: url('fonts/UncialAntiqua-Regular.ttf') format('woff2'); 
+}
+
+h1 {
+  font-size: 64px;
+  letter-spacing: 3px;
+}
+
+@media only screen and (max-height: 1200px) {
+  canvas {
+    width: 100vh;
+  }
+}
+
+@media only screen and (max-height: 680px) {
+  canvas {
+    width: 100vh;
+  }
 }
