@@ -1,6 +1,6 @@
 class Endboss extends MoveleObjekt {
-  height = 700;
-  width = 650;
+  height = 400;
+  width = 400;
   y = 116;
   x = 0;
 
@@ -16,10 +16,10 @@ class Endboss extends MoveleObjekt {
   constructor() {
     super().loadImage(this.IMAGES_WALKING[0]);
     this.offset = {
-      top: 230,
-      left: 250,
-      right: 125 ,
-      bottom: 130, 
+      top: 140,
+      left: 150,
+      right: 75,
+      bottom: 80, 
     };
     this.loadImages(this.IMAGES_WALKING);
     this.x = 2700;

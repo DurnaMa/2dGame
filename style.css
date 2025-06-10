@@ -35,7 +35,7 @@ h1 {
   letter-spacing: 3px;
 }
 
-@media only screen and (max-height: 1200px) {
+/* @media only screen and (max-height: 1200px) {
   canvas {
     width: 100vh;
   }
@@ -45,4 +45,4 @@ h1 {
   canvas {
     width: 100vh;
   }
-}
+} */
