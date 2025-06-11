@@ -17,9 +17,9 @@ class Endboss extends MoveleObjekt {
     super().loadImage(this.IMAGES_WALKING[0]);
     this.offset = {
       top: 140,
-      left: 150,
+      left: 155,
       right: 75,
-      bottom: 80, 
+      bottom: 75, 
     };
     this.loadImages(this.IMAGES_WALKING);
     this.x = 2700;

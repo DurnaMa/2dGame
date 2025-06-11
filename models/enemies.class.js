@@ -1,5 +1,5 @@
 class EnemiesAnt extends MoveleObjekt {
-  y = 350;
+  y = 340;
   x = 40;
   height = 300;
   width = 300;
@@ -23,7 +23,7 @@ class EnemiesAnt extends MoveleObjekt {
       top: 95,
       left: 115,
       right: 105,
-      bottom: 105,
+      bottom: 100,
     };
   }
 

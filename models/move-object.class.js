@@ -29,21 +29,13 @@ class MoveleObjekt {
   }
 
   isAboveGround() {
-    return this.y < 420;
+    return this.y < 366;
   }
 
   loadImage(path) {
     this.img = new Image();
     this.img.src = path;
   }
-
-  // draw(ctx) {
-  //   try {
-  //     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-  //   } catch (e) {
-  //     console.warn('Dieses Element konnte nicht gezeichnet werden:', this);
-  //   }
-  // }
 
   draw(ctx) {
     try {
@@ -70,7 +62,6 @@ class MoveleObjekt {
       ctx.strokeStyle = 'blue';
 
       if (this.otherDirection) {
-        //ctx.rect(this.x, this.y, this.width, this.height);
         ctx.rect(0, 0, this.width, this.height);
       } else {
         ctx.rect(this.x, this.y, this.width, this.height);
@@ -79,26 +70,6 @@ class MoveleObjekt {
     }
   }
 
-  // drawCollisionBorder(ctx) {
-  //   if (
-  //     this instanceof Character ||
-  //     this instanceof EnemiesAnt ||
-  //     this instanceof Endboss ||
-  //     this instanceof Bottle ||
-  //     this instanceof Coins
-  //   ) {
-  //     ctx.beginPath();
-  //     ctx.lineWidth = '1';
-  //     ctx.strokeStyle = 'red';
-  //     ctx.rect(
-  //       this.x + this.offset.left,
-  //       this.y + this.offset.top,
-  //       this.width - this.offset.right - this.offset.left,
-  //       this.height - this.offset.bottom - this.offset.top
-  //     );
-  //     ctx.stroke();
-  //   }
-  // }
   drawCollisionBorder(ctx) {
     if (
       this instanceof Character ||
@@ -111,13 +82,20 @@ class MoveleObjekt {
       ctx.lineWidth = '1';
       ctx.strokeStyle = 'red';
 
-      const relWidth = this.width - this.offset.right - this.offset.left;
-      const relHeight = this.height - this.offset.bottom - this.offset.top;
-
       if (this.otherDirection) {
-        ctx.rect(this.offset.right, this.offset.top, relWidth, relHeight);
+        ctx.rect(
+          this.offset.left,
+          this.offset.top,
+          this.width - this.offset.right - this.offset.left,
+          this.height - this.offset.bottom - this.offset.top
+        );
       } else {
-        ctx.rect(this.x + this.offset.left, this.y + this.offset.top, relWidth, relHeight);
+        ctx.rect(
+          this.x + this.offset.left,
+          this.y + this.offset.top,
+          this.width - this.offset.right - this.offset.left,
+          this.height - this.offset.bottom - this.offset.top
+        );
       }
       ctx.stroke();
     }

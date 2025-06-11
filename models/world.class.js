@@ -48,19 +48,6 @@ class World {
     });
   }
 
-  // addToMap(mo) {
-  //   if (mo.otherDirection) {
-  //     this.filpImage(mo);
-  //   }
-  //   mo.draw(this.ctx);
-  //   mo.drawBorder(this.ctx);
-  //   mo.drawCollisionBorder(this.ctx)
-
-  //   if (mo.otherDirection) {
-  //     this.filpImageBack(mo);
-  //   }
-  // }
-
   addToMap(mo) {
     this.ctx.save();
     if (mo.otherDirection) {
