@@ -1,5 +1,5 @@
 class Character extends MoveleObjekt {
-  y = 420;
+  y = 366;
   x = 0;
   height = 200;
   width = 200;
@@ -32,7 +32,7 @@ class Character extends MoveleObjekt {
       top: 90,
       left: 35,
       right: 90,
-      bottom: 0,
+      bottom: 25,
     };
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_JUPING);
