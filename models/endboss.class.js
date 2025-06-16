@@ -14,19 +14,24 @@ class Endboss extends MoveleObjekt {
   ];
 
   constructor() {
+    
     super().loadImage(this.IMAGES_WALKING[0]);
+    this.loadImages(this.IMAGES_WALKING);
+    this.animate();
     this.offset = {
       top: 140,
       left: 155,
       right: 75,
-      bottom: 75, 
+      bottom: 75,
     };
-    this.loadImages(this.IMAGES_WALKING);
     this.x = 2700;
-    this.animate();
   }
 
   animate() {
+    // setInterval(() => {
+    //   this.moveLeft();
+    // }, 1000 / 60);
+
     setInterval(() => {
       this.playAnimation(this.IMAGES_WALKING);
       this.otherDirection = true;

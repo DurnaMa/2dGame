@@ -73,10 +73,10 @@ class MoveleObjekt {
   drawCollisionBorder(ctx) {
     if (
       this instanceof Character ||
-      this instanceof EnemiesAnt ||
-      this instanceof Endboss ||
-      this instanceof Bottle ||
-      this instanceof Coins
+      //this instanceof EnemiesAnt ||
+      this instanceof Endboss 
+      //this instanceof Bottle ||
+      //this instanceof Coins
     ) {
       ctx.beginPath();
       ctx.lineWidth = '1';
