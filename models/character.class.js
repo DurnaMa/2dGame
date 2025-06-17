@@ -24,7 +24,7 @@ class Character extends MoveleObjekt {
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Jump/jump6.png',
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Jump/jump7.png',
   ];
-  world;
+  
 
   constructor() {
     super().loadImage('assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/rogue.png');

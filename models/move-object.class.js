@@ -73,7 +73,7 @@ class MoveleObjekt {
   drawCollisionBorder(ctx) {
     if (
       this instanceof Character ||
-      //this instanceof EnemiesAnt ||
+      this instanceof EnemiesAnt ||
       this instanceof Endboss 
       //this instanceof Bottle ||
       //this instanceof Coins

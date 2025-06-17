@@ -2,7 +2,8 @@ class Endboss extends MoveleObjekt {
   height = 400;
   width = 400;
   y = 116;
-  x = 0;
+
+  otherDirection = false;
 
   IMAGES_WALKING = [
     'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Walk1.png',
@@ -14,17 +15,16 @@ class Endboss extends MoveleObjekt {
   ];
 
   constructor() {
-    
-    super().loadImage(this.IMAGES_WALKING[0]);
+    super().loadImage('assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Walk1.png');
     this.loadImages(this.IMAGES_WALKING);
     this.animate();
     this.offset = {
-      top: 140,
-      left: 155,
+      top: 125,
+      left: 165,
       right: 75,
       bottom: 75,
     };
-    this.x = 2700;
+    this.x = 400;
   }
 
   animate() {
@@ -34,7 +34,8 @@ class Endboss extends MoveleObjekt {
 
     setInterval(() => {
       this.playAnimation(this.IMAGES_WALKING);
-      this.otherDirection = true;
+      this.moveLeft();
     }, 200);
+
   }
 }
