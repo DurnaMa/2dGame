@@ -74,7 +74,7 @@ class MoveleObjekt {
     if (
       this instanceof Character ||
       this instanceof EnemiesAnt ||
-      this instanceof Endboss 
+      this instanceof Endboss
       //this instanceof Bottle ||
       //this instanceof Coins
     ) {
@@ -138,10 +138,14 @@ class MoveleObjekt {
   }
 
   playAnimation(images) {
-    let index = this.currentImage % this.IMAGES_WALKING.length;
+   // try {
+    let index = this.currentImage % images.length;
     let path = images[index];
     this.img = this.imageCache[path];
     this.currentImage++;
+    // } catch (e){
+    //   console.warn('Dieses Element konnte nicht gezeichnet werden:', this);
+    // }
   }
 
   playItems(images) {

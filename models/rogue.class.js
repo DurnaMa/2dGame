@@ -27,6 +27,7 @@ class Rogue extends Character {
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Attack/Attack6.png',
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Attack/Attack7.png',
   ];
+
   IMAGES_ATTACK_EXTRA = [
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Attack_Extra/attack_extra1.png',
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Attack_Extra/attack_extra2.png',
@@ -40,12 +41,14 @@ class Rogue extends Character {
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Attack_Extra/attack_extra10.png',
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Attack_Extra/attack_extra11.png',
   ];
+
   IMAGES_CLIMB = [
     `assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Climb/climb1.png`,
     `assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Climb/climb2.png`,
     `assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Climb/climb3.png`,
     `assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Climb/climb4.png`,
   ];
+
   IMAGES_DEATH = [
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death1.png',
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death2.png',
@@ -58,6 +61,7 @@ class Rogue extends Character {
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death9.png',
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death10.png',
   ];
+
   IMAGES_HIGH_JUMP = [
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/High_Jump/high_jump1.png',
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/High_Jump/high_jump2.png',
@@ -72,12 +76,14 @@ class Rogue extends Character {
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/High_Jump/high_jump11.png',
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/High_Jump/high_jump12.png',
   ];
+
   IMAGES_HURT = [
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Hurt/hurt1.png',
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Hurt/hurt2.png',
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Hurt/hurt3.png',
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Hurt/hurt4.png',
   ];
+
   IMAGES_IDELE = [
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Idle/idle1.png',
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Idle/idle2.png',
@@ -97,12 +103,14 @@ class Rogue extends Character {
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Idle/idle16.png',
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Idle/idle17.png',
   ];
+
   IMAGES_PUSH = [
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Push/push1.png',
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Push/push2.png',
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Push/push3.png',
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Push/push4.png',
   ];
+
   IMAGES_RUN = [
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Run/run1.png',
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Run/run2.png',
@@ -113,6 +121,7 @@ class Rogue extends Character {
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Run/run7.png',
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Run/run8.png',
   ];
+
   IMAGES_RUN_ATTACK = [
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Run_Attack/run_attack1.png',
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Run_Attack/run_attack2.png',
@@ -121,16 +130,34 @@ class Rogue extends Character {
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Run_Attack/run_attack5.png',
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Run_Attack/run_attack6.png',
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Run_Attack/run_attack7.png',
-    'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Run_Attack/run_attack8.png'
+    'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Run_Attack/run_attack8.png',
   ];
+
   IMAGES_WALK_ATTACK = [
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Walk_Attack/walk_attack1.png',
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Walk_Attack/walk_attack2.png',
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Walk_Attack/walk_attack3.png',
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Walk_Attack/walk_attack4.png',
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Walk_Attack/walk_attack5.png',
-    'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Walk_Attack/walk_attack6.png'
+    'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Walk_Attack/walk_attack6.png',
   ];
 
-  constructor(parameters) {}
+  constructor() {
+    super();
+
+    this.loadImages(this.IMAGES_WALKING);
+    this.loadImages(this.IMAGES_JUPING);
+    this.loadImages(this.IMAGES_ATTACK);
+    this.loadImages(this.IMAGES_ATTACK_EXTRA);
+    this.loadImages(this.IMAGES_CLIMB);
+    this.loadImages(this.IMAGES_DEATH);
+    this.loadImages(this.IMAGES_HIGH_JUMP);
+    this.loadImages(this.IMAGES_HURT);
+    this.loadImages(this.IMAGES_IDELE);
+    this.loadImages(this.IMAGES_PUSH);
+    this.loadImages(this.IMAGES_RUN);
+    this.loadImages(this.IMAGES_RUN_ATTACK);
+    this.loadImages(this.IMAGES_WALK_ATTACK);
+
+  }
 }
