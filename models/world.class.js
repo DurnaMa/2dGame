@@ -1,5 +1,5 @@
 class World {
-  character = new Character();
+  character = new Rogue();
   level = level1;
   canvas;
   ctx;
@@ -15,6 +15,7 @@ class World {
     this.keyboard = keyboard;
     this.collisionManager = new CollisionManager(this);
     this.setWorld();
+    this.character.animate();
     this.draw();
     this.checkCollisions();
   }
