@@ -4,13 +4,11 @@ class Character extends MoveleObjekt {
   height = 200;
   width = 200;
 
-  speed = 1.5;
-
-  rogue = []
-
+  speed = 2.5;
 
   constructor() {
-    super().loadImage('assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/rogue.png');
+    //super().loadImage('assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/rogue.png');
+    super().loadImage('assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Mage/mage.png');
 
     this.offset = {
       top: 90,

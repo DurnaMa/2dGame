@@ -1,5 +1,6 @@
 class World {
   character = new Rogue();
+  //character = new Mage();
   level = level1;
   canvas;
   ctx;
