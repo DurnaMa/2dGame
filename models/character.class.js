@@ -1,14 +1,14 @@
 class Character extends MoveleObjekt {
   y = 366;
   x = 0;
-  height = 200;
-  width = 200;
+  // height = 200;
+  // width = 200;
 
   speed = 2.5;
 
   constructor() {
-    //super().loadImage('assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/rogue.png');
-    super().loadImage('assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Mage/mage.png');
+    super().loadImage('assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/rogue.png');
+    //super().loadImage('assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Mage/mage.png');
 
     this.offset = {
       top: 90,
@@ -19,7 +19,10 @@ class Character extends MoveleObjekt {
 
     this.x = 150;
     this.applyGravity();
+  }
 
+  isDeath() {
+    return this.energy <= 0;
   }
 
   animate() {
@@ -42,7 +45,9 @@ class Character extends MoveleObjekt {
     }, 1000 / 60);
 
     setInterval(() => {
-      if (this.isAboveGround()) {
+      if (this.isDeath()) {
+        this.playAnimation(this.IMAGES_DEATH);
+      } else if (this.isAboveGround()) {
         this.playAnimation(this.IMAGES_JUPING);
       } else {
         if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {

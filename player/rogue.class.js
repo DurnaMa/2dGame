@@ -145,6 +145,9 @@ class Rogue extends Character {
   constructor() {
     super();
 
+    this.height = 200;
+    this.width = 200;
+
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_JUPING);
     this.loadImages(this.IMAGES_ATTACK);
@@ -158,6 +161,5 @@ class Rogue extends Character {
     this.loadImages(this.IMAGES_RUN);
     this.loadImages(this.IMAGES_RUN_ATTACK);
     this.loadImages(this.IMAGES_WALK_ATTACK);
-
   }
 }

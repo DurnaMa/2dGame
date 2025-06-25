@@ -138,14 +138,14 @@ class MoveleObjekt {
   }
 
   playAnimation(images) {
-   // try {
-    let index = this.currentImage % images.length;
-    let path = images[index];
-    this.img = this.imageCache[path];
-    this.currentImage++;
-    // } catch (e){
-    //   console.warn('Dieses Element konnte nicht gezeichnet werden:', this);
-    // }
+    try {
+      let index = this.currentImage % images.length;
+      let path = images[index];
+      this.img = this.imageCache[path];
+      this.currentImage++;
+    } catch (e) {
+      console.warn('Dieses Element konnte nicht gezeichnet werden:', this);
+    }
   }
 
   playItems(images) {
