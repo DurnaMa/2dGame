@@ -16,7 +16,7 @@ class Endboss extends MoveleObjekt {
   ];
 
   constructor() {
-    
+
     super().loadImage(this.IMAGES_WALKING[0]);
     this.loadImages(this.IMAGES_WALKING);
     this.offset = {
@@ -25,7 +25,7 @@ class Endboss extends MoveleObjekt {
       right: 75,
       bottom: 75,
     };
-    this.x = 2700;
+    this.x = 400;
     this.animate();
   }
 
@@ -36,7 +36,7 @@ class Endboss extends MoveleObjekt {
 
     setInterval(() => {
       this.playAnimation(this.IMAGES_WALKING);
-      
+      this.zoom = 1;
     }, 200);
 
     setInterval(() => {

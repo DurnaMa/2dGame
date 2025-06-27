@@ -50,16 +50,17 @@ class Rogue extends Character {
   ];
 
   IMAGES_DEATH = [
-    'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death1.png',
-    'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death2.png',
-    'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death3.png',
-    'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death4.png',
-    'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death5.png',
-    'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death6.png',
-    'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death7.png',
-    'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death8.png',
-    'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death9.png',
-    'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death10.png',
+    'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/1death1.png'
+    // 'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death1.png',
+    // 'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death2.png',
+    // 'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death3.png',
+    // 'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death4.png',
+    // 'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death5.png',
+    // 'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death6.png',
+    // 'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death7.png',
+    // 'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death8.png',
+    // 'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death9.png',
+    // 'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death10.png',
   ];
 
   IMAGES_HIGH_JUMP = [
@@ -145,6 +146,9 @@ class Rogue extends Character {
   constructor() {
     super();
 
+    this.height = 200;
+    this.width = 200;
+
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_JUPING);
     this.loadImages(this.IMAGES_ATTACK);
@@ -158,6 +162,5 @@ class Rogue extends Character {
     this.loadImages(this.IMAGES_RUN);
     this.loadImages(this.IMAGES_RUN_ATTACK);
     this.loadImages(this.IMAGES_WALK_ATTACK);
-
   }
 }

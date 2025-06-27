@@ -34,6 +34,7 @@ class EnemiesAnt extends MoveleObjekt {
 
     setInterval(() => {
       this.playAnimation(this.IMAGES_WALKING);
+      this.zoom = 1;
     }, 200);
   }
 }

@@ -40,9 +40,9 @@ class MoveleObjekt {
   draw(ctx) {
     try {
       if (this.otherDirection) {
-        ctx.drawImage(this.img, 0, 0, this.width, this.height);
+        ctx.drawImage(this.img, 0, 0, this.width * this.zoom , this.height * this.zoom);
       } else {
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        ctx.drawImage(this.img, this.x, this.y, this.width * this.zoom , this.height * this.zoom);
       }
     } catch (e) {
       console.warn('Dieses Element konnte nicht gezeichnet werden:', this);
@@ -138,14 +138,14 @@ class MoveleObjekt {
   }
 
   playAnimation(images) {
-   // try {
-    let index = this.currentImage % images.length;
-    let path = images[index];
-    this.img = this.imageCache[path];
-    this.currentImage++;
-    // } catch (e){
-    //   console.warn('Dieses Element konnte nicht gezeichnet werden:', this);
-    // }
+    try {
+      let index = this.currentImage % images.length;
+      let path = images[index];
+      this.img = this.imageCache[path];
+      this.currentImage++;
+    } catch (e) {
+      console.warn('Dieses Element konnte nicht gezeichnet werden:', this);
+    }
   }
 
   playItems(images) {
@@ -153,5 +153,18 @@ class MoveleObjekt {
     let path = images[index];
     this.img = this.imageCache[path];
     this.currentImage++;
+  }
+
+  hit() {
+    this.energy -= 5;
+    if (this.energy < 0) {
+      this.energy = 0;
+    } else {
+      this.lastHit = new Date().getTime();
+    }
+  }
+  isHurt() {
+    let tiempassed = new Date().getTime() - this.lastHit;
+    return tiempassed < 5;
   }
 }
