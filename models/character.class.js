@@ -6,6 +6,8 @@ class Character extends MoveleObjekt {
 
   speed = 2.5;
 
+  zoom = 1;
+
   constructor() {
     super().loadImage('assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/rogue.png');
     //super().loadImage('assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Mage/mage.png');
@@ -22,7 +24,7 @@ class Character extends MoveleObjekt {
   }
 
   isDeath() {
-    return this.energy <= 0;
+    return this.energy == 0;
   }
 
   animate() {
@@ -47,13 +49,21 @@ class Character extends MoveleObjekt {
     setInterval(() => {
       if (this.isDeath()) {
         this.playAnimation(this.IMAGES_DEATH);
-      } else if (this.isAboveGround()) {
+        this.zoom = 1;
+      } else if (this.isHurt) {
+        this.playAnimation(this.IMAGES_HURT)
+        this.zoom = 1;
+      }
+       else if (this.isAboveGround()) {
         this.playAnimation(this.IMAGES_JUPING);
+        this.zoom = 1;
       } else {
         if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
           this.playAnimation(this.IMAGES_WALKING);
+          this.zoom = 1;
         } else {
           this.playAnimation(this.IMAGES_IDELE);
+          this.zoom = 1;
         }
       }
     }, 100);

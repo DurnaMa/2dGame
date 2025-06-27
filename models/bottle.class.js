@@ -12,6 +12,7 @@ class Bottle extends Item {
   animate() {
     setInterval(() => {
       this.playItems(this.ITEMS);
+      this.zoom = 1;
     }, 200);
   }
 }
