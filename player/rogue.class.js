@@ -50,7 +50,9 @@ class Rogue extends Character {
   ];
 
   IMAGES_DEATH = [
-    'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/1death1.png'
+    'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/1death1.png',
+    'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/2death2.png',
+    'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/3death3.png'
     // 'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death1.png',
     // 'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death2.png',
     // 'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death3.png',
