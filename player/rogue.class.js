@@ -50,19 +50,16 @@ class Rogue extends Character {
   ];
 
   IMAGES_DEATH = [
-    'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/1death1.png',
-    'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/2death2.png',
-    'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/3death3.png'
-    // 'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death1.png',
-    // 'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death2.png',
-    // 'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death3.png',
-    // 'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death4.png',
-    // 'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death5.png',
-    // 'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death6.png',
-    // 'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death7.png',
-    // 'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death8.png',
-    // 'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death9.png',
-    // 'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death10.png',
+    'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death1.png',
+    'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death2.png',
+    'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death3.png',
+    'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death4.png',
+    'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death5.png',
+    'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death6.png',
+    'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death7.png',
+    'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death8.png',
+    'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death9.png',
+    'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Death/death10.png',
   ];
 
   IMAGES_HIGH_JUMP = [
