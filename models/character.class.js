@@ -47,7 +47,7 @@ class Character extends MoveleObjekt {
     setInterval(() => {
       if (this.isDeath()) {
         this.playAnimation(this.IMAGES_DEATH);
-      } else if (this.isHurt) {
+      } else if ((this.isHurt())) {
         this.playAnimation(this.IMAGES_HURT)
       }
        else if (this.isAboveGround()) {

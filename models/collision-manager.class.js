@@ -45,7 +45,7 @@ class CollisionManager {
     if (this.world.character.energy <= 0) {
       this.world.character.energy = 0;
     }
-    console.log('Kollision mit Gegner, Energie:', this.world.character.energy);
+    //console.log('Kollision mit Gegner, Energie:', this.world.character.energy);
   }
 
   handleCoinCollection(coin) {

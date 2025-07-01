@@ -11,6 +11,7 @@ class MoveleObjekt {
   speedY = 0;
   acceleration = 1;
   energy = 100;
+  lastHit = 0;
 
   offset = {
     top: 0,
@@ -163,8 +164,11 @@ class MoveleObjekt {
       this.lastHit = new Date().getTime();
     }
   }
+
   isHurt() {
-    let tiempassed = new Date().getTime() - this.lastHit;
-    return tiempassed < 5;
+    let timepassed = new Date().getTime() - this.lastHit;
+    timepassed = timepassed / 1000;
+    //console.log(timepassed);
+    return timepassed < 1;
   }
 }
