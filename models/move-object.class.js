@@ -40,9 +40,9 @@ class MoveleObjekt {
   draw(ctx) {
     try {
       if (this.otherDirection) {
-        ctx.drawImage(this.img, 0, 0, this.width * this.zoom , this.height * this.zoom);
+        ctx.drawImage(this.img, 0, 0, this.width, this.height);
       } else {
-        ctx.drawImage(this.img, this.x, this.y, this.width * this.zoom , this.height * this.zoom);
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
       }
     } catch (e) {
       console.warn('Dieses Element konnte nicht gezeichnet werden:', this);
