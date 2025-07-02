@@ -168,7 +168,11 @@ class MoveleObjekt {
   isHurt() {
     let timepassed = new Date().getTime() - this.lastHit;
     timepassed = timepassed / 1000;
-    //console.log(timepassed);
     return timepassed < 1;
+  }
+
+  isIdele() {
+    let now = new Date().getTime();
+    return (now - this.lastMoveTime) > 3000;
   }
 }
