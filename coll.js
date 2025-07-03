@@ -1,32 +1,6 @@
-class Character extends MovableObject {
-  y = 366;
-  x = 0;
-  // height = 200;
-  // width = 200;
+handleCharacterAnimation
 
-  speed = 2.5;
-
-  constructor() {
-    super().loadImage('assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/rogue.png');
-    //super().loadImage('assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Mage/mage.png');
-
-    this.offset = {
-      top: 90,
-      left: 35,
-      right: 90,
-      bottom: 25,
-    };
-
-    this.x = 150;
-    this.applyGravity();
-
-    this.lastMoveTime = new Date().getTime();
-  }
-
-  isDeath() {
-    return this.energy == 0;
-  }
-
+// character
 animate() {
     setInterval(() => {
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
@@ -67,7 +41,7 @@ animate() {
     }, 100);
   }
 
-    handleJumpAnimation(){
+  handleJumpAnimation(){
     if (!this.checkAlreadyRunning) {
       this.checkAlreadyRunning = true;
       console.log('jump animation start')
@@ -82,4 +56,23 @@ animate() {
             }, 2016)
         }
   }
-}
+
+// movable-objects
+applyGravity() {
+    setInterval(() => {
+      if (this.isAboveGround() || this.speedY > 0) {
+        this.y -= this.speedY;
+        this.speedY -= this.acceleration;
+      }
+      if (this instanceof Rogue && !this.isAboveGround() && this.jumpStarted){
+        this.jumpEnded = new Date().getTime();
+        console.log('Zeit in der Luft:', this.jumpEnded - this.jumpStarted);
+        this.jumpStarted = null;
+      }
+    }, 1000 / 25);
+
+  }
+
+  isAboveGround() {
+    return this.y < 366;
+  }

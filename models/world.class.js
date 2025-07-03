@@ -35,12 +35,12 @@ class World {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.translate(this.camera_x, 0);
 
-    this.addObjectesToMap(this.level.backgroundObjecktRocks);
-    this.addObjectesToMap(this.level.clouds);
+    this.addObjectsToMap(this.level.backgroundObjectRocks);
+    this.addObjectsToMap(this.level.clouds);
     this.addToMap(this.character);
-    this.addObjectesToMap(this.level.enemiesAnt);
-    this.addObjectesToMap(this.level.coins);
-    this.addObjectesToMap(this.level.bottles);
+    this.addObjectsToMap(this.level.enemiesAnt);
+    this.addObjectsToMap(this.level.coins);
+    this.addObjectsToMap(this.level.bottles);
 
     this.ctx.translate(-this.camera_x, 0);
 
@@ -66,8 +66,8 @@ class World {
     this.ctx.restore();
   }
 
-  addObjectesToMap(Objectes) {
-    Objectes.forEach((o) => {
+  addObjectsToMap(objects) {
+    objects.forEach((o) => {
       this.addToMap(o);
     });
   }

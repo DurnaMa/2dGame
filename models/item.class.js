@@ -1,4 +1,4 @@
-class Item extends MoveleObjekt {
+class Item extends MovableObject {
   y = 450;
   height = 50;
   width = 50;

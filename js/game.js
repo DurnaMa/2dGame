@@ -6,7 +6,7 @@ function init() {
   canvas = document.getElementById('canvas');
   world = new World(canvas, keyboard);
 
-  console.log('My Chracter is', world.character);
+  console.log('My Character is', world.character);
 }
 
 window.addEventListener('keydown', (event) => {
@@ -44,7 +44,7 @@ window.addEventListener('keyup', (event) => {
   }
 
   if (event.keyCode == 40) {
-    keyboard.UP = false;
+    keyboard.DOWN = false;
   }
 
   if (event.keyCode == 37) {

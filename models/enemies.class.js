@@ -1,4 +1,4 @@
-class EnemiesAnt extends MoveleObjekt {
+class EnemiesAnt extends MovableObject {
   y = 340;
   x = 40;
   height = 300;

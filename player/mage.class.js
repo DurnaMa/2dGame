@@ -82,7 +82,7 @@ class Mage extends Character {
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Mage/Hurt/hurt4.png',
   ];
 
-  IMAGES_IDELE = [
+  IMAGES_IDLE = [
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Mage/Idle/idle1.png',
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Mage/Idle/idle2.png',
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Mage/Idle/idle3.png',
@@ -99,7 +99,7 @@ class Mage extends Character {
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Mage/Idle/idle14.png'
   ];
 
-  IMAGES_JUPING = [
+  IMAGES_JUMPING = [
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Mage/Jump/jump1.png',
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Mage/Jump/jump2.png',
     'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Mage/Jump/jump3.png',
@@ -160,7 +160,7 @@ class Mage extends Character {
     super();
 
     this.loadImages(this.IMAGES_WALKING);
-    this.loadImages(this.IMAGES_JUPING);
+    this.loadImages(this.IMAGES_JUMPING);
     this.loadImages(this.IMAGES_ATTACK);
     this.loadImages(this.IMAGES_ATTACK_EXTRA);
     this.loadImages(this.IMAGES_CLIMB);
@@ -169,7 +169,7 @@ class Mage extends Character {
     this.loadImages(this.IMAGES_FIRE_EXTRA);
     this.loadImages(this.IMAGES_HIGH_JUMP);
     this.loadImages(this.IMAGES_HURT);
-    this.loadImages(this.IMAGES_IDELE);
+    this.loadImages(this.IMAGES_IDLE);
     this.loadImages(this.IMAGES_PUSH);
     this.loadImages(this.IMAGES_RUN);
     this.loadImages(this.IMAGES_RUN_ATTACK);
