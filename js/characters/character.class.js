@@ -1,8 +1,6 @@
 class Character extends MovableObject {
   y = 366;
   x = 0;
-  // height = 200;
-  // width = 200;
 
   speed = 2.5;
 
@@ -27,7 +25,7 @@ class Character extends MovableObject {
     return this.energy == 0;
   }
 
-animate() {
+  animate() {
     setInterval(() => {
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
         this.moveRight();
@@ -39,47 +37,49 @@ animate() {
         this.lastMoveTime = new Date().getTime();
       }
       //console.log("Aktuelle Position:", this.x.toFixed(0), "px");
-
       if (this.world.keyboard.SPACE && !this.isAboveGround() && !this.jumpStarted) {
         this.jump();
         this.lastMoveTime = new Date().getTime();
         this.jumpStarted = new Date().getTime();
       }
       //console.log('Aktuelle Position:', this.y.toFixed(0), 'px');
-
       this.world.camera_x = -this.x + 150;
     }, 1000 / 60);
 
     setInterval(() => {
-      if (this.isDeath()) {
-        this.playAnimation(this.IMAGES_DEATH);
-      } else if (this.isAboveGround()) {
-        this.handleJumpAnimation();
-      } else if (this.isIdle()) {
-        this.playAnimation(this.IMAGES_IDLE);
-      } else if (this.isHurt()) {
-        this.playAnimation(this.IMAGES_HURT);
-      } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-        this.playAnimation(this.IMAGES_WALKING);
-      }else{
-        this.playAnimation(this.IMAGES_STANDING);
-      }
+      this.animateSetInterval();
     }, 100);
   }
 
-    handleJumpAnimation(){
+  animateSetInterval() {
+    if (this.isDeath()) {
+      this.playAnimation(this.IMAGES_DEATH);
+    } else if (this.isAboveGround()) {
+      this.handleJumpAnimation();
+    } else if (this.isIdle()) {
+      this.playAnimation(this.IMAGES_IDLE);
+    } else if (this.isHurt()) {
+      this.playAnimation(this.IMAGES_HURT);
+    } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+      this.playAnimation(this.IMAGES_WALKING);
+    } else {
+      this.playAnimation(this.IMAGES_STANDING);
+    }
+  }
+
+  handleJumpAnimation() {
     if (!this.checkAlreadyRunning) {
       this.checkAlreadyRunning = true;
-      console.log('jump animation start')
-            this.currentImage = 0;
-            let spacePressed = setInterval(() => {
-                this.playAnimation(this.IMAGES_JUMPING);
-            }, 288)
+      console.log('jump animation start');
+      this.currentImage = 0;
+      let spacePressed = setInterval(() => {
+        this.playAnimation(this.IMAGES_JUMPING);
+      }, 288);
 
-            setTimeout(() => {
-                this.checkAlreadyRunning = false;
-                clearInterval(spacePressed)
-            }, 2016)
-        }
+      setTimeout(() => {
+        this.checkAlreadyRunning = false;
+        clearInterval(spacePressed);
+      }, 2016);
+    }
   }
 }
