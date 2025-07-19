@@ -9,6 +9,7 @@ class World {
   coins;
   bottles;
   collisionManager;
+  statusBar = new Statusbar();
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext('2d');
@@ -36,6 +37,7 @@ class World {
     this.ctx.translate(this.camera_x, 0);
 
     this.addObjectsToMap(this.level.backgroundObjectRocks);
+    this.addToMap(this.statusBar);
     this.addObjectsToMap(this.level.clouds);
     this.addToMap(this.character);
     this.addObjectsToMap(this.level.enemiesAnt);
