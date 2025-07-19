@@ -1,11 +1,4 @@
-class MovableObject {
-  x = 120;
-  y = 520;
-  img;
-  height = 150;
-  width = 100;
-  imageCache = {};
-  currentImage = 0;
+class MovableObject extends DrawableObject {
   speed = 0.15;
   otherDirection = false;
   speedY = 0;
@@ -36,23 +29,6 @@ class MovableObject {
 
   isAboveGround() {
     return this.y < 366;
-  }
-
-  loadImage(path) {
-    this.img = new Image();
-    this.img.src = path;
-  }
-
-  draw(ctx) {
-    try {
-      if (this.otherDirection) {
-        ctx.drawImage(this.img, 0, 0, this.width, this.height);
-      } else {
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-      }
-    } catch (e) {
-      console.warn('Dieses Element konnte nicht gezeichnet werden:', this);
-    }
   }
 
   drawBorder(ctx) {
@@ -114,19 +90,6 @@ class MovableObject {
       this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
       this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom
     );
-  }
-
-  /**
-   *
-   * @param {Array} arr - ['/assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Walk/walk1.png',
-   * '/assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Walk/walk2.png' ...]
-   */
-  loadImages(arr) {
-    arr.forEach((path) => {
-      let img = new Image();
-      img.src = path;
-      this.imageCache[path] = img;
-    });
   }
 
   moveLeft() {
