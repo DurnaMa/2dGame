@@ -37,4 +37,9 @@ class DrawableObject {
       this.imageCache[path] = img;
     });
   }
+
+  drawBorder(ctx) {
+    // Optional: Rahmen zeichnen, z.B. für Debug-Zwecke
+    // ctx.strokeRect(this.x, this.y, this.width, this.height);
+  }
 }
