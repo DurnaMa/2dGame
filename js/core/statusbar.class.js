@@ -1,7 +1,7 @@
 class Statusbar extends DrawableObject {
-  y = 150;
-  height = 50;
-  width = 50;
+  // y = 150;
+  // height = 50;
+  // width = 50;
 
   percentage = 100;
 
@@ -19,9 +19,13 @@ class Statusbar extends DrawableObject {
   constructor() {
     super();
     this.loadImages(this.IMAGES);
+    this.loadImages(this.CHARACTER_STATUSBAR);
+    this.y = 0;
+    this.x = 10;
+    this.width = 200;
+    this.height = 30;
     this.setPercentage(100);
-    this.y = 150;
-    this.x = 150;
+
     console.log('Statusbar liegt auf der y-Achse (y = ' + this.y + ')');
   }
 
@@ -31,22 +35,22 @@ class Statusbar extends DrawableObject {
     this.img = this.imageCache[path];
   }
 
-  setPercentage(percentage) {
-    this.percentage = percentage;
-  }
+  // setPercentage(percentage) {
+  //   this.percentage = percentage;
+  // }
 
   resolveImageIndex() {
-    if (this.perecentage == 100) {
+    if (this.percentage == 100) {
       return 5;
-    } else if (this.perecentage > 80) {
+    } else if (this.percentage > 80) {
       return 4;
-    } else if (this.perecentage > 60) {
+    } else if (this.percentage > 60) {
       return 3;
-    } else if (this.perecentage > 40) {
+    } else if (this.percentage > 40) {
       return 2;
-    } else if (this.perecentage > 20) {
+    } else if (this.percentage > 20) {
       return 1;
-    } else if (this.perecentage > 0) {
+    } else if (this.percentage > 0) {
       return 0;
     }
   }
