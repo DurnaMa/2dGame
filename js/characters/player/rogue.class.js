@@ -165,5 +165,6 @@ class Rogue extends Character {
     this.loadImages(this.IMAGES_RUN);
     this.loadImages(this.IMAGES_RUN_ATTACK);
     this.loadImages(this.IMAGES_WALK_ATTACK);
+    this.loadImages(this.IMAGE_IMAGES_STANDING);
   }
 }

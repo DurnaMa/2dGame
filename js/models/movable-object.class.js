@@ -22,6 +22,7 @@ class MovableObject extends DrawableObject {
       if (this instanceof Rogue && !this.isAboveGround() && this.jumpStarted) {
         this.jumpEnded = new Date().getTime();
         console.log('Zeit in der Luft:', this.jumpEnded - this.jumpStarted);
+        this.lastMoveTime = new Date().getTime();
         this.jumpStarted = null;
       }
     }, 1000 / 25);
@@ -89,6 +90,6 @@ class MovableObject extends DrawableObject {
 
   isIdle() {
     let now = new Date().getTime();
-    return now - this.lastMoveTime > 3000;
+    //return now - this.lastMoveTime > 3000;
   }
 }
