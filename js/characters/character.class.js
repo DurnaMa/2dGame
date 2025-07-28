@@ -39,7 +39,6 @@ class Character extends MovableObject {
       //console.log("Aktuelle Position:", this.x.toFixed(0), "px");
       if (this.world.keyboard.SPACE && !this.isAboveGround() && !this.jumpStarted) {
         this.jump();
-        //this.lastMoveTime = new Date().getTime();
         this.jumpStarted = new Date().getTime();
       }
       //console.log('Aktuelle Position:', this.y.toFixed(0), 'px');
