@@ -39,7 +39,7 @@ class Character extends MovableObject {
       //console.log("Aktuelle Position:", this.x.toFixed(0), "px");
       if (this.world.keyboard.SPACE && !this.isAboveGround() && !this.jumpStarted) {
         this.jump();
-        this.lastMoveTime = new Date().getTime();
+        //this.lastMoveTime = new Date().getTime();
         this.jumpStarted = new Date().getTime();
       }
       //console.log('Aktuelle Position:', this.y.toFixed(0), 'px');
@@ -63,7 +63,7 @@ class Character extends MovableObject {
     } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
       this.playAnimation(this.IMAGES_WALKING);
     } else {
-      this.playAnimation(this.IMAGES_STANDING);
+      this.playAnimation(this.IMAGE_IMAGES_STANDING);
     }
   }
 

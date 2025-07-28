@@ -34,10 +34,14 @@ class World {
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.ctx.translate(this.camera_x, 0);
 
+    this.ctx.translate(this.camera_x, 0);
     this.addObjectsToMap(this.level.backgroundObjectRocks);
+
+    this.ctx.translate(-this.camera_x, 0); // back
     this.addToMap(this.statusBar);
+    this.ctx.translate(this.camera_x, 0); // Forwards
+
     this.addObjectsToMap(this.level.clouds);
     this.addToMap(this.character);
     this.addObjectsToMap(this.level.enemiesAnt);

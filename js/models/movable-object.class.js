@@ -22,6 +22,7 @@ class MovableObject extends DrawableObject {
       if (this instanceof Rogue && !this.isAboveGround() && this.jumpStarted) {
         this.jumpEnded = new Date().getTime();
         console.log('Zeit in der Luft:', this.jumpEnded - this.jumpStarted);
+        this.lastMoveTime = new Date().getTime();
         this.jumpStarted = null;
       }
     }, 1000 / 25);
@@ -29,58 +30,6 @@ class MovableObject extends DrawableObject {
 
   isAboveGround() {
     return this.y < 366;
-  }
-
-  drawBorder(ctx) {
-    if (
-      this instanceof Character ||
-      this instanceof EnemiesAnt ||
-      this instanceof Endboss ||
-      this instanceof Bottle ||
-      this instanceof Coins
-    ) {
-      ctx.beginPath();
-      ctx.lineWidth = '1';
-      ctx.strokeStyle = 'blue';
-
-      if (this.otherDirection) {
-        ctx.rect(0, 0, this.width, this.height);
-      } else {
-        ctx.rect(this.x, this.y, this.width, this.height);
-      }
-      ctx.stroke();
-    }
-  }
-
-  drawCollisionBorder(ctx) {
-    if (
-      this instanceof Character ||
-      this instanceof EnemiesAnt ||
-      this instanceof Endboss
-      //this instanceof Bottle ||
-      //this instanceof Coins
-    ) {
-      ctx.beginPath();
-      ctx.lineWidth = '1';
-      ctx.strokeStyle = 'red';
-
-      if (this.otherDirection) {
-        ctx.rect(
-          this.offset.left,
-          this.offset.top,
-          this.width - this.offset.right - this.offset.left,
-          this.height - this.offset.bottom - this.offset.top
-        );
-      } else {
-        ctx.rect(
-          this.x + this.offset.left,
-          this.y + this.offset.top,
-          this.width - this.offset.right - this.offset.left,
-          this.height - this.offset.bottom - this.offset.top
-        );
-      }
-      ctx.stroke();
-    }
   }
 
   isColliding(mo) {
@@ -141,6 +90,6 @@ class MovableObject extends DrawableObject {
 
   isIdle() {
     let now = new Date().getTime();
-    return now - this.lastMoveTime > 3000;
+    //return now - this.lastMoveTime > 3000;
   }
 }
