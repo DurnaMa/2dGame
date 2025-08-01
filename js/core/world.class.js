@@ -9,7 +9,7 @@ class World {
   coins;
   bottles;
   collisionManager;
-  statusBar = new Statusbar();
+  //statusBar = new Statusbar();
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext('2d');
@@ -29,26 +29,24 @@ class World {
   checkCollisions() {
     setInterval(() => {
       this.collisionManager.checkAllCollisions();
+
     }, 1000 / 60);
   }
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    this.ctx.translate(this.camera_x, 0);
     this.addObjectsToMap(this.level.backgroundObjectRocks);
-
-    this.ctx.translate(-this.camera_x, 0); // back
-    this.addToMap(this.statusBar);
-    this.ctx.translate(this.camera_x, 0); // Forwards
-
     this.addObjectsToMap(this.level.clouds);
     this.addToMap(this.character);
     this.addObjectsToMap(this.level.enemiesAnt);
     this.addObjectsToMap(this.level.coins);
     this.addObjectsToMap(this.level.bottles);
 
-    this.ctx.translate(-this.camera_x, 0);
+    // Statusbar ohne Kamera-Bewegung zeichnen
+    this.ctx.save();
+    // this.addToMap(this.statusBar);
+    this.ctx.restore();
 
     self = this;
     requestAnimationFrame(function () {
@@ -58,6 +56,15 @@ class World {
 
   addToMap(mo) {
     this.ctx.save();
+    
+    // Parallax-Effekt für BackgroundObjects
+    if (mo instanceof BackgroundObject) {
+      this.ctx.translate(this.camera_x * mo.parallax, 0);
+    } else {
+      // Normale Kamera-Bewegung für andere Objekte
+      this.ctx.translate(this.camera_x, 0);
+    }
+    
     if (mo.otherDirection) {
       this.ctx.translate(mo.x + mo.width, mo.y);
       this.ctx.scale(-1, 1);

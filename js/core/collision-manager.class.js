@@ -41,11 +41,14 @@ class CollisionManager {
   }
 
   handleEnemyCollision(enemy) {
-    this.world.character.energy -= 5;
-    if (this.world.character.energy <= 0) {
-      this.world.character.energy = 0;
-    }
-    //console.log('Kollision mit Gegner, Energie:', this.world.character.energy);
+    setTimeout(() => {
+      this.world.character.energy -= 5;
+      if (this.world.character.energy <= 0) {
+        this.world.character.energy = 0;
+      }
+      this.world.statusBar.setPercentage(this.world.character.energy);
+      console.log('Kollision mit Gegner, Energie:', this.world.character.energy);
+    }, 2.0 * 2000);
   }
 
   handleCoinCollection(coin) {
