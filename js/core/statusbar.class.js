@@ -5,9 +5,9 @@ class Statusbar extends DrawableObject {
 
   percentage = 100;
 
-  CHARACTER_STATUSBAR = ['assets/fantasy-platformer-game-ui/PNG/16Inner_Interface/hp_bar_full.png'];
+  //CHARACTER_STATUSBAR = ['assets/fantasy-platformer-game-ui/PNG/16Inner_Interface/hp_bar_full.png'];
   ENERGY = ['assets/fantasy-platformer-game-ui/PNG/16Inner_Interface/hp_full.png'];
-  IMAGES = [
+  CHARACTER_STATUSBAR = [
     'assets/fantasy-platformer-game-ui/PNG/16Inner_Interface/hp_full6/00_hp_full6.png',
     'assets/fantasy-platformer-game-ui/PNG/16Inner_Interface/hp_full6/01_hp_full6.png',
     'assets/fantasy-platformer-game-ui/PNG/16Inner_Interface/hp_full6/02_hp_full6.png',
@@ -18,7 +18,7 @@ class Statusbar extends DrawableObject {
 
   constructor() {
     super();
-    this.loadImages(this.IMAGES);
+    //this.loadImages(this.IMAGES);
     this.loadImages(this.CHARACTER_STATUSBAR);
     this.y = 0;
     this.x = 10;
@@ -31,7 +31,7 @@ class Statusbar extends DrawableObject {
 
   setPercentage(percentage) {
     this.percentage = percentage;
-    let path = this.IMAGES[this.resolveImageIndex()];
+    let path = this.CHARACTER_STATUSBAR[this.resolveImageIndex()];
     this.img = this.imageCache[path];
   }
 
