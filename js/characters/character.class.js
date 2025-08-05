@@ -19,6 +19,7 @@ class Character extends MovableObject {
     this.applyGravity();
 
     this.lastMoveTime = new Date().getTime();
+    this.hit = false; // Hit-Status für Kollisionsschutz
   }
 
   isDeath() {

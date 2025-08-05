@@ -12,7 +12,7 @@ function createBackgroundLayer(imagePath, count, width, yOffset = 0, parallax = 
 }
 
 const backgroundObjects = [
-  ...createBackgroundLayer('/assets/mountain-platformer-pixel-art-tileset/PNG/Background/bright/sky.png', 5, CANVAS_WIDTH, 0, 0.2),
+  ...createBackgroundLayer('/assets/mountain-platformer-pixel-art-tileset/PNG/Background/bright/sky.png', 5, CANVAS_WIDTH, 0, 0),
   ...createBackgroundLayer('/assets/mountain-platformer-pixel-art-tileset/PNG/Background/bright/clouds1.png', 5, CANVAS_WIDTH, 50, 0.4),
   ...createBackgroundLayer('/assets/mountain-platformer-pixel-art-tileset/PNG/Background/bright/clouds2.png', 5, CANVAS_WIDTH, 75, 0.6),
   ...createBackgroundLayer('/assets/mountain-platformer-pixel-art-tileset/PNG/Background/bright/rocks.png', 5, CANVAS_WIDTH, 100, 0.8),

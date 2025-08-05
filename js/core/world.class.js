@@ -9,7 +9,7 @@ class World {
   coins;
   bottles;
   collisionManager;
-  //statusBar = new Statusbar();
+  statusBar = new Statusbar();
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext('2d');
@@ -20,6 +20,8 @@ class World {
     this.character.animate();
     this.draw();
     this.checkCollisions();
+    // Statusbar mit initialer Energie synchronisieren
+    this.statusBar.setPercentage(this.character.energy);
   }
 
   setWorld() {
@@ -29,7 +31,6 @@ class World {
   checkCollisions() {
     setInterval(() => {
       this.collisionManager.checkAllCollisions();
-
     }, 1000 / 60);
   }
 
@@ -37,16 +38,19 @@ class World {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     this.addObjectsToMap(this.level.backgroundObjectRocks);
+
+    // Statusbar nur zeichnen, wenn der Spieler noch lebt
+    if (!this.character.isDeath()) {
+      this.ctx.translate(-this.camera_x, 0); // back
+      this.addToMap(this.statusBar);
+      this.ctx.translate(this.camera_x, 0); // Forwards
+    }
+
     this.addObjectsToMap(this.level.clouds);
     this.addToMap(this.character);
     this.addObjectsToMap(this.level.enemiesAnt);
     this.addObjectsToMap(this.level.coins);
     this.addObjectsToMap(this.level.bottles);
-
-    // Statusbar ohne Kamera-Bewegung zeichnen
-    this.ctx.save();
-    // this.addToMap(this.statusBar);
-    this.ctx.restore();
 
     self = this;
     requestAnimationFrame(function () {
@@ -55,8 +59,13 @@ class World {
   }
 
   addToMap(mo) {
+    // Nicht zeichnen wenn Objekt nicht sichtbar ist
+    if (mo.visible === false) {
+      return;
+    }
+
     this.ctx.save();
-    
+
     // Parallax-Effekt für BackgroundObjects
     if (mo instanceof BackgroundObject) {
       this.ctx.translate(this.camera_x * mo.parallax, 0);
@@ -64,7 +73,7 @@ class World {
       // Normale Kamera-Bewegung für andere Objekte
       this.ctx.translate(this.camera_x, 0);
     }
-    
+
     if (mo.otherDirection) {
       this.ctx.translate(mo.x + mo.width, mo.y);
       this.ctx.scale(-1, 1);

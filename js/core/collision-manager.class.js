@@ -40,15 +40,29 @@ class CollisionManager {
     }
   }
 
+  // handleEnemyCollision(enemy) {
+  //   setTimeout(() => {
+  //     this.world.character.energy -= 5;
+  //     if (this.world.character.energy <= 0) {
+  //       this.world.character.energy = 0;
+  //     }
+  //     this.world.statusBar.setPercentage(this.world.character.energy);
+  //     console.log('Kollision mit Gegner, Energie:', this.world.character.energy);
+  //   }, 2.0 * 2000);
+  // }
   handleEnemyCollision(enemy) {
-    setTimeout(() => {
-      this.world.character.energy -= 5;
+    if (!this.world.character.hit && !this.world.character.isDeath()) {
+      this.world.character.energy -= 2; // Weniger Schaden
       if (this.world.character.energy <= 0) {
         this.world.character.energy = 0;
+        this.world.character.hit = true;
+        setTimeout(() => {
+          this.world.character.hit = false;
+        }, 1500); // Längere Invulnerabilität
       }
       this.world.statusBar.setPercentage(this.world.character.energy);
       console.log('Kollision mit Gegner, Energie:', this.world.character.energy);
-    }, 2.0 * 2000);
+    }
   }
 
   handleCoinCollection(coin) {
@@ -64,7 +78,17 @@ class CollisionManager {
   }
 
   handleEndbossCollision(endboss) {
-    this.world.character.energy -= 10;
-    console.log('Kollision mit Endboss, Energie:', this.world.character.energy);
+    if (!this.world.character.hit && !this.world.character.isDeath()) {
+      this.world.character.energy -= 5; // Weniger Schaden vom Endboss
+      if (this.world.character.energy <= 0) {
+        this.world.character.energy = 0;
+        this.world.character.hit = true;
+        setTimeout(() => {
+          this.world.character.hit = false;
+        }, 1500);
+      }
+      this.world.statusBar.setPercentage(this.world.character.energy);
+      console.log('Kollision mit Endboss, Energie:', this.world.character.energy);
+    }
   }
 }
