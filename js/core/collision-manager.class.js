@@ -40,28 +40,21 @@ class CollisionManager {
     }
   }
 
-  // handleEnemyCollision(enemy) {
-  //   setTimeout(() => {
-  //     this.world.character.energy -= 5;
-  //     if (this.world.character.energy <= 0) {
-  //       this.world.character.energy = 0;
-  //     }
-  //     this.world.statusBar.setPercentage(this.world.character.energy);
-  //     console.log('Kollision mit Gegner, Energie:', this.world.character.energy);
-  //   }, 2.0 * 2000);
-  // }
   handleEnemyCollision(enemy) {
     if (!this.world.character.hit && !this.world.character.isDeath()) {
-      this.world.character.energy -= 2; // Weniger Schaden
+      this.world.character.hit = true;
+      // Bei 100 Energie = 6 Stufen, also 100/6 ≈ 16.67 pro Stufe
+      this.world.character.energy -= Math.floor(100 / 6);
       if (this.world.character.energy <= 0) {
         this.world.character.energy = 0;
-        this.world.character.hit = true;
-        setTimeout(() => {
-          this.world.character.hit = false;
-        }, 1500); // Längere Invulnerabilität
       }
       this.world.statusBar.setPercentage(this.world.character.energy);
       console.log('Kollision mit Gegner, Energie:', this.world.character.energy);
+      
+      // Nach 1.5 Sekunden kann der Charakter wieder getroffen werden
+      setTimeout(() => {
+        this.world.character.hit = false;
+      }, 1500);
     }
   }
 
