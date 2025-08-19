@@ -3,18 +3,23 @@ class Item extends MovableObject {
   height = 50;
   width = 50;
   collected = false;
+  visible = true;
 
   constructor() {
     super();
-    this.x = 350 + Math.random() * 2000;
-    this.y = 380 + Math.random() * 230;
+    // Positionierung entfernt, da sie in den abgeleiteten Klassen gesetzt wird
   }
 
   collect() {
     this.collected = true;
+    this.visible = false;
   }
 
   isCollected() {
     return this.collected;
+  }
+
+  isVisible() {
+    return this.visible && !this.collected;
   }
 }
