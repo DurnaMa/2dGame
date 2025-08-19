@@ -60,7 +60,7 @@ class World {
 
   addToMap(mo) {
     // Nicht zeichnen wenn Objekt nicht sichtbar ist
-    if (mo.visible === false) {
+    if (mo.visible === false || (mo.isVisible && mo.isVisible() === false)) {
       return;
     }
 

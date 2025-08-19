@@ -1,7 +1,9 @@
 class Coins extends Item {
-  y = 450;
+  y = 550;
   height = 50;
   width = 50;
+  currentImage = 0;
+  visible = true;
 
   ITEMS = [
     'assets/mountain-platformer-pixel-art-tileset/PNG/items/Coin/coin1.png',
@@ -19,15 +21,38 @@ class Coins extends Item {
   constructor() {
     super();
     this.loadImages(this.ITEMS);
-    this.x = 350 + Math.random() * 2000;
-    this.y = 380 + Math.random() * 230;
-
+    
+    // Bessere Positionierung innerhalb des sichtbaren Bereichs
+    this.x = 400 + Math.random() * 1500; // 400 bis 1900 (besserer Bereich)
+    this.y = 400 + Math.random() * 150;  // 400 bis 550 (näher am Boden)
+    
+    // Sicherstellen, dass das erste Bild geladen ist
+    this.img = this.imageCache[this.ITEMS[0]];
+    
+    // Debug: Überprüfen der Bildladung
+    setTimeout(() => {
+      if (this.imageCache[this.ITEMS[0]]) {
+        console.log('Münze erfolgreich geladen an Position:', this.x, this.y);
+      } else {
+        console.warn('Münze konnte nicht geladen werden an Position:', this.x, this.y);
+      }
+    }, 100);
+    
     //console.log('Münze liegt auf der y-Achse (y = ' + this.y + ')');
   }
 
   animate() {
-    setInterval(() => {
-      this.playItems(this.ITEMS);
-    }, 150);
+    // Animation nur starten, wenn Bilder geladen sind
+    if (this.imageCache[this.ITEMS[0]]) {
+      setInterval(() => {
+        this.playItems(this.ITEMS);
+      }, 150);
+    }
+  }
+
+  // Überschreiben der collect Methode, um Sichtbarkeit zu ändern
+  collect() {
+    super.collect();
+    this.visible = false;
   }
 }
