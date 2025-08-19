@@ -11,6 +11,22 @@ class Statusbar extends DrawableObject {
     'assets/fantasy-platformer-game-ui/PNG/16Inner_Interface/hpBar/hp_bar_full06.png',
   ];
 
+  CHARACTER_MAGIC_BAR = [
+    'assets/fantasy-platformer-game-ui/PNG/16Inner_Interface/magic_bar/00energy-magic.png',
+    'assets/fantasy-platformer-game-ui/PNG/16Inner_Interface/magic_bar/01energy-magic.png',
+    'assets/fantasy-platformer-game-ui/PNG/16Inner_Interface/magic_bar/02energy-magic.png',
+    'assets/fantasy-platformer-game-ui/PNG/16Inner_Interface/magic_bar/03energy-magic.png',
+    'assets/fantasy-platformer-game-ui/PNG/16Inner_Interface/magic_bar/04energy-magic.png',
+    'assets/fantasy-platformer-game-ui/PNG/16Inner_Interface/magic_bar/05energy-magic.png',
+    'assets/fantasy-platformer-game-ui/PNG/16Inner_Interface/magic_bar/06energy-magic.png',
+    'assets/fantasy-platformer-game-ui/PNG/16Inner_Interface/magic_bar/07energy-magic.png',
+    'assets/fantasy-platformer-game-ui/PNG/16Inner_Interface/magic_bar/08energy-magic.png',
+    'assets/fantasy-platformer-game-ui/PNG/16Inner_Interface/magic_bar/09energy-magic.png',
+    'assets/fantasy-platformer-game-ui/PNG/16Inner_Interface/magic_bar/10energy-magic.png',
+    'assets/fantasy-platformer-game-ui/PNG/16Inner_Interface/magic_bar/11energy-magic.png',
+    'assets/fantasy-platformer-game-ui/PNG/16Inner_Interface/magic_bar/12energy-magic.png'
+  ]
+
   constructor() {
     super();
     //this.loadImages(this.IMAGES);
