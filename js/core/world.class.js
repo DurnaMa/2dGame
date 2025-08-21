@@ -10,6 +10,7 @@ class World {
   bottles;
   collisionManager;
   statusBar = new Statusbar();
+  magicBar = new Magicbar();
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext('2d');
@@ -20,7 +21,6 @@ class World {
     this.character.animate();
     this.draw();
     this.checkCollisions();
-    // Statusbar mit initialer Energie synchronisieren
     this.statusBar.setPercentage(this.character.energy);
   }
 
@@ -43,6 +43,7 @@ class World {
     if (!this.character.isDeath()) {
       this.ctx.translate(-this.camera_x, 0); // back
       this.addToMap(this.statusBar);
+      this.addToMap(this.magicBar);
       this.ctx.translate(this.camera_x, 0); // Forwards
     }
 
