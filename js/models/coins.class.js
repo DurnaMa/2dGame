@@ -21,14 +21,14 @@ class Coins extends Item {
   constructor() {
     super();
     this.loadImages(this.ITEMS);
-    
+
     // Bessere Positionierung innerhalb des sichtbaren Bereichs
-    this.x = 400 + Math.random() * 1500; // 400 bis 1900 (besserer Bereich)
-    this.y = 400 + Math.random() * 150;  // 400 bis 550 (näher am Boden)
-    
+    this.x = 400 + Math.random() * 1500;
+    this.y = 340 + Math.random() * 150;
+
     // Sicherstellen, dass das erste Bild geladen ist
     this.img = this.imageCache[this.ITEMS[0]];
-    
+
     // Debug: Überprüfen der Bildladung
     setTimeout(() => {
       if (this.imageCache[this.ITEMS[0]]) {
@@ -37,7 +37,7 @@ class Coins extends Item {
         console.warn('Münze konnte nicht geladen werden an Position:', this.x, this.y);
       }
     }, 100);
-    
+
     //console.log('Münze liegt auf der y-Achse (y = ' + this.y + ')');
   }
 
