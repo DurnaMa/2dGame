@@ -25,5 +25,5 @@ const level1 = new Level(
   [new Cloud()],
    backgroundObjects,
   [new Coins(), new Coins(), new Coins(), new Coins(), new Coins(), new Coins()],
-  [new Bottle(), new Bottle(), new Bottle()],
+  [new Bottle(), new Bottle(), new Bottle(), new Bottle(), new Bottle()],
 );
