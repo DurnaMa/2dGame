@@ -23,16 +23,27 @@ canvas {
 }
 
 @font-face {
-  font-display: swap; 
+  font-display: swap;
   font-family: 'Uncial Antiqua';
   font-style: normal;
   font-weight: 400;
-  src: url('fonts/UncialAntiqua-Regular.ttf') format('woff2'); 
+  src: url('fonts/UncialAntiqua-Regular.ttf') format('woff2');
 }
 
 h1 {
   font-size: 64px;
   letter-spacing: 3px;
+}
+
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+}
+
+.icon-text {
+  font-size: 52px;
 }
 
 /* @media only screen and (max-height: 1200px) {
