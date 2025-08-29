@@ -1,5 +1,6 @@
 const CANVAS_WIDTH = 960;
 const yOffset = 100;
+let coins = [new Coins(), new Coins(), new Coins(), new Coins(), new Coins(), new Coins()];
 
 function createBackgroundLayer(imagePath, count, width, yOffset = 0, parallax = 1) {
   const layer = [];
@@ -20,10 +21,11 @@ const backgroundObjects = [
   ...createBackgroundLayer('/assets/mountain-platformer-pixel-art-tileset/PNG/Background/bright/rocks3.png', 5, CANVAS_WIDTH, 150, 1.2),
 ];
 
+
 const level1 = new Level(
   [new EnemiesAnt(), new Endboss()],
   [new Cloud()],
    backgroundObjects,
-  [new Coins(), new Coins(), new Coins(), new Coins(), new Coins(), new Coins()],
+  coins,
   [new Bottle(), new Bottle(), new Bottle(), new Bottle(), new Bottle()],
 );
