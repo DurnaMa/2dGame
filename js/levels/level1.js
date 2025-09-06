@@ -1,6 +1,17 @@
 const CANVAS_WIDTH = 960;
 const yOffset = 100;
-let coins = [new Coins(), new Coins(), new Coins(), new Coins(), new Coins(), new Coins()];
+let coins = [];
+let bottel = []
+
+for (let index = 0; index < 6; index++) {
+  let coin = new Coins()
+  coins.push(coin)
+}
+
+for (let index = 0; index < 6; index++) {
+  let bottle = new Bottle()
+  coins.push(bottle)
+}
 
 function createBackgroundLayer(imagePath, count, width, yOffset = 0, parallax = 1) {
   const layer = [];
