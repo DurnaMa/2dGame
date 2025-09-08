@@ -19,17 +19,9 @@ class Bottle extends Item {
     this.y = 320 + Math.random() * 150;
 
     let bottle = bottel.find(
-      (c) =>
-        (c.x < this.x && c.x > this.x - 60) ||
-        (c.x > this.x && c.x < this.x + 60 && c.y < this.y && c.y > this.y - 60) ||
-        (c.y > this.x && c.y < this.y + 60)
-    );
+      c =>(c.x < this.x && c.x > this.x - 60) || (c.x > this.x && c.x < this.x + 60));
     let coin = coins.find(
-      (c) =>
-        (c.x < this.x && c.x > this.x - 60) ||
-        (c.x > this.x && c.x < this.x + 60 && c.y < this.y && c.y > this.y - 60) ||
-        (c.y > this.x && c.y < this.y + 60)
-    );
+      c => (c.x < this.x && c.x > this.x - 60) || (c.x > this.x && c.x < this.x + 60));
 
     if (coin || bottle) {
       this.findBottlePosition();
