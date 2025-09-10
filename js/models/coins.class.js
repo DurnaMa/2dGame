@@ -18,12 +18,13 @@ class Coins extends Item {
     'assets/mountain-platformer-pixel-art-tileset/PNG/items/Coin/coin10.png',
   ];
 
-  constructor() {
+  constructor(xPosition) {
     super();
     this.loadImages(this.ITEMS);
 
     // Bessere Positionierung innerhalb des sichtbaren Bereichs
-    this.x = 400 + Math.random() * 1500;
+    //this.x = 400 + Math.random() * 2500;
+    this.x = xPosition;
     this.y = 340 + Math.random() * 150;
 
     // Sicherstellen, dass das erste Bild geladen ist
@@ -56,17 +57,21 @@ class Coins extends Item {
     this.visible = false;
   }
 
-  findCoinPosition() {
-    this.x = 400 + Math.random() * 1500;
+
+    findCoinPosition(xPosition, tries = 0) {
+    if (tries > 20) {
+      this.x = xPosition;
+      this.y = 320 + Math.random() * 150;
+      return;
+    }
+    this.x = xPosition;
     this.y = 320 + Math.random() * 150;
 
-    let bottle = bottel.find
-      (c => (c.x < this.x && c.x > this.x - 60) || (c.x > this.x && c.x < this.x + 60));
-    let coin = coins.find(
-      c => (c.x < this.x && c.x > this.x - 60) || (c.x > this.x && c.x < this.x + 60));
+    let bottle = bottel.find((c) => c !== this && Math.abs(c.x - this.x) < 60);
+    let coin = coins.find((c) => Math.abs(c.x - this.x) < 60);
 
-    if (coin || bottle) {
-      this.findCoinPosition();
+    if (bottle || coin) {
+      this.findCoinPosition(xPosition, tries + 1);
     }
   }
 }
