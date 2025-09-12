@@ -1,24 +1,56 @@
 const CANVAS_WIDTH = 960;
 const yOffset = 100;
 let coins = [];
-let bottel = [];
+let bottles = [];
 
 
-for (let index = 1; index < 7; index++) {
-  const maxWidth = CANVAS_WIDTH * index;
-  const minWidth = CANVAS_WIDTH * (index - 1);
-  for (let index = 0; index < 5; index++) {
-    let coin = new Coins(Math.floor(Math.random() * (maxWidth - minWidth + 1)) + minWidth);
+// for (let index = 2; index < 4; index++) {
+//   const maxWidth = CANVAS_WIDTH * index;
+//   const minWidth = CANVAS_WIDTH * (index - 1);
+//   for (let index = 1; index < 3; index++) {
+//     let coin = new Coins(Math.floor(Math.random() * (maxWidth - minWidth + 1)) + minWidth);
+//     coins.push(coin);
+//   }
+// }
+
+// for (let index = 2; index < 4; index++) {
+//   const maxWidth = CANVAS_WIDTH * index;
+//   const minWidth = CANVAS_WIDTH * (index - 1);
+//   for (let index = 0; index < 3; index++){
+//     let bottle = new Bottle(Math.floor(Math.random() * (maxWidth - minWidth + 1)) + minWidth);
+//     bottel.push(bottle);
+//   }
+// }
+
+for (let index = 2; index < 4; index++) {
+  for (let index = 0; index < 3; index++) {
+    let positionX = getXPosition(index);
+    let coin = new Coins(positionX);
     coins.push(coin);
   }
 }
 
-for (let index = 0; index < 6; index++) {
+for (let index = 2; index < 4; index++) {
+
+  for (let index = 0; index < 3; index++){
+    let positionX = getXPosition(index);
+    let bottel = new Bottle(positionX);
+    bottles.push(bottel);
+  }
+}
+
+function getXPosition(index) {
   const maxWidth = CANVAS_WIDTH * index;
   const minWidth = CANVAS_WIDTH * (index - 1);
-  for (let index = 0; index < 5; index++){
-    let bottle = new Bottle(Math.floor(Math.random() * (maxWidth - minWidth + 1)) + minWidth);
-    bottel.push(bottle);
+  let x = Math.floor(Math.random() * (maxWidth - minWidth + 1)) + minWidth;
+  let coinsAndBottles = [...coins, ...bottles];
+
+  let elementOnPosition = coinsAndBottles.find(c => Math.abs( c.x - x ) < 50 );
+
+  if( elementOnPosition ) {
+    return getXPosition(index); // Neue Position ermitteln
+  } else {
+    return x; // Position passt: Position zurückgeben.
   }
 }
 
@@ -75,4 +107,4 @@ const backgroundObjects = [
   ),
 ];
 
-const level1 = new Level([new EnemiesAnt(), new Endboss()], [new Cloud()], backgroundObjects, coins, bottel);
+const level1 = new Level([new EnemiesAnt(), new Endboss()], [new Cloud()], backgroundObjects, coins, bottles);

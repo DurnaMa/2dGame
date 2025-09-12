@@ -17,23 +17,6 @@ class Bottle extends Item {
     this.y = 320 + Math.random() * 150;
   }
 
-  findBottlePosition(xPosition, tries = 0) {
-    if (tries > 20) {
-      this.x = xPosition;
-      this.y = 320 + Math.random() * 150;
-      return;
-    }
-    this.x = xPosition;
-    this.y = 320 + Math.random() * 150;
-
-    let bottle = bottel.find((c) => c !== this && Math.abs(c.x - this.x) < 60);
-    let coin = coins.find((c) => Math.abs(c.x - this.x) < 60);
-
-    if (coin || bottle) {
-      this.findBottlePosition(xPosition, tries + 1);
-    }
-  }
-
   animate() {
     setInterval(() => {
       this.playItems(this.ITEMS);
