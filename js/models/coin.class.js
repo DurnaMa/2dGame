@@ -1,4 +1,4 @@
-class Coins extends Item {
+class Coin extends Item {
   y = 550;
   height = 50;
   width = 50;
@@ -33,9 +33,9 @@ class Coins extends Item {
     // Debug: Überprüfen der Bildladung
     setTimeout(() => {
       if (this.imageCache[this.ITEMS[0]]) {
-        console.log('Münze erfolgreich geladen an Position:', this.x, this.y);
+        //console.log('Münze erfolgreich geladen an Position:', this.x, this.y);
       } else {
-        console.warn('Münze konnte nicht geladen werden an Position:', this.x, this.y);
+        //console.warn('Münze konnte nicht geladen werden an Position:', this.x, this.y);
       }
     }, 100);
 
