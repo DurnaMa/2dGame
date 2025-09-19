@@ -2,7 +2,7 @@ class Character extends MovableObject {
   y = 366;
   x = 0;
 
-  speed = 2.5;
+  speed = 5;
 
   constructor() {
     super().loadImage('assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/rogue.png');
