@@ -20,14 +20,6 @@ function spawnItem() {
       bottles.push(bottle);
     }
   }
-
-  // for (let section = SECTIONSTART; section <= SECTIONEND; section++) {
-  //   for (let index = 0; index < 2; index++) {
-  //     let positionX = getXPosition(section);
-  //     let bottle = new Bottle(positionX);
-  //     bottles.push(bottle);
-  //   }
-  // }
 }
 
 function getXPosition(index) {
@@ -43,21 +35,6 @@ function getXPosition(index) {
     return x; // Position passt: Position zurückgeben.
   }
 }
-
-// function getXPosition(index) {
-//   const maxWidth = CANVAS_WIDTH * index;
-//   const minWidth = CANVAS_WIDTH * (index - 1);
-//   let x;
-//   let elementOnPositionX;
-
-//   let elementOnPositionX = coinsAndBottles.find((c) => Math.abs(c.x - x) < 50);
-//   //console.log('Prüfe Position:', x, 'Inhalt:', coinsAndBottles);
-//   if (elementOnPositionX) {
-//     return getXPosition(index); // Neue Position ermitteln
-//   } else {
-//     return x; // Position passt: Position zurückgeben.
-//   }
-// }
 
 function createBackgroundLayer(imagePath, SECTIONCOUNT, width, yOffset = 0, parallax = 1) {
   const layer = [];
