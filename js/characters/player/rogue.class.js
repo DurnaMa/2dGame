@@ -144,18 +144,6 @@ class Rogue extends Character {
 
   IMAGE_IMAGES_STANDING = ['assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/rogue.png'];
 
-  // IMAGES_FIRE = [
-  //   'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Mage/Fire/fire1.png',
-  //   'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Mage/Fire/fire2.png',
-  //   'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Mage/Fire/fire3.png',
-  //   'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Mage/Fire/fire4.png',
-  //   'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Mage/Fire/fire5.png',
-  //   'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Mage/Fire/fire6.png',
-  //   'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Mage/Fire/fire7.png',
-  //   'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Mage/Fire/fire8.png',
-  //   'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Mage/Fire/fire9.png',
-  // ];
-
   constructor() {
     super();
 
@@ -176,6 +164,5 @@ class Rogue extends Character {
     this.loadImages(this.IMAGES_RUN_ATTACK);
     this.loadImages(this.IMAGES_WALK_ATTACK);
     this.loadImages(this.IMAGE_IMAGES_STANDING);
-    // this.loadImages(this.MAGES_FIRE)
   }
 }

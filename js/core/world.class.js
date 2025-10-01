@@ -11,6 +11,7 @@ class World {
   collisionManager;
   statusBar = new Statusbar();
   magicBar = new Magicbar();
+  throwableObject = [new ThrowableObject()];
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext('2d');
@@ -49,7 +50,9 @@ class World {
 
     this.addObjectsToMap(this.level.clouds);
     this.addToMap(this.character);
+    this.addObjectsToMap(this.level.throwableObject);
     this.addObjectsToMap(this.level.enemiesAnt);
+
     this.addObjectsToMap(this.level.coins);
     this.addObjectsToMap(this.level.bottles);
 
