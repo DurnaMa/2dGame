@@ -94,4 +94,4 @@ const backgroundObjects = [
   ),
 ];
 
-const level1 = new Level([new EnemiesAnt(), new Endboss()], [new Cloud()], backgroundObjects, coins, bottles);
+const level1 = new Level([new EnemiesAnt(), new Endboss()], [new Cloud()], backgroundObjects, coins, bottles, );
