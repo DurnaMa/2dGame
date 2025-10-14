@@ -11,19 +11,16 @@ class ThrowableObject extends MovableObject {
     // 'assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Mage/Fire/fire9.png',
   ];
 
-  constructor() {
+  constructor(x, y) {
     super();
     this.loadImage(this.IMAGES_FIRE);
-    this.x = 250;
-    this.y = 380;
-    this.trow(109, 380)
-  }
-
-  trow(x, y) {
     this.x = x;
     this.y = y;
-    this.speedX = 30;
-    this.applyGravity();
+    this.trow()
+  }
+
+  trow() {
+    this.speedX = 40;
     setInterval(() => {
       this.x += this.speedX;
     }, 1000 / 25);

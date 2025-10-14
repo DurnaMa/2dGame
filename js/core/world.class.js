@@ -11,7 +11,7 @@ class World {
   collisionManager;
   statusBar = new Statusbar();
   magicBar = new Magicbar();
-  throwableObject = [new ThrowableObject()];
+  throwableObject = [];
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext('2d');
@@ -21,7 +21,7 @@ class World {
     this.setWorld();
     this.character.animate();
     this.draw();
-    this.checkCollisions();
+    this.run();
     this.statusBar.setPercentage(this.character.energy);
   }
 
@@ -29,10 +29,18 @@ class World {
     this.character.world = this;
   }
 
-  checkCollisions() {
+  run() {
     setInterval(() => {
       this.collisionManager.checkAllCollisions();
+      this.checkThrowableObject()
     }, 1000 / 60);
+  }
+
+  checkThrowableObject() {
+    if (this.keyboard.X) {
+      let fire = new ThrowableObject(this.character.x + 100, this.character.y + 100)
+      this.throwableObject.push(fire);
+    }
   }
 
   draw() {
