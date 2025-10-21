@@ -37,9 +37,14 @@ class World {
   }
 
   checkThrowableObject() {
-    if (this.keyboard.X) {
-      let fire = new ThrowableObject(this.character.x + 100, this.character.y + 100)
+    if (this.keyboard.X && !this.firePressed) {
+      let fire = new ThrowableObject(this.character.x + 100, this.character.y)
       this.throwableObject.push(fire);
+      this.firePressed = true;
+    }
+
+    if (!this.keyboard.X) {
+      this.firePressed = false;
     }
   }
 

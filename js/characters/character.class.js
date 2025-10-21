@@ -43,11 +43,6 @@ class Character extends MovableObject {
         this.jumpStarted = new Date().getTime();
       }
 
-      // if(this.world.keyboard.X) {
-      //   this.Throwable();
-      //   //this.lastMoveTime = new Date().getTime();
-      // }
-      //console.log('Aktuelle Position:', this.y.toFixed(0), 'px');
       this.world.camera_x = -this.x + 150;
     }, 1000 / 60);
 
