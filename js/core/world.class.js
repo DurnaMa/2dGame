@@ -41,6 +41,7 @@ class World {
       let fire = new ThrowableObject(this.character.x + 100, this.character.y)
       this.throwableObject.push(fire);
       this.firePressed = true;
+      this.magicBar.useMagic();
     }
 
     if (!this.keyboard.X) {
@@ -114,4 +115,12 @@ class World {
   addCloudToMap(cloud) {
     this.ctx.drawImage(cloud.img, cloud.x, cloud.y, cloud.width, cloud.height);
   }
+
+  // binKeyEvents() {
+  //   window.addEventListener('keydown', (e) => {
+  //     if (e.keyCode === 'X') {
+  //       this.magicBar.useMagic();
+  //     }
+  //   })
+  // }
 }

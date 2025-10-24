@@ -30,13 +30,19 @@ class Magicbar extends DrawableObject {
     //console.log('Statusbar liegt auf der y-Achse (y = ' + this.y + ')');
   }
 
+  useMagic(amount = 8.34) {
+    if (this.percentage > 0) {
+      this.setPercentage(this.percentage - amount)
+    }
+  }
+
   setPercentage(percentage) {
     this.percentage = Math.round(percentage);
     if (this.percentage <= 0) {
       this.percentage = 0;
-      this.visible = false;
-    } else {
-      this.visible = true;
+    //   this.visible = false;
+    // } else {
+    //   this.visible = true;
     }
     let path = this.CHARACTER_MAGIC_BAR[this.resolveImageIndex()];
     this.img = this.imageCache[path];

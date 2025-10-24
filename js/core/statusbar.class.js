@@ -28,9 +28,9 @@ class Statusbar extends DrawableObject {
     this.percentage = Math.round(percentage);
     if (this.percentage <= 0) {
       this.percentage = 0;
-      this.visible = false;
-    } else {
-      this.visible = true;
+    //   this.visible = false;
+    // } else {
+    //   this.visible = true;
     }
     let path = this.CHARACTER_STATUSBAR[this.resolveImageIndex()];
     this.img = this.imageCache[path];
