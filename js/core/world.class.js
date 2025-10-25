@@ -54,12 +54,30 @@ class World {
 
     this.addObjectsToMap(this.level.backgroundObjectRocks);
 
-    // Statusbar nur zeichnen, wenn der Spieler noch lebt
-    if (!this.character.isDeath()) {
-      this.ctx.translate(-this.camera_x, 0); // back
-      this.addToMap(this.statusBar);
-      this.addToMap(this.magicBar);
-      this.ctx.translate(this.camera_x, 0); // Forwards
+    // Statusbar zeichnen
+    this.ctx.translate(-this.camera_x, 0);
+    this.addToMap(this.statusBar);
+    this.addToMap(this.magicBar);
+    this.ctx.translate(this.camera_x, 0);
+
+    // Spielobjekte zeichnen
+    this.addObjectsToMap(this.level.clouds);
+    this.addToMap(this.character);
+    this.addObjectsToMap(this.throwableObject);
+    this.addObjectsToMap(this.level.enemiesAnt);
+    this.addObjectsToMap(this.level.coins);
+    this.addObjectsToMap(this.level.bottles);
+
+    // Game Over Screen als letztes zeichnen, damit es über allem anderen liegt
+    if (this.character.isDeath()) {
+      this.ctx.translate(-this.camera_x, 0);
+      if (window.gameOverScreen) {
+        window.gameOverScreen.show(); // Mache den Screen sichtbar
+        window.gameOverScreen.x = (this.canvas.width - window.gameOverScreen.width) / 2;
+        window.gameOverScreen.y = (this.canvas.height - window.gameOverScreen.height) / 2;
+        window.gameOverScreen.draw(this.ctx);
+      }
+      this.ctx.translate(this.camera_x, 0);
     }
 
     this.addObjectsToMap(this.level.clouds);

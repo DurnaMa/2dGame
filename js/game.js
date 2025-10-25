@@ -1,12 +1,43 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let gameOverScreen;
 
 function init() {
   canvas = document.getElementById('canvas');
-  world = new World(canvas, keyboard);
+
+  // Erst GameOverScreen initialisieren
+  window.gameOverScreen = new GameOverScreen();
+  gameOverScreen = window.gameOverScreen;
+
+  // Dann World initialisieren
+  window.world = new World(canvas, keyboard);
+  world = window.world;
+
+  console.log('Game Over Screen initialized:', window.gameOverScreen);
+
+  // Click-Event für den Retry-Button
+  canvas.addEventListener('click', handleClick);
+
+  // Add click event listener for retry button
+  canvas.addEventListener('click', handleClick);
 
   console.log('My Character is', world.character);
+}
+
+function handleClick(event) {
+  const rect = canvas.getBoundingClientRect();
+  const clickX = event.clientX - rect.left;
+  const clickY = event.clientY - rect.top;
+
+  if (gameOverScreen.isRetryButtonClicked(clickX, clickY)) {
+    restartGame();
+  }
+}
+
+function restartGame() {
+  gameOverScreen.hide();
+  world = new World(canvas, keyboard);
 }
 
 window.addEventListener('keydown', (e) => {
