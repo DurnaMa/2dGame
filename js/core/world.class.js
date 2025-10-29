@@ -12,6 +12,7 @@ class World {
   statusBar = new Statusbar();
   magicBar = new Magicbar();
   throwableObject = [];
+  gameInterval;
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext('2d');
@@ -30,15 +31,15 @@ class World {
   }
 
   run() {
-    setInterval(() => {
+    this.gameInterval = setInterval(() => {
       this.collisionManager.checkAllCollisions();
-      this.checkThrowableObject()
+      this.checkThrowableObject();
     }, 1000 / 60);
   }
 
   checkThrowableObject() {
     if (this.keyboard.X && !this.firePressed) {
-      let fire = new ThrowableObject(this.character.x + 100, this.character.y)
+      let fire = new ThrowableObject(this.character.x + 100, this.character.y);
       this.throwableObject.push(fire);
       this.firePressed = true;
       this.magicBar.useMagic();
@@ -133,6 +134,13 @@ class World {
   addCloudToMap(cloud) {
     this.ctx.drawImage(cloud.img, cloud.x, cloud.y, cloud.width, cloud.height);
   }
+
+  stopGame() {
+    clearInterval(this.gameInterval);
+    if (this.character) {
+        this.character.stopAllIntervals();
+    }
+}
 
   // binKeyEvents() {
   //   window.addEventListener('keydown', (e) => {
