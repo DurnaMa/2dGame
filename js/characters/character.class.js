@@ -1,8 +1,10 @@
 class Character extends MovableObject {
   y = 366;
   x = 0;
-
   speed = 5;
+
+  moveInterval;
+  animateionInterval;
 
   constructor() {
     super().loadImage('assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/rogue.png');
@@ -23,11 +25,17 @@ class Character extends MovableObject {
   }
 
   isDeath() {
-    return this.energy == 0;
+    if (this.energy == 0) {
+      console.log('Character is dead, stopping intervals...');
+      this.stopAllIntervals();
+      return true;
+    }
+    return false;
+    //return this.energy == 0;
   }
 
   animate() {
-    setInterval(() => {
+    this.moveInterval = setInterval(() => {
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
         this.moveRight();
         this.lastMoveTime = new Date().getTime();
@@ -46,7 +54,7 @@ class Character extends MovableObject {
       this.world.camera_x = -this.x + 150;
     }, 1000 / 60);
 
-    setInterval(() => {
+    this.animationInterval = setInterval(() => {
       this.animateSetInterval();
     }, 100);
   }
@@ -80,6 +88,27 @@ class Character extends MovableObject {
         this.checkAlreadyRunning = false;
         clearInterval(spacePressed);
       }, 2016);
+    }
+  }
+
+  // stopAllIntervals() {
+  //   clearInterval(this.moveInterval);
+  //   clearInterval(this.animationInterval);
+  //   if (this.world) {
+  //     clearInterval(this.world.gameInterval);
+  //   }
+  // }
+
+  stopAllIntervals() {
+    console.log('Stopping intervals...'); // Debug-Log
+    console.log('moveInterval:', this.moveInterval); // Debug-Log
+    console.log('animationInterval:', this.animationInterval); // Debug-Log
+    console.log('gameInterval:', this.world?.gameInterval); // Debug-Log
+
+    if (this.moveInterval) clearInterval(this.moveInterval);
+    if (this.animationInterval) clearInterval(this.animationInterval);
+    if (this.world && this.world.gameInterval) {
+      clearInterval(this.world.gameInterval);
     }
   }
 }
