@@ -1,5 +1,5 @@
 class Magicbar extends DrawableObject {
-  percentage = 100;
+  percentage = 0; // Start with empty magic bar
 
   CHARACTER_MAGIC_BAR = [
     'assets/fantasy-platformer-game-ui/PNG/16Inner_Interface/magic_bar/00energy-magic.png',
@@ -25,9 +25,15 @@ class Magicbar extends DrawableObject {
     this.width = 200;
     this.height = 30;
     this.visible = true;
-    this.setPercentage(100);
+    this.setPercentage(0); // Start with empty magic bar
 
     //console.log('Statusbar liegt auf der y-Achse (y = ' + this.y + ')');
+  }
+
+  addMagic(amount = 8.34) {
+    if (this.percentage < 100) {
+      this.setPercentage(Math.min(100, this.percentage + amount));
+    }
   }
 
   useMagic(amount = 8.34) {

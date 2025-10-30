@@ -91,19 +91,11 @@ class Character extends MovableObject {
     }
   }
 
-  // stopAllIntervals() {
-  //   clearInterval(this.moveInterval);
-  //   clearInterval(this.animationInterval);
-  //   if (this.world) {
-  //     clearInterval(this.world.gameInterval);
-  //   }
-  // }
-
   stopAllIntervals() {
-    console.log('Stopping intervals...'); // Debug-Log
-    console.log('moveInterval:', this.moveInterval); // Debug-Log
-    console.log('animationInterval:', this.animationInterval); // Debug-Log
-    console.log('gameInterval:', this.world?.gameInterval); // Debug-Log
+   // console.log('Stopping intervals...'); // Debug-Log
+   // console.log('moveInterval:', this.moveInterval); // Debug-Log
+   // console.log('animationInterval:', this.animationInterval); // Debug-Log
+   // console.log('gameInterval:', this.world?.gameInterval); // Debug-Log
 
     if (this.moveInterval) clearInterval(this.moveInterval);
     if (this.animationInterval) clearInterval(this.animationInterval);

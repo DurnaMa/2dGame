@@ -50,7 +50,7 @@ class CollisionManager {
       }
       this.world.statusBar.setPercentage(this.world.character.energy);
       console.log('Kollision mit Gegner, Energie:', this.world.character.energy);
-      
+
       // Nach 1.5 Sekunden kann der Charakter wieder getroffen werden
       setTimeout(() => {
         this.world.character.hit = false;
@@ -66,8 +66,9 @@ class CollisionManager {
 
   handleBottleCollection(bottle) {
     bottle.collect();
-    // Hier können Sie die Flaschen-Punktzahl erhöhen
-    console.log('Flasche gesammelt!');
+    // Fill magic bar when collecting a bottle
+    this.world.magicBar.addMagic(16.67); // Adds 1/6 of the magic bar
+    console.log('Flasche gesammelt! Magic erhöht!');
   }
 
   handleEndbossCollision(endboss) {

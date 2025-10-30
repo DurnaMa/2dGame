@@ -38,11 +38,11 @@ class World {
   }
 
   checkThrowableObject() {
-    if (this.keyboard.X && !this.firePressed) {
+    if (this.keyboard.X && !this.firePressed && this.magicBar.percentage > 0) {
       let fire = new ThrowableObject(this.character.x + 100, this.character.y);
       this.throwableObject.push(fire);
       this.firePressed = true;
-      this.magicBar.useMagic();
+      this.magicBar.useMagic(1); // Verringert die Magie langsamer
     }
 
     if (!this.keyboard.X) {
@@ -71,23 +71,18 @@ class World {
 
     // Game Over Screen als letztes zeichnen, damit es über allem anderen liegt
     if (this.character.isDeath()) {
-      this.ctx.translate(-this.camera_x, 0);
+      this.ctx.save();
       if (window.gameOverScreen) {
-        window.gameOverScreen.show(); // Mache den Screen sichtbar
-        window.gameOverScreen.x = (this.canvas.width - window.gameOverScreen.width) / 2;
+        // Position relativ zum sichtbaren Bildschirmbereich berechnen
+        window.gameOverScreen.show();
+        window.gameOverScreen.x = this.camera_x + (this.canvas.width - window.gameOverScreen.width) / 2;
         window.gameOverScreen.y = (this.canvas.height - window.gameOverScreen.height) / 2;
         window.gameOverScreen.draw(this.ctx);
       }
-      this.ctx.translate(this.camera_x, 0);
+      this.ctx.restore();
     }
 
-    this.addObjectsToMap(this.level.clouds);
-    this.addToMap(this.character);
-    this.addObjectsToMap(this.throwableObject);
-    this.addObjectsToMap(this.level.enemiesAnt);
-
-    this.addObjectsToMap(this.level.coins);
-    this.addObjectsToMap(this.level.bottles);
+  // (Duplicated drawing calls removed) — Game objects were already drawn above.
 
     self = this;
     requestAnimationFrame(function () {
