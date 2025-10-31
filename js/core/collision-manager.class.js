@@ -3,6 +3,18 @@ class CollisionManager {
     this.world = world;
   }
 
+  // Prüft ob der Spieler von oben auf den Gegner springt
+  isJumpingOnEnemy(character, enemy) {
+    // 1. Spieler muss fallen (speedY < 0)
+    // 2. Spieler muss über dem Gegner sein
+    // 3. Kollision muss im oberen Drittel des Gegners stattfinden
+    const isPlayerFalling = character.speedY < 0;
+    const playerBottom = character.y + character.height;
+    const enemyTopThird = enemy.y + enemy.height / 3;
+
+    return isPlayerFalling && playerBottom < enemyTopThird;
+  }
+
   checkAllCollisions() {
     this.checkEnemyCollisions();
     this.checkItemCollisions();
@@ -41,6 +53,22 @@ class CollisionManager {
   }
 
   handleEnemyCollision(enemy) {
+    // Debug-Informationen ausgeben
+    console.log('=== Kollision mit Gegner ===');
+    console.log('Spieler Position Y:', this.world.character.y);
+    console.log('Gegner Position Y:', enemy.y);
+    console.log('Spieler speedY:', this.world.character.speedY);
+    console.log('Spieler Höhe:', this.world.character.height);
+    console.log('Gegner Höhe:', enemy.height);
+
+    // Prüfen ob Spieler von oben kommt
+    if (this.isJumpingOnEnemy(this.world.character, enemy)) {
+      console.log('Treffer von oben!');
+      // Hier später: Gegner eliminieren
+      return;
+    }
+
+    // Normaler Treffer (von der Seite)
     if (!this.world.character.hit && !this.world.character.isDeath()) {
       this.world.character.hit = true;
       // Bei 100 Energie = 6 Stufen, also 100/6 ≈ 16.67 pro Stufe
