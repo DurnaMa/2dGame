@@ -21,7 +21,7 @@ class Statusbar extends DrawableObject {
     this.visible = true;
     this.setPercentage(100);
 
-    //console.log('Statusbar liegt auf der y-Achse (y = ' + this.y + ')');
+
   }
 
   setPercentage(percentage) {

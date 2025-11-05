@@ -14,15 +14,12 @@ function init() {
   window.world = new World(canvas, keyboard);
   world = window.world;
 
-  console.log('Game Over Screen initialized:', window.gameOverScreen);
-
   // Click-Event für den Retry-Button
   canvas.addEventListener('click', handleClick);
 
   // Add click event listener for retry button
   canvas.addEventListener('click', handleClick);
 
-  console.log('My Character is', world.character);
 }
 
 function handleClick(event) {
@@ -65,8 +62,7 @@ window.addEventListener('keydown', (e) => {
     keyboard.X = true;
   }
 
-  //  console.log(event)
-  //  console.log(event.keyCode)
+
 });
 
 window.addEventListener('keyup', (e) => {
@@ -93,5 +89,4 @@ window.addEventListener('keyup', (e) => {
   if (e.keyCode == 88) {
     keyboard.X = false;
   }
-  // console.log(event)
 });

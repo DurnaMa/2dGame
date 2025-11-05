@@ -21,7 +21,6 @@ class MovableObject extends DrawableObject {
       }
       if (this instanceof Rogue && !this.isAboveGround() && this.jumpStarted) {
         this.jumpEnded = new Date().getTime();
-        console.log('Zeit in der Luft:', this.jumpEnded - this.jumpStarted);
         this.lastMoveTime = new Date().getTime();
         this.jumpStarted = null;
       }

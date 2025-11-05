@@ -33,13 +33,13 @@ class Coin extends Item {
     // Debug: Überprüfen der Bildladung
     setTimeout(() => {
       if (this.imageCache[this.ITEMS[0]]) {
-        //console.log('Münze erfolgreich geladen an Position:', this.x, this.y);
+
       } else {
         //console.warn('Münze konnte nicht geladen werden an Position:', this.x, this.y);
       }
     }, 100);
 
-    //console.log('Münze liegt auf der y-Achse (y = ' + this.y + ')');
+
   }
 
   animate() {

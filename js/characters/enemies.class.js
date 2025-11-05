@@ -12,12 +12,22 @@ class EnemiesAnt extends MovableObject {
     'assets/2d-pixel-art-evil-monster-sprites/PNG/Big_knight/big_knight08_walk5.png',
     'assets/2d-pixel-art-evil-monster-sprites/PNG/Big_knight/big_knight09_walk6.png',
   ];
+
+  IMAGES_DEATH = [
+    'assets/2d-pixel-art-evil-monster-sprites/PNG/Big_knight/big_knight16_death1.png',
+    'assets/2d-pixel-art-evil-monster-sprites/PNG/Big_knight/big_knight17_death2.png',
+    'assets/2d-pixel-art-evil-monster-sprites/PNG/Big_knight/big_knight18_death3.png',
+    'assets/2d-pixel-art-evil-monster-sprites/PNG/Big_knight/big_knight19_death4.png'
+  ]
+
   constructor() {
     super().loadImage('assets/2d-pixel-art-evil-monster-sprites/PNG/Big_knight/big_knight14_hurt1.png');
 
     this.x = 250 + Math.random() * 500;
     this.speed = 0.15 + Math.random() * 0.55;
     this.loadImages(this.IMAGES_WALKING);
+    this.loadImages(this.IMAGES_DEATH);  // Lade auch die Todesanimation
+    this.isDead = false;  // Initialisiere isDead
     this.animate();
     this.offset = {
       top: 95,
@@ -28,12 +38,32 @@ class EnemiesAnt extends MovableObject {
   }
 
   animate() {
-    setInterval(() => {
-      this.moveLeft();
+    this.moveInterval = setInterval(() => {
+      if (!this.isDead) {
+        this.moveLeft();
+      }
     }, 1000 / 60);
 
-    setInterval(() => {
-      this.playAnimation(this.IMAGES_WALKING);
+    this.animationInterval = setInterval(() => {
+      if (this.isDead) {
+        // Todesanimation abspielen
+        this.playAnimation(this.IMAGES_DEATH);
+        // Nach der Animation verschwinden
+        if (this.currentImage >= this.IMAGES_DEATH.length) {
+          this.remove();
+        }
+      } else {
+        this.playAnimation(this.IMAGES_WALKING);
+      }
     }, 200);
+  }
+
+  remove() {
+    // Intervalle stoppen
+    clearInterval(this.moveInterval);
+    clearInterval(this.animationInterval);
+    // Gegner unsichtbar machen
+    this.width = 0;
+    this.height = 0;
   }
 }

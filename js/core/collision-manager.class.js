@@ -4,15 +4,26 @@ class CollisionManager {
   }
 
   // Prüft ob der Spieler von oben auf den Gegner springt
-  isJumpingOnEnemy(character, enemy) {
-    // 1. Spieler muss fallen (speedY < 0)
-    // 2. Spieler muss über dem Gegner sein
-    // 3. Kollision muss im oberen Drittel des Gegners stattfinden
-    const isPlayerFalling = character.speedY < 0;
-    const playerBottom = character.y + character.height;
-    const enemyTopThird = enemy.y + enemy.height / 3;
+ isJumpingOnEnemy(character, enemy) {
+    // Berechne die tatsächlichen Kollisionspunkte
+    const playerFeet = character.y + character.height - character.offset.bottom;
+    const playerCenter = character.y + (character.height / 2);
+    const enemyHead = enemy.y + enemy.offset.top;
+    const enemyCenter = enemy.y + (enemy.height / 2);
 
-    return isPlayerFalling && playerBottom < enemyTopThird;
+    // 1. Spieler muss fallen
+    const isPlayerFalling = character.speedY < 0;
+
+    // 2. Berechne die vertikale Distanz zwischen Spielerfüßen und Gegnerkopf
+    const heightDifference = playerFeet - enemyHead;
+
+    // Treffer ist gültig wenn der Abstand positiv aber nicht zu groß ist
+    const isHittingWithFeet = heightDifference >= 0 && heightDifference <= 120;
+
+    // 3. Spieler muss sich in der richtigen Position befinden
+    const isPositionedAbove = playerCenter < enemyCenter;
+
+    return isPlayerFalling && isHittingWithFeet && isPositionedAbove;
   }
 
   checkAllCollisions() {
@@ -53,18 +64,25 @@ class CollisionManager {
   }
 
   handleEnemyCollision(enemy) {
-    // Debug-Informationen ausgeben
-    console.log('=== Kollision mit Gegner ===');
-    console.log('Spieler Position Y:', this.world.character.y);
-    console.log('Gegner Position Y:', enemy.y);
-    console.log('Spieler speedY:', this.world.character.speedY);
-    console.log('Spieler Höhe:', this.world.character.height);
-    console.log('Gegner Höhe:', enemy.height);
+    const character = this.world.character;
+
+    // Frühzeitig beenden wenn der Spieler nach oben springt
+    if (character.speedY > 0) {
+      return false;
+    }
 
     // Prüfen ob Spieler von oben kommt
-    if (this.isJumpingOnEnemy(this.world.character, enemy)) {
-      console.log('Treffer von oben!');
-      // Hier später: Gegner eliminieren
+    if (this.isJumpingOnEnemy(this.world.character, enemy)) {      // 1. Gegner "stirbt"
+      enemy.isDead = true;
+
+      // 2. Spieler springt automatisch hoch
+      this.world.character.speedY = 15;      // 3. Kurze Unverwundbarkeit
+      this.world.character.hit = true;
+      setTimeout(() => {
+        this.world.character.hit = false;
+      }, 500);
+
+      // Keine weitere Kollisionsbehandlung nötig
       return;
     }
 
@@ -77,7 +95,6 @@ class CollisionManager {
         this.world.character.energy = 0;
       }
       this.world.statusBar.setPercentage(this.world.character.energy);
-      console.log('Kollision mit Gegner, Energie:', this.world.character.energy);
 
       // Nach 1.5 Sekunden kann der Charakter wieder getroffen werden
       setTimeout(() => {
@@ -89,14 +106,12 @@ class CollisionManager {
   handleCoinCollection(coin) {
     coin.collect();
     // Hier können Sie die Münzen-Punktzahl erhöhen
-    console.log('Münze gesammelt!');
   }
 
   handleBottleCollection(bottle) {
     bottle.collect();
     // Fill magic bar when collecting a bottle
     this.world.magicBar.addMagic(16.67); // Adds 1/6 of the magic bar
-    console.log('Flasche gesammelt! Magic erhöht!');
   }
 
   handleEndbossCollision(endboss) {
@@ -110,7 +125,6 @@ class CollisionManager {
         }, 1500);
       }
       this.world.statusBar.setPercentage(this.world.character.energy);
-      console.log('Kollision mit Endboss, Energie:', this.world.character.energy);
     }
   }
 }

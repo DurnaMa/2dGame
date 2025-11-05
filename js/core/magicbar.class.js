@@ -27,7 +27,7 @@ class Magicbar extends DrawableObject {
     this.visible = true;
     this.setPercentage(0); // Start with empty magic bar
 
-    //console.log('Statusbar liegt auf der y-Achse (y = ' + this.y + ')');
+
   }
 
   addMagic(amount = 8.34) {

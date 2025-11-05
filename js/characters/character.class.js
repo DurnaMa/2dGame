@@ -26,7 +26,6 @@ class Character extends MovableObject {
 
   isDeath() {
     if (this.energy == 0) {
-      console.log('Character is dead, stopping intervals...');
       this.stopAllIntervals();
       return true;
     }
@@ -40,12 +39,10 @@ class Character extends MovableObject {
         this.moveRight();
         this.lastMoveTime = new Date().getTime();
       }
-      //console.log(this.world.level.level_end_x)
       if (this.world.keyboard.LEFT && this.x > 150) {
         this.moveLeft();
         this.lastMoveTime = new Date().getTime();
       }
-      //console.log("Aktuelle Position:", this.x.toFixed(0), "px");
       if (this.world.keyboard.SPACE && !this.isAboveGround() && !this.jumpStarted) {
         this.jump();
         this.jumpStarted = new Date().getTime();
@@ -78,7 +75,6 @@ class Character extends MovableObject {
   handleJumpAnimation() {
     if (!this.checkAlreadyRunning) {
       this.checkAlreadyRunning = true;
-      console.log('jump animation start');
       this.currentImage = 0;
       let spacePressed = setInterval(() => {
         this.playAnimation(this.IMAGES_JUMPING);
@@ -92,11 +88,6 @@ class Character extends MovableObject {
   }
 
   stopAllIntervals() {
-   // console.log('Stopping intervals...'); // Debug-Log
-   // console.log('moveInterval:', this.moveInterval); // Debug-Log
-   // console.log('animationInterval:', this.animationInterval); // Debug-Log
-   // console.log('gameInterval:', this.world?.gameInterval); // Debug-Log
-
     if (this.moveInterval) clearInterval(this.moveInterval);
     if (this.animationInterval) clearInterval(this.animationInterval);
     if (this.world && this.world.gameInterval) {
