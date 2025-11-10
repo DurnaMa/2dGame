@@ -28,6 +28,30 @@ class World {
 
   setWorld() {
     this.character.world = this;
+
+    // Helper to assign world to every object in an array
+    const setWorldOnArray = (arr) => {
+      if (Array.isArray(arr)) {
+        arr.forEach((obj) => {
+          if (obj) obj.world = this;
+        });
+      }
+    };
+
+    // Assign world to all relevant level objects so they can access world via this.world
+    if (this.level) {
+      setWorldOnArray(this.level.enemiesAnt);
+      setWorldOnArray(this.level.clouds);
+      setWorldOnArray(this.level.backgroundObjectRocks);
+      setWorldOnArray(this.level.coins);
+      setWorldOnArray(this.level.bottles);
+      setWorldOnArray(this.level.throwableObject);
+    }
+
+    // Also set world for any runtime arrays / UI elements
+    setWorldOnArray(this.throwableObject);
+    if (this.statusBar) this.statusBar.world = this;
+    if (this.magicBar) this.magicBar.world = this;
   }
 
   run() {
