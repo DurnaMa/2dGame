@@ -1,4 +1,5 @@
 class CollisionManager {
+
   constructor(world) {
     this.world = world;
   }
@@ -10,19 +11,14 @@ class CollisionManager {
     const playerCenter = character.y + (character.height / 2);
     const enemyHead = enemy.y + enemy.offset.top;
     const enemyCenter = enemy.y + (enemy.height / 2);
-
     // 1. Spieler muss fallen
     const isPlayerFalling = character.speedY < 0;
-
     // 2. Berechne die vertikale Distanz zwischen Spielerfüßen und Gegnerkopf
     const heightDifference = playerFeet - enemyHead;
-
     // Treffer ist gültig wenn der Abstand positiv aber nicht zu groß ist
     const isHittingWithFeet = heightDifference >= 0 && heightDifference <= 120;
-
     // 3. Spieler muss sich in der richtigen Position befinden
     const isPositionedAbove = playerCenter < enemyCenter;
-
     return isPlayerFalling && isHittingWithFeet && isPositionedAbove;
   }
 
@@ -70,22 +66,18 @@ class CollisionManager {
     if (character.speedY > 0) {
       return false;
     }
-
     // Prüfen ob Spieler von oben kommt
     if (this.isJumpingOnEnemy(this.world.character, enemy)) {      // 1. Gegner "stirbt"
       enemy.isDead = true;
-
       // 2. Spieler springt automatisch hoch
-      this.world.character.speedY = 15;      // 3. Kurze Unverwundbarkeit
+      this.world.character.speedY += 15;      // 3. Kurze Unverwundbarkeit
       this.world.character.hit = true;
       setTimeout(() => {
         this.world.character.hit = false;
       }, 500);
-
       // Keine weitere Kollisionsbehandlung nötig
       return;
     }
-
     // Normaler Treffer (von der Seite)
     if (!this.world.character.hit && !this.world.character.isDeath()) {
       this.world.character.hit = true;
@@ -95,7 +87,6 @@ class CollisionManager {
         this.world.character.energy = 0;
       }
       this.world.statusBar.setPercentage(this.world.character.energy);
-
       // Nach 1.5 Sekunden kann der Charakter wieder getroffen werden
       setTimeout(() => {
         this.world.character.hit = false;

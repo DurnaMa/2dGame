@@ -5,6 +5,7 @@ class MovableObject extends DrawableObject {
   acceleration = 1;
   energy = 100;
   lastHit = 0;
+  ground = 366;
 
   offset = {
     top: 0,
@@ -22,13 +23,15 @@ class MovableObject extends DrawableObject {
       if (this instanceof Rogue && !this.isAboveGround() && this.jumpStarted) {
         this.jumpEnded = new Date().getTime();
         this.lastMoveTime = new Date().getTime();
+        this.speedY = 0;
+        this.y = this.ground;
         this.jumpStarted = null;
       }
     }, 1000 / 25);
   }
 
   isAboveGround() {
-    return this.y < 366;
+    return this.y < this.ground;
   }
 
   isColliding(mo) {
