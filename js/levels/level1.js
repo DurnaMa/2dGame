@@ -6,6 +6,20 @@ const SECTIONCOUNT = 8;
 const SECTIONSTART = 2;
 const SECTIONEND = 7;
 
+const PARALLAX_SKY = 0;
+const PARALLAX_FAR_CLOUDS = 0.2;
+const PARALLAX_MID_CLOUDS = 0.25;
+const PARALLAX_DISTANT_ROCKS = 0.4;
+const PARALLAX_MID_GROUND = 0.6;
+const PARALLAX_FOREGROUND = 0.8;
+
+const Y_OFFSET_SKY = 0;
+const Y_OFFSET_CLOUDS_HIGH = 25;
+const Y_OFFSET_CLOUDS_MID = 20;
+const Y_OFFSET_ROCKS_HIGH = 15;
+const Y_OFFSET_ROCKS_MID = 10;
+const Y_OFFSET_ROCKS_LOW = 5;
+
 spawnItem();
 
 function spawnItem() {
@@ -36,7 +50,7 @@ function getXPosition(index) {
   }
 }
 
-function createBackgroundLayer(imagePath, SECTIONCOUNT, width, yOffset = 0, parallax = 1) {
+function createBackgroundLayer(imagePath, SECTIONCOUNT, width, yOffset = 1, parallax = 1) {
   const layer = [];
   for (let i = 0; i < SECTIONCOUNT; i++) {
     layer.push(new BackgroundObject(imagePath, i * (width - 1), yOffset * parallax, parallax));
@@ -49,48 +63,48 @@ const backgroundObjects = [
     '/assets/mountain-platformer-pixel-art-tileset/PNG/Background/bright/sky.png',
     SECTIONCOUNT,
     CANVAS_WIDTH,
-    0,
-    0
+    Y_OFFSET_SKY,
+    PARALLAX_SKY
   ),
 
   ...createBackgroundLayer(
     '/assets/mountain-platformer-pixel-art-tileset/PNG/Background/bright/clouds1.png',
     SECTIONCOUNT,
     CANVAS_WIDTH,
-    50,
-    0.4
+    Y_OFFSET_CLOUDS_HIGH,
+    PARALLAX_FAR_CLOUDS
   ),
 
   ...createBackgroundLayer(
     '/assets/mountain-platformer-pixel-art-tileset/PNG/Background/bright/clouds2.png',
     SECTIONCOUNT,
     CANVAS_WIDTH,
-    75,
-    0.6
+    Y_OFFSET_CLOUDS_MID,
+    PARALLAX_MID_CLOUDS
   ),
 
   ...createBackgroundLayer(
     '/assets/mountain-platformer-pixel-art-tileset/PNG/Background/bright/rocks.png',
     SECTIONCOUNT,
     CANVAS_WIDTH,
-    100,
-    0.8
+    Y_OFFSET_ROCKS_HIGH,
+    PARALLAX_DISTANT_ROCKS
   ),
 
   ...createBackgroundLayer(
     '/assets/mountain-platformer-pixel-art-tileset/PNG/Background/bright/rocks2.png',
     SECTIONCOUNT,
     CANVAS_WIDTH,
-    125,
-    1
+    Y_OFFSET_ROCKS_MID,
+    PARALLAX_MID_GROUND
   ),
 
   ...createBackgroundLayer(
     '/assets/mountain-platformer-pixel-art-tileset/PNG/Background/bright/rocks3.png',
     SECTIONCOUNT,
     CANVAS_WIDTH,
-    150,
-    1.2
+    Y_OFFSET_ROCKS_LOW,
+    PARALLAX_FOREGROUND
   ),
 ];
 

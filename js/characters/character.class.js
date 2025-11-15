@@ -54,7 +54,6 @@ class Character extends MovableObject {
     this.animationInterval = setInterval(() => {
       this.animateSetInterval();
     }, 100);
-    setInterval(() => console.log(this.y), 100);
   }
 
   animateSetInterval() {
