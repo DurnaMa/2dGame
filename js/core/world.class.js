@@ -41,7 +41,6 @@ class World {
     // Assign world to all relevant level objects so they can access world via this.world
     if (this.level) {
       setWorldOnArray(this.level.enemiesAnt);
-      setWorldOnArray(this.level.clouds);
       setWorldOnArray(this.level.backgroundObjectRocks);
       setWorldOnArray(this.level.coins);
       setWorldOnArray(this.level.bottles);
@@ -86,7 +85,6 @@ class World {
     this.ctx.translate(this.camera_x, 0);
 
     // Spielobjekte zeichnen
-    this.addObjectsToMap(this.level.clouds);
     this.addToMap(this.character);
     this.addObjectsToMap(this.throwableObject);
     this.addObjectsToMap(this.level.enemiesAnt);
@@ -148,10 +146,6 @@ class World {
     objects.forEach((o) => {
       this.addToMap(o);
     });
-  }
-
-  addCloudToMap(cloud) {
-    this.ctx.drawImage(cloud.img, cloud.x, cloud.y, cloud.width, cloud.height);
   }
 
   stopGame() {
