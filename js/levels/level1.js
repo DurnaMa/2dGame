@@ -12,6 +12,7 @@ const PARALLAX_MID_CLOUDS = 0.25;
 const PARALLAX_DISTANT_ROCKS = 0.4;
 const PARALLAX_MID_GROUND = 0.6;
 const PARALLAX_FOREGROUND = 0.8;
+const PARALLAX_MID_CLOUDS4 = 0.3;
 
 const Y_OFFSET_SKY = 0;
 const Y_OFFSET_CLOUDS_HIGH = 25;
@@ -19,6 +20,7 @@ const Y_OFFSET_CLOUDS_MID = 20;
 const Y_OFFSET_ROCKS_HIGH = 15;
 const Y_OFFSET_ROCKS_MID = 10;
 const Y_OFFSET_ROCKS_LOW = 5;
+const Y_OFFSET_CLOUDS4_MID = 30;
 
 spawnItem();
 
@@ -99,6 +101,14 @@ const backgroundObjects = [
     PARALLAX_MID_GROUND
   ),
 
+    ...createBackgroundLayer(
+    '/assets/mountain-platformer-pixel-art-tileset/PNG/Background/bright/clouds4.png',
+    SECTIONCOUNT,
+    CANVAS_WIDTH,
+    Y_OFFSET_CLOUDS4_MID,
+    PARALLAX_MID_CLOUDS4
+  ),
+
   ...createBackgroundLayer(
     '/assets/mountain-platformer-pixel-art-tileset/PNG/Background/bright/rocks3.png',
     SECTIONCOUNT,
@@ -108,4 +118,4 @@ const backgroundObjects = [
   ),
 ];
 
-const level1 = new Level([new EnemiesAnt(), new Endboss()], [new Cloud()], backgroundObjects, coins, bottles, );
+const level1 = new Level([new EnemiesAnt(), new Endboss()], backgroundObjects, coins, bottles, );
