@@ -2,10 +2,10 @@ class DrawableObject {
   img;
   imageCache = {};
   currentImage = 0;
-  x = 120;
-  y = 520;
-  height = 150;
-  width = 100;
+  x = GAME_CONFIG.DRAWABLE.X;
+  y = GAME_CONFIG.DRAWABLE.Y;
+  height = GAME_CONFIG.DRAWABLE.HEIGHT;
+  width = GAME_CONFIG.DRAWABLE.WIDTH;
 
   loadImage(path) {
     this.img = new Image();
@@ -46,7 +46,7 @@ class DrawableObject {
       this instanceof Coin
     ) {
       ctx.beginPath();
-      ctx.lineWidth = '1';
+      ctx.lineWidth = GAME_CONFIG.DRAWABLE.BORDER_WIDTH;
       ctx.strokeStyle = 'blue';
 
       if (this.otherDirection) {
@@ -67,7 +67,7 @@ class DrawableObject {
       //this instanceof Coins
     ) {
       ctx.beginPath();
-      ctx.lineWidth = '1';
+      ctx.lineWidth = GAME_CONFIG.DRAWABLE.BORDER_WIDTH;
       ctx.strokeStyle = 'red';
 
       if (this.otherDirection) {

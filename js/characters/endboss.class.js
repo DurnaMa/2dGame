@@ -1,7 +1,7 @@
 class Endboss extends MovableObject {
-  height = 400;
-  width = 400;
-  y = 220;
+  height = GAME_CONFIG.ENEMY.BOSS.HEIGHT;
+  width = GAME_CONFIG.ENEMY.BOSS.WIDTH;
+  y = GAME_CONFIG.ENEMY.BOSS.Y;
   x = 0;
 
   otherDirection = true;
@@ -19,15 +19,15 @@ class Endboss extends MovableObject {
     super().loadImage(this.IMAGES_WALKING[0]);
     this.loadImages(this.IMAGES_WALKING);
     this.offset = {
-      top: 125,
-      left: 165,
-      right: 75,
-      bottom: 75,
+      top: GAME_CONFIG.ENEMY.BOSS.OFFSET.TOP,
+      left: GAME_CONFIG.ENEMY.BOSS.OFFSET.LEFT,
+      right: GAME_CONFIG.ENEMY.BOSS.OFFSET.RIGHT,
+      bottom: GAME_CONFIG.ENEMY.BOSS.OFFSET.BOTTOM,
     };
-    this.x = 7500;
+    this.x = GAME_CONFIG.ENEMY.BOSS.START_X;
     this.isActive = false;
     this.movingRight = false;
-    this.speed = 1; // boss speed while patrolling (not active after revert)
+    this.speed = GAME_CONFIG.ENEMY.BOSS.SPEED; // boss speed while patrolling (not active after revert)
     this.animate();
   }
 
@@ -35,6 +35,6 @@ class Endboss extends MovableObject {
     // Animation (sprite frames)
     this.animationInterval = setInterval(() => {
       this.playAnimation(this.IMAGES_WALKING);
-    }, 200);
+    }, GAME_CONFIG.ENEMY.BOSS.ANIMATION_SPEED);
   }
 }

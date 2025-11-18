@@ -16,7 +16,7 @@ class CollisionManager {
     // 2. Berechne die vertikale Distanz zwischen Spielerfüßen und Gegnerkopf
     const heightDifference = playerFeet - enemyHead;
     // Treffer ist gültig wenn der Abstand positiv aber nicht zu groß ist
-    const isHittingWithFeet = heightDifference >= 0 && heightDifference <= 120;
+    const isHittingWithFeet = heightDifference >= 0 && heightDifference <= GAME_CONFIG.COLLISION.JUMP_KILL_HEIGHT_MAX;
     // 3. Spieler muss sich in der richtigen Position befinden
     const isPositionedAbove = playerCenter < enemyCenter;
     return isPlayerFalling && isHittingWithFeet && isPositionedAbove;
@@ -70,11 +70,11 @@ class CollisionManager {
     if (this.isJumpingOnEnemy(this.world.character, enemy)) {      // 1. Gegner "stirbt"
       enemy.isDead = true;
       // 2. Spieler springt automatisch hoch
-      this.world.character.speedY += 15;      // 3. Kurze Unverwundbarkeit
+      this.world.character.speedY += GAME_CONFIG.COLLISION.JUMP_BOUNCE_POWER;      // 3. Kurze Unverwundbarkeit
       this.world.character.hit = true;
       setTimeout(() => {
         this.world.character.hit = false;
-      }, 500);
+      }, GAME_CONFIG.COLLISION.INVULNERABILITY_SHORT);
       // Keine weitere Kollisionsbehandlung nötig
       return;
     }
@@ -82,7 +82,7 @@ class CollisionManager {
     if (!this.world.character.hit && !this.world.character.isDeath()) {
       this.world.character.hit = true;
       // Bei 100 Energie = 6 Stufen, also 100/6 ≈ 16.67 pro Stufe
-      this.world.character.energy -= Math.floor(100 / 6);
+      this.world.character.energy -= GAME_CONFIG.COLLISION.DAMAGE_NORMAL;
       if (this.world.character.energy <= 0) {
         this.world.character.energy = 0;
       }
@@ -90,7 +90,7 @@ class CollisionManager {
       // Nach 1.5 Sekunden kann der Charakter wieder getroffen werden
       setTimeout(() => {
         this.world.character.hit = false;
-      }, 1500);
+      }, GAME_CONFIG.COLLISION.INVULNERABILITY_LONG);
     }
   }
 
@@ -102,18 +102,18 @@ class CollisionManager {
   handleBottleCollection(bottle) {
     bottle.collect();
     // Fill magic bar when collecting a bottle
-    this.world.magicBar.addMagic(16.67); // Adds 1/6 of the magic bar
+    this.world.magicBar.addMagic(GAME_CONFIG.BOTTLE.MAGIC_AMOUNT); // Adds 1/6 of the magic bar
   }
 
   handleEndbossCollision(endboss) {
     if (!this.world.character.hit && !this.world.character.isDeath()) {
-      this.world.character.energy -= 5; // Weniger Schaden vom Endboss
+      this.world.character.energy -= GAME_CONFIG.COLLISION.DAMAGE_BOSS; // Weniger Schaden vom Endboss
       if (this.world.character.energy <= 0) {
         this.world.character.energy = 0;
         this.world.character.hit = true;
         setTimeout(() => {
           this.world.character.hit = false;
-        }, 1500);
+        }, GAME_CONFIG.COLLISION.INVULNERABILITY_LONG);
       }
       this.world.statusBar.setPercentage(this.world.character.energy);
     }

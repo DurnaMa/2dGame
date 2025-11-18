@@ -1,6 +1,6 @@
 class GameOverScreen extends DrawableObject {
-    width = 400;
-    height = 300;
+    width = GAME_CONFIG.UI.GAMEOVER.WIDTH;
+    height = GAME_CONFIG.UI.GAMEOVER.HEIGHT;
 
     constructor() {
         super();
@@ -21,7 +21,7 @@ class GameOverScreen extends DrawableObject {
 
         // Dunklerer Hintergrund für besseren Kontrast
         ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-        ctx.fillRect(0, 0, 720, 480);
+        ctx.fillRect(0, 0, GAME_CONFIG.UI.GAMEOVER.SCREEN_WIDTH, GAME_CONFIG.UI.GAMEOVER.SCREEN_HEIGHT);
 
         // Position berechnen für die Mitte des Bildschirms
         this.x = (720 - this.width) / 2;
@@ -33,33 +33,33 @@ class GameOverScreen extends DrawableObject {
         }
 
         // Game Over Text
-        ctx.font = 'bold 48px Arial';
+        ctx.font = 'bold ' + GAME_CONFIG.UI.GAMEOVER.FONT_SIZE_LARGE + 'px Arial';
         ctx.fillStyle = '#8B0000';
         ctx.textAlign = 'center';
-        ctx.fillText('GAME OVER', 360, 200);
+        ctx.fillText('GAME OVER', GAME_CONFIG.UI.GAMEOVER.TEXT_X, GAME_CONFIG.UI.GAMEOVER.TEXT_Y);
 
         // Retry Button
         ctx.fillStyle = '#4a4a4a';
-        const buttonWidth = 200;
-        const buttonHeight = 50;
+        const buttonWidth = GAME_CONFIG.UI.GAMEOVER.BUTTON_WIDTH;
+        const buttonHeight = GAME_CONFIG.UI.GAMEOVER.BUTTON_HEIGHT;
         const buttonX = this.x + (this.width - buttonWidth) / 2;
-        const buttonY = this.y + 180;
+        const buttonY = this.y + GAME_CONFIG.UI.GAMEOVER.BUTTON_Y_OFFSET;
         ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
 
         // Retry Text
-        ctx.font = '24px Arial';
+        ctx.font = GAME_CONFIG.UI.GAMEOVER.FONT_SIZE_SMALL + 'px Arial';
         ctx.fillStyle = '#ffffff';
         ctx.textAlign = 'center';
-        ctx.fillText('Retry', 360, this.y + 210);
+        ctx.fillText('Retry', GAME_CONFIG.UI.GAMEOVER.TEXT_X, this.y + 210);
     }
 
     isRetryButtonClicked(clickX, clickY) {
         if (!this.visible) return false;
 
-        const buttonWidth = 200;
-        const buttonHeight = 50;
+        const buttonWidth = GAME_CONFIG.UI.GAMEOVER.BUTTON_WIDTH;
+        const buttonHeight = GAME_CONFIG.UI.GAMEOVER.BUTTON_HEIGHT;
         const buttonX = this.x + (this.width - buttonWidth) / 2;
-        const buttonY = this.y + 180;
+        const buttonY = this.y + GAME_CONFIG.UI.GAMEOVER.BUTTON_Y_OFFSET;
 
         return (
             clickX >= buttonX &&

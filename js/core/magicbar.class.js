@@ -1,5 +1,5 @@
 class Magicbar extends DrawableObject {
-  percentage = 0; // Start with empty magic bar
+  percentage = GAME_CONFIG.UI.MAGICBAR.PERCENTAGE_START; // Start with empty magic bar
 
   CHARACTER_MAGIC_BAR = [
     'assets/fantasy-platformer-game-ui/PNG/16Inner_Interface/magic_bar/00energy-magic.png',
@@ -20,23 +20,23 @@ class Magicbar extends DrawableObject {
   constructor() {
     super();
     this.loadImages(this.CHARACTER_MAGIC_BAR);
-    this.y = 40;
-    this.x = 10;
-    this.width = 200;
-    this.height = 30;
+    this.y = GAME_CONFIG.UI.MAGICBAR.Y;
+    this.x = GAME_CONFIG.UI.MAGICBAR.X;
+    this.width = GAME_CONFIG.UI.MAGICBAR.WIDTH;
+    this.height = GAME_CONFIG.UI.MAGICBAR.HEIGHT;
     this.visible = true;
-    this.setPercentage(0); // Start with empty magic bar
+    this.setPercentage(GAME_CONFIG.UI.MAGICBAR.PERCENTAGE_START); // Start with empty magic bar
 
 
   }
 
-  addMagic(amount = 8.34) {
+  addMagic(amount = GAME_CONFIG.UI.MAGICBAR.MAGIC_ADD_AMOUNT) {
     if (this.percentage < 100) {
       this.setPercentage(Math.min(100, this.percentage + amount));
     }
   }
 
-  useMagic(amount = 8.34) {
+  useMagic(amount = GAME_CONFIG.UI.MAGICBAR.MAGIC_USE_AMOUNT) {
     if (this.percentage > 0) {
       this.setPercentage(this.percentage - amount)
     }

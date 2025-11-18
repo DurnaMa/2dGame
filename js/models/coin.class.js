@@ -1,7 +1,7 @@
 class Coin extends Item {
   y = 550;
-  height = 50;
-  width = 50;
+  height = GAME_CONFIG.COIN.HEIGHT;
+  width = GAME_CONFIG.COIN.WIDTH;
   currentImage = 0;
   visible = true;
 
@@ -25,7 +25,7 @@ class Coin extends Item {
     // Bessere Positionierung innerhalb des sichtbaren Bereichs
     //this.x = 400 + Math.random() * 2500;
     this.x = xPosition;
-    this.y = 340 + Math.random() * 150;
+    this.y = GAME_CONFIG.COIN.Y_BASE + Math.random() * GAME_CONFIG.COIN.Y_RANGE;
 
     // Sicherstellen, dass das erste Bild geladen ist
     this.img = this.imageCache[this.ITEMS[0]];
@@ -47,7 +47,7 @@ class Coin extends Item {
     if (this.imageCache[this.ITEMS[0]]) {
       setInterval(() => {
         this.playItems(this.ITEMS);
-      }, 150);
+      }, GAME_CONFIG.COIN.ANIMATION_SPEED);
     }
   }
 

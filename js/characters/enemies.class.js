@@ -1,8 +1,8 @@
 class EnemiesAnt extends MovableObject {
-  y = 340;
-  x = 40;
-  height = 300;
-  width = 300;
+  y = GAME_CONFIG.ENEMY.ANT.Y;
+  x = GAME_CONFIG.ENEMY.ANT.START_X;
+  height = GAME_CONFIG.ENEMY.ANT.HEIGHT;
+  width = GAME_CONFIG.ENEMY.ANT.WIDTH;
 
   IMAGES_WALKING = [
     'assets/2d-pixel-art-evil-monster-sprites/PNG/Big_knight/big_knight04_walk1.png',
@@ -23,17 +23,17 @@ class EnemiesAnt extends MovableObject {
   constructor() {
     super().loadImage('assets/2d-pixel-art-evil-monster-sprites/PNG/Big_knight/big_knight14_hurt1.png');
 
-    this.x = 250 + Math.random() * 500;
-    this.speed = 0.15 + Math.random() * 0.55;
+    this.x = GAME_CONFIG.ENEMY.ANT.START_X + Math.random() * GAME_CONFIG.ENEMY.ANT.MAX_X_RANDOM_RANGE;
+    this.speed = GAME_CONFIG.ENEMY.ANT.MIN_SPEED + Math.random() * GAME_CONFIG.ENEMY.ANT.MAX_SPEED_RANGE;
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_DEATH);  // Lade auch die Todesanimation
     this.isDead = false;  // Initialisiere isDead
     this.animate();
     this.offset = {
-      top: 95,
-      left: 115,
-      right: 105,
-      bottom: 100,
+      top: GAME_CONFIG.ENEMY.ANT.OFFSET.TOP,
+      left: GAME_CONFIG.ENEMY.ANT.OFFSET.LEFT,
+      right: GAME_CONFIG.ENEMY.ANT.OFFSET.RIGHT,
+      bottom: GAME_CONFIG.ENEMY.ANT.OFFSET.BOTTOM,
     };
   }
 
@@ -42,7 +42,7 @@ class EnemiesAnt extends MovableObject {
       if (!this.isDead) {
         this.moveLeft();
       }
-    }, 1000 / 60);
+    }, 1000 / GAME_CONFIG.FRAME_RATE);
 
     this.animationInterval = setInterval(() => {
       if (this.isDead) {
@@ -55,7 +55,7 @@ class EnemiesAnt extends MovableObject {
       } else {
         this.playAnimation(this.IMAGES_WALKING);
       }
-    }, 200);
+    }, GAME_CONFIG.ENEMY.ANT.ANIMATION_SPEED);
   }
 
   remove() {

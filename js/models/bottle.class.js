@@ -1,7 +1,7 @@
 class Bottle extends Item {
   y = 450;
-  height = 50;
-  width = 50;
+  height = GAME_CONFIG.BOTTLE.HEIGHT;
+  width = GAME_CONFIG.BOTTLE.WIDTH;
   collected = false;
   visible = true;
 
@@ -14,12 +14,12 @@ class Bottle extends Item {
     this.x = xPosition;
 
     //this.findBottlePosition();
-    this.y = 320 + Math.random() * 150;
+    this.y = GAME_CONFIG.BOTTLE.Y_BASE + Math.random() * GAME_CONFIG.BOTTLE.Y_RANGE;
   }
 
   animate() {
     setInterval(() => {
       this.playItems(this.ITEMS);
-    }, 200);
+    }, GAME_CONFIG.BOTTLE.ANIMATION_SPEED);
   }
 }

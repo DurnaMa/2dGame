@@ -147,8 +147,8 @@ class Rogue extends Character {
   constructor() {
     super();
 
-    this.height = 200;
-    this.width = 200;
+    this.height = GAME_CONFIG.CHARACTER.HEIGHT;
+    this.width = GAME_CONFIG.CHARACTER.WIDTH;
 
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_JUMPING);

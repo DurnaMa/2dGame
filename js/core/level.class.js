@@ -1,7 +1,7 @@
 class Level {
   enemiesAnt;
   backgroundObjectRocks;
-  level_end_x = 7520;
+  level_end_x = GAME_CONFIG.LEVEL_END;
   coins;
   bottles;
   throwableObject;

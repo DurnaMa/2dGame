@@ -1,7 +1,7 @@
 class Character extends MovableObject {
-  y = 366;
-  x = 0;
-  speed = 5;
+  y = GAME_CONFIG.CHARACTER.START_Y
+  x = GAME_CONFIG.CHARACTER.START_X;
+  speed = GAME_CONFIG.CHARACTER.SPEED;
 
   moveInterval;
   animateionInterval;
@@ -11,13 +11,13 @@ class Character extends MovableObject {
     //super().loadImage('assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Mage/mage.png');
 
     this.offset = {
-      top: 90,
-      left: 35,
-      right: 90,
-      bottom: 25,
+      top: GAME_CONFIG.CHARACTER.OFFSET.TOP,
+      left: GAME_CONFIG.CHARACTER.OFFSET.LEFT,
+      right: GAME_CONFIG.CHARACTER.OFFSET.RIGHT,
+      bottom: GAME_CONFIG.CHARACTER.OFFSET.BOTTOM,
     };
 
-    this.x = 150;
+    this.x = GAME_CONFIG.CHARACTER.START_X;
     this.applyGravity();
 
     this.lastMoveTime = new Date().getTime();
@@ -39,7 +39,7 @@ class Character extends MovableObject {
         this.moveRight();
         this.lastMoveTime = new Date().getTime();
       }
-      if (this.world.keyboard.LEFT && this.x > 150) {
+      if (this.world.keyboard.LEFT && this.x > GAME_CONFIG.CHARACTER.START_X) {
         this.moveLeft();
         this.lastMoveTime = new Date().getTime();
       }
@@ -48,12 +48,12 @@ class Character extends MovableObject {
         this.jumpStarted = new Date().getTime();
       }
 
-      this.world.camera_x = -this.x + 150;
-    }, 1000 / 60);
+      this.world.camera_x = -this.x + GAME_CONFIG.CAMERA_OFFSET;
+    }, 1000 / GAME_CONFIG.FRAME_RATE);
 
     this.animationInterval = setInterval(() => {
       this.animateSetInterval();
-    }, 100);
+    }, GAME_CONFIG.ANIMATION_SPEED);
   }
 
   animateSetInterval() {
@@ -79,12 +79,12 @@ class Character extends MovableObject {
       this.currentImage = 0;
       let spacePressed = setInterval(() => {
         this.playAnimation(this.IMAGES_JUMPING);
-      }, 288);
+      }, GAME_CONFIG.JUMP_ANIMATION_SPEED);
 
       setTimeout(() => {
         this.checkAlreadyRunning = false;
         clearInterval(spacePressed);
-      }, 1900);
+      }, GAME_CONFIG.JUMP_ANIMATION_DURATION);
     }
   }
 

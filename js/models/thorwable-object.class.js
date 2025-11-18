@@ -20,9 +20,9 @@ class ThrowableObject extends MovableObject {
   }
 
   trow() {
-    this.speedX = 40;
+    this.speedX = GAME_CONFIG.THROWABLE.SPEED_X;
     setInterval(() => {
       this.x += this.speedX;
-    }, 1000 / 25);
+    }, 1000 / GAME_CONFIG.THROWABLE.UPDATE_RATE);
   }
 }

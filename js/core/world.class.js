@@ -57,15 +57,15 @@ class World {
     this.gameInterval = setInterval(() => {
       this.collisionManager.checkAllCollisions();
       this.checkThrowableObject();
-    }, 1000 / 60);
+    }, 1000 / GAME_CONFIG.FRAME_RATE);
   }
 
   checkThrowableObject() {
     if (this.keyboard.X && !this.firePressed && this.magicBar.percentage > 0) {
-      let fire = new ThrowableObject(this.character.x + 100, this.character.y);
+      let fire = new ThrowableObject(this.character.x + GAME_CONFIG.WORLD.FIRE_OFFSET_X, this.character.y);
       this.throwableObject.push(fire);
       this.firePressed = true;
-      this.magicBar.useMagic(1); // Verringert die Magie langsamer
+      this.magicBar.useMagic(GAME_CONFIG.WORLD.MAGIC_USE_PER_FIRE); // Verringert die Magie langsamer
     }
 
     if (!this.keyboard.X) {

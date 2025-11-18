@@ -1,26 +1,26 @@
-const CANVAS_WIDTH = 960;
-const yOffset = 100;
+const CANVAS_WIDTH = GAME_CONFIG.CANVAS_WIDTH;
+
 let coins = [];
 let bottles = [];
-const SECTIONCOUNT = 8;
-const SECTIONSTART = 2;
-const SECTIONEND = 7;
+const SECTIONCOUNT = GAME_CONFIG.SECTION_COUNT;
+const SECTIONSTART = GAME_CONFIG.SECTION_START;
+const SECTIONEND = GAME_CONFIG.SECTION_END;
 
-const PARALLAX_SKY = 0;
-const PARALLAX_FAR_CLOUDS = 0.2;
-const PARALLAX_MID_CLOUDS = 0.25;
-const PARALLAX_DISTANT_ROCKS = 0.4;
-const PARALLAX_MID_GROUND = 0.6;
-const PARALLAX_FOREGROUND = 0.8;
-const PARALLAX_MID_CLOUDS4 = 0.3;
+const PARALLAX_SKY = GAME_CONFIG.PARALLAX.SKY;
+const PARALLAX_FAR_CLOUDS = GAME_CONFIG.PARALLAX.FAR_CLOUDS;
+const PARALLAX_MID_CLOUDS = GAME_CONFIG.PARALLAX.MID_CLOUDS;
+const PARALLAX_DISTANT_ROCKS = GAME_CONFIG.PARALLAX.DISTANT_ROCKS;
+const PARALLAX_MID_GROUND = GAME_CONFIG.PARALLAX.MID_GROUND;
+const PARALLAX_FOREGROUND = GAME_CONFIG.PARALLAX.FOREGROUND;
+const PARALLAX_MID_CLOUDS4 = GAME_CONFIG.PARALLAX.MID_CLOUDS4;
 
-const Y_OFFSET_SKY = 0;
-const Y_OFFSET_CLOUDS_HIGH = 25;
-const Y_OFFSET_CLOUDS_MID = 20;
-const Y_OFFSET_ROCKS_HIGH = 15;
-const Y_OFFSET_ROCKS_MID = 10;
-const Y_OFFSET_ROCKS_LOW = 5;
-const Y_OFFSET_CLOUDS4_MID = 30;
+const Y_OFFSET_SKY = GAME_CONFIG.Y_OFFSET.SKY;
+const Y_OFFSET_CLOUDS_HIGH = GAME_CONFIG.Y_OFFSET.CLOUDS_HIGH;
+const Y_OFFSET_CLOUDS_MID = GAME_CONFIG.Y_OFFSET.CLOUDS_MID;
+const Y_OFFSET_ROCKS_HIGH = GAME_CONFIG.Y_OFFSET.ROCKS_HIGH;
+const Y_OFFSET_ROCKS_MID = GAME_CONFIG.Y_OFFSET.ROCKS_MID;
+const Y_OFFSET_ROCKS_LOW = GAME_CONFIG.Y_OFFSET.ROCKS_LOW;
+const Y_OFFSET_CLOUDS4_MID = GAME_CONFIG.Y_OFFSET.CLOUDS4_MID;
 
 spawnItem();
 
@@ -43,12 +43,12 @@ function getXPosition(index) {
   const minWidth = CANVAS_WIDTH * (index - 1);
   let x = Math.floor(Math.random() * (maxWidth - minWidth + 1)) + minWidth;
   let coinsAndBottles = [...coins, ...bottles];
-  let elementOnPosition = coinsAndBottles.find( c => c.x < x + 50 && c.x > x - 50);
+  let elementOnPosition = coinsAndBottles.find( c => c.x < x + GAME_CONFIG.ITEM_MIN_DISTANCE && c.x > x - GAME_CONFIG.ITEM_MIN_DISTANCE);
 
   if( elementOnPosition ) {
-    return getXPosition(); // Neue Position ermitteln
+    return getXPosition(index);
   } else {
-    return x; // Position passt: Position zurückgeben.
+    return x;
   }
 }
 

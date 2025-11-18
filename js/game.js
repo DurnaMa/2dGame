@@ -38,27 +38,27 @@ function restartGame() {
 }
 
 window.addEventListener('keydown', (e) => {
-  if (e.keyCode == 38) {
+  if (e.keyCode == GAME_CONFIG.KEYS.ARROW_UP) {
     keyboard.UP = true;
   }
 
-  if (e.keyCode == 39) {
+  if (e.keyCode == GAME_CONFIG.KEYS.ARROW_RIGHT) {
     keyboard.RIGHT = true;
   }
 
-  if (e.keyCode == 40) {
+  if (e.keyCode == GAME_CONFIG.KEYS.ARROW_DOWN) {
     keyboard.DOWN = true;
   }
 
-  if (e.keyCode == 37) {
+  if (e.keyCode == GAME_CONFIG.KEYS.ARROW_LEFT) {
     keyboard.LEFT = true;
   }
 
-  if (e.keyCode == 32) {
+  if (e.keyCode == GAME_CONFIG.KEYS.SPACE) {
     keyboard.SPACE = true;
   }
 
-  if (e.keyCode == 88) {
+  if (e.keyCode == GAME_CONFIG.KEYS.X) {
     keyboard.X = true;
   }
 
@@ -66,27 +66,27 @@ window.addEventListener('keydown', (e) => {
 });
 
 window.addEventListener('keyup', (e) => {
-  if (e.keyCode == 38) {
+  if (e.keyCode == GAME_CONFIG.KEYS.ARROW_UP) {
     keyboard.UP = false;
   }
 
-  if (e.keyCode == 39) {
+  if (e.keyCode == GAME_CONFIG.KEYS.ARROW_RIGHT) {
     keyboard.RIGHT = false;
   }
 
-  if (e.keyCode == 40) {
+  if (e.keyCode == GAME_CONFIG.KEYS.ARROW_DOWN) {
     keyboard.DOWN = false;
   }
 
-  if (e.keyCode == 37) {
+  if (e.keyCode == GAME_CONFIG.KEYS.ARROW_LEFT) {
     keyboard.LEFT = false;
   }
 
-  if (e.keyCode == 32) {
+  if (e.keyCode == GAME_CONFIG.KEYS.SPACE) {
     keyboard.SPACE = false;
   }
 
-  if (e.keyCode == 88) {
+  if (e.keyCode == GAME_CONFIG.KEYS.X) {
     keyboard.X = false;
   }
 });
