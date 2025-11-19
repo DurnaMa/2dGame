@@ -92,6 +92,6 @@ class MovableObject extends DrawableObject {
 
   isIdle() {
     let now = new Date().getTime();
-    //return now - this.lastMoveTime > 3000;
+    return now - this.lastMoveTime > 3000;
   }
 }

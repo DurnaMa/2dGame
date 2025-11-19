@@ -35,6 +35,13 @@ class EnemiesAnt extends MovableObject {
       right: GAME_CONFIG.ENEMY.ANT.OFFSET.RIGHT,
       bottom: GAME_CONFIG.ENEMY.ANT.OFFSET.BOTTOM,
     };
+
+    this.startX = this.x;
+    this.isActive = true;
+    this.movingRight = false;
+    this.speed = GAME_CONFIG.ENEMY.BOSS.SPEED;
+
+    this.animate();
   }
 
   animate() {

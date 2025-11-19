@@ -117,6 +117,8 @@ const GAME_CONFIG = {
       HEIGHT: 400,
       SPEED: 1,
       ANIMATION_SPEED: 200,
+      PATROL_RANGE: 2000,
+      ACTIVATION_DISTANCE: 600,
       OFFSET: {
         TOP: 125,
         LEFT: 165,

@@ -1,5 +1,5 @@
 class Magicbar extends DrawableObject {
-  percentage = GAME_CONFIG.UI.MAGICBAR.PERCENTAGE_START; // Start with empty magic bar
+  percentage = GAME_CONFIG.UI.MAGICBAR.PERCENTAGE_START;
 
   CHARACTER_MAGIC_BAR = [
     'assets/fantasy-platformer-game-ui/PNG/16Inner_Interface/magic_bar/00energy-magic.png',
@@ -25,9 +25,7 @@ class Magicbar extends DrawableObject {
     this.width = GAME_CONFIG.UI.MAGICBAR.WIDTH;
     this.height = GAME_CONFIG.UI.MAGICBAR.HEIGHT;
     this.visible = true;
-    this.setPercentage(GAME_CONFIG.UI.MAGICBAR.PERCENTAGE_START); // Start with empty magic bar
-
-
+    this.setPercentage(GAME_CONFIG.UI.MAGICBAR.PERCENTAGE_START);
   }
 
   addMagic(amount = GAME_CONFIG.UI.MAGICBAR.MAGIC_ADD_AMOUNT) {
@@ -38,7 +36,7 @@ class Magicbar extends DrawableObject {
 
   useMagic(amount = GAME_CONFIG.UI.MAGICBAR.MAGIC_USE_AMOUNT) {
     if (this.percentage > 0) {
-      this.setPercentage(this.percentage - amount)
+      this.setPercentage(this.percentage - amount);
     }
   }
 
@@ -46,9 +44,6 @@ class Magicbar extends DrawableObject {
     this.percentage = Math.round(percentage);
     if (this.percentage <= 0) {
       this.percentage = 0;
-    //   this.visible = false;
-    // } else {
-    //   this.visible = true;
     }
     let path = this.CHARACTER_MAGIC_BAR[this.resolveImageIndex()];
     this.img = this.imageCache[path];
@@ -64,19 +59,32 @@ class Magicbar extends DrawableObject {
     if (this.percentage <= 0) return 0;
 
     switch (true) {
-      case this.percentage >= 91.67: return 12;
-      case this.percentage >= 83.34: return 11;
-      case this.percentage >= 75: return 10;
-      case this.percentage >= 66.67: return 9;
-      case this.percentage >= 58.34: return 8;
-      case this.percentage >= 50: return 7;
-      case this.percentage >= 41.67: return 6;
-      case this.percentage >= 33.34: return 5;
-      case this.percentage >= 25: return 4;
-      case this.percentage >= 16.67: return 3;
-      case this.percentage >= 16.66: return 2;
-      case this.percentage >= 8.34: return 1;
-      default: return 0;
+      case this.percentage >= 91.67:
+        return 12;
+      case this.percentage >= 83.34:
+        return 11;
+      case this.percentage >= 75:
+        return 10;
+      case this.percentage >= 66.67:
+        return 9;
+      case this.percentage >= 58.34:
+        return 8;
+      case this.percentage >= 50:
+        return 7;
+      case this.percentage >= 41.67:
+        return 6;
+      case this.percentage >= 33.34:
+        return 5;
+      case this.percentage >= 25:
+        return 4;
+      case this.percentage >= 16.67:
+        return 3;
+      case this.percentage >= 16.66:
+        return 2;
+      case this.percentage >= 8.34:
+        return 1;
+      default:
+        return 0;
     }
   }
 }
