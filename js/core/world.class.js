@@ -61,7 +61,7 @@ class World {
   }
 
   checkThrowableObject() {
-    if (this.keyboard.X && !this.firePressed && this.magicBar.percentage > 0) {
+    if (this.keyboard.X && !this.firePressed && this.magicBar.shots > 0) {
       let fire = new ThrowableObject(this.character.x + GAME_CONFIG.WORLD.FIRE_OFFSET_X, this.character.y);
       this.throwableObject.push(fire);
       this.firePressed = true;
@@ -104,7 +104,7 @@ class World {
       this.ctx.restore();
     }
 
-  // (Duplicated drawing calls removed) — Game objects were already drawn above.
+    // (Duplicated drawing calls removed) — Game objects were already drawn above.
 
     self = this;
     requestAnimationFrame(function () {
@@ -151,15 +151,7 @@ class World {
   stopGame() {
     clearInterval(this.gameInterval);
     if (this.character) {
-        this.character.stopAllIntervals();
+      this.character.stopAllIntervals();
     }
-}
-
-  // binKeyEvents() {
-  //   window.addEventListener('keydown', (e) => {
-  //     if (e.keyCode === 'X') {
-  //       this.magicBar.useMagic();
-  //     }
-  //   })
-  // }
+  }
 }

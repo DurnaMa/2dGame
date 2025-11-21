@@ -1,5 +1,6 @@
 class Magicbar extends DrawableObject {
   percentage = GAME_CONFIG.UI.MAGICBAR.PERCENTAGE_START;
+  shots = 0
 
   CHARACTER_MAGIC_BAR = [
     'assets/fantasy-platformer-game-ui/PNG/16Inner_Interface/magic_bar/00energy-magic.png',
@@ -29,15 +30,17 @@ class Magicbar extends DrawableObject {
   }
 
   addMagic(amount = GAME_CONFIG.UI.MAGICBAR.MAGIC_ADD_AMOUNT) {
-    if (this.percentage < 100) {
-      this.setPercentage(Math.min(100, this.percentage + amount));
+    if (this.shots <= 12) {
+      this.shots++;
+      const percentage = 100 / 12; // 8.34
+      this.setPercentage(percentage * this.shots);
     }
   }
 
   useMagic(amount = GAME_CONFIG.UI.MAGICBAR.MAGIC_USE_AMOUNT) {
-    if (this.percentage > 0) {
-      this.setPercentage(this.percentage - amount);
-    }
+    this.shots--;
+    const percentage = 100 / 12; // 8.34
+    this.setPercentage(percentage * this.shots);
   }
 
   setPercentage(percentage) {
@@ -45,46 +48,8 @@ class Magicbar extends DrawableObject {
     if (this.percentage <= 0) {
       this.percentage = 0;
     }
-    let path = this.CHARACTER_MAGIC_BAR[this.resolveImageIndex()];
+    //let path = this.CHARACTER_MAGIC_BAR[this.resolveImageIndex()];
+    let path = this.CHARACTER_MAGIC_BAR[this.shots]
     this.img = this.imageCache[path];
-  }
-
-  /**
-   * Calculates the correct image index based on the current percentage.
-   * There are 12 images for the bar's progression (1 to 12) and one for the empty state (0).
-   * The percentage is divided into 12 equal segments.
-   * @returns {number} The index of the image to display.
-   */
-  resolveImageIndex() {
-    if (this.percentage <= 0) return 0;
-
-    switch (true) {
-      case this.percentage >= 91.67:
-        return 12;
-      case this.percentage >= 83.34:
-        return 11;
-      case this.percentage >= 75:
-        return 10;
-      case this.percentage >= 66.67:
-        return 9;
-      case this.percentage >= 58.34:
-        return 8;
-      case this.percentage >= 50:
-        return 7;
-      case this.percentage >= 41.67:
-        return 6;
-      case this.percentage >= 33.34:
-        return 5;
-      case this.percentage >= 25:
-        return 4;
-      case this.percentage >= 16.67:
-        return 3;
-      case this.percentage >= 16.66:
-        return 2;
-      case this.percentage >= 8.34:
-        return 1;
-      default:
-        return 0;
-    }
   }
 }
