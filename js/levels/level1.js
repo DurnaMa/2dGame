@@ -118,4 +118,4 @@ const backgroundObjects = [
   ),
 ];
 
-const level1 = new Level([new EnemiesAnt(), new Endboss()], backgroundObjects, coins, bottles, );
+const level1 = new Level([new EvilMonsterSprites(), new Endboss()], backgroundObjects, coins, bottles, );

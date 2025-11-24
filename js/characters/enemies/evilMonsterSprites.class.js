@@ -1,4 +1,4 @@
-class EnemiesAnt extends MovableObject {
+class EvilMonsterSprites extends MovableObject {
   y = GAME_CONFIG.ENEMY.ANT.Y;
   x = GAME_CONFIG.ENEMY.ANT.START_X;
   height = GAME_CONFIG.ENEMY.ANT.HEIGHT;
