@@ -1,0 +1,3 @@
+class Dragon extends MovableObject {
+
+}

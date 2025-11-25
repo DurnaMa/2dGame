@@ -26,6 +26,14 @@ class CollisionManager {
     this.checkEnemyCollisions();
     this.checkItemCollisions();
     this.checkEndbossCollisions();
+    this.cleanupDeadEnemies();
+  }
+
+  cleanupDeadEnemies() {
+    // Entferne alle Gegner die markedForRemoval Flag haben
+    this.world.level.enemiesAnt = this.world.level.enemiesAnt.filter(
+      enemy => !enemy.markedForRemoval
+    );
   }
 
   checkEnemyCollisions() {

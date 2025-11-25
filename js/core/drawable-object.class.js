@@ -40,7 +40,7 @@ class DrawableObject {
   drawBorder(ctx) {
     if (
       this instanceof Character ||
-      this instanceof EvilMonsterSprites ||
+      this instanceof BigKnight ||
       this instanceof Endboss ||
       this instanceof Bottle ||
       this instanceof Coin
@@ -61,7 +61,7 @@ class DrawableObject {
   drawCollisionBorder(ctx) {
     if (
       this instanceof Character ||
-      this instanceof EvilMonsterSprites ||
+      this instanceof BigKnight ||
       this instanceof Endboss
       //this instanceof Bottle ||
       //this instanceof Coins

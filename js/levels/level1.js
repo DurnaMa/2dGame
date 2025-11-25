@@ -2,6 +2,7 @@ const CANVAS_WIDTH = GAME_CONFIG.CANVAS_WIDTH;
 
 let coins = [];
 let bottles = [];
+let enemies = [];
 const SECTIONCOUNT = GAME_CONFIG.SECTION_COUNT;
 const SECTIONSTART = GAME_CONFIG.SECTION_START;
 const SECTIONEND = GAME_CONFIG.SECTION_END;
@@ -23,6 +24,23 @@ const Y_OFFSET_ROCKS_LOW = GAME_CONFIG.Y_OFFSET.ROCKS_LOW;
 const Y_OFFSET_CLOUDS4_MID = GAME_CONFIG.Y_OFFSET.CLOUDS4_MID;
 
 spawnItem();
+spawnEnemies();
+
+function spawnEnemies() {
+  // Erstelle 1-2 Gegner pro Sektion
+  for (let section = SECTIONSTART; section <= SECTIONEND; section++) {
+    // Anzahl der Gegner pro Sektion (1 oder 2 zufällig)
+    const enemyCount = Math.random() > 0.5 ? 1 : 2;
+
+    for (let i = 0; i < enemyCount; i++) {
+      let enemy = new BigKnight();
+      enemy.x = CANVAS_WIDTH * (section - 1) + Math.random() * (CANVAS_WIDTH - 400);
+      enemies.push(enemy);
+    }
+  }
+
+  enemies.push(new Endboss());
+}
 
 function spawnItem() {
   for (let section = SECTIONSTART; section <= SECTIONEND; section++) {
@@ -118,4 +136,4 @@ const backgroundObjects = [
   ),
 ];
 
-const level1 = new Level([new EvilMonsterSprites(), new Endboss()], backgroundObjects, coins, bottles, );
+const level1 = new Level(enemies, backgroundObjects, coins, bottles);

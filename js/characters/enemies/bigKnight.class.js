@@ -1,8 +1,8 @@
-class EvilMonsterSprites extends MovableObject {
-  y = GAME_CONFIG.ENEMY.ANT.Y;
-  x = GAME_CONFIG.ENEMY.ANT.START_X;
-  height = GAME_CONFIG.ENEMY.ANT.HEIGHT;
-  width = GAME_CONFIG.ENEMY.ANT.WIDTH;
+class BigKnight extends MovableObject {
+  y = GAME_CONFIG.ENEMY.BIGKNIGHT.Y;
+  x = GAME_CONFIG.ENEMY.BIGKNIGHT.START_X;
+  height = GAME_CONFIG.ENEMY.BIGKNIGHT.HEIGHT;
+  width = GAME_CONFIG.ENEMY.BIGKNIGHT.WIDTH;
 
   IMAGES_WALKING = [
     'assets/2d-pixel-art-evil-monster-sprites/PNG/Big_knight/big_knight04_walk1.png',
@@ -23,17 +23,18 @@ class EvilMonsterSprites extends MovableObject {
   constructor() {
     super().loadImage('assets/2d-pixel-art-evil-monster-sprites/PNG/Big_knight/big_knight14_hurt1.png');
 
-    this.x = GAME_CONFIG.ENEMY.ANT.START_X + Math.random() * GAME_CONFIG.ENEMY.ANT.MAX_X_RANDOM_RANGE;
-    this.speed = GAME_CONFIG.ENEMY.ANT.MIN_SPEED + Math.random() * GAME_CONFIG.ENEMY.ANT.MAX_SPEED_RANGE;
+    this.x = GAME_CONFIG.ENEMY.BIGKNIGHT.START_X + Math.random() * GAME_CONFIG.ENEMY.BIGKNIGHT.MAX_X_RANDOM_RANGE;
+    this.speed = GAME_CONFIG.ENEMY.BIGKNIGHT.MIN_SPEED + Math.random() * GAME_CONFIG.ENEMY.BIGKNIGHT.MAX_SPEED_RANGE;
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_DEATH);  // Lade auch die Todesanimation
     this.isDead = false;  // Initialisiere isDead
+    this.markedForRemoval = false;  // Flag für vollständige Entfernung
     this.animate();
     this.offset = {
-      top: GAME_CONFIG.ENEMY.ANT.OFFSET.TOP,
-      left: GAME_CONFIG.ENEMY.ANT.OFFSET.LEFT,
-      right: GAME_CONFIG.ENEMY.ANT.OFFSET.RIGHT,
-      bottom: GAME_CONFIG.ENEMY.ANT.OFFSET.BOTTOM,
+      top: GAME_CONFIG.ENEMY.BIGKNIGHT.OFFSET.TOP,
+      left: GAME_CONFIG.ENEMY.BIGKNIGHT.OFFSET.LEFT,
+      right: GAME_CONFIG.ENEMY.BIGKNIGHT.OFFSET.RIGHT,
+      bottom: GAME_CONFIG.ENEMY.BIGKNIGHT.OFFSET.BOTTOM,
     };
 
     this.startX = this.x;
@@ -62,7 +63,7 @@ class EvilMonsterSprites extends MovableObject {
       } else {
         this.playAnimation(this.IMAGES_WALKING);
       }
-    }, GAME_CONFIG.ENEMY.ANT.ANIMATION_SPEED);
+    }, GAME_CONFIG.ENEMY.BIGKNIGHT.ANIMATION_SPEED);
   }
 
   remove() {
@@ -72,5 +73,7 @@ class EvilMonsterSprites extends MovableObject {
     // Gegner unsichtbar machen
     this.width = 0;
     this.height = 0;
+    // Markiere für vollständige Entfernung aus dem Array
+    this.markedForRemoval = true;
   }
 }

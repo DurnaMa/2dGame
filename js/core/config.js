@@ -93,7 +93,7 @@ const GAME_CONFIG = {
 
   // ===== ENEMIES =====
   ENEMY: {
-    ANT: {
+    BIGKNIGHT: {
       Y: 340,
       START_X: 40,
       WIDTH: 300,
