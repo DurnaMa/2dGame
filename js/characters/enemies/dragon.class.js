@@ -35,5 +35,8 @@ class Dragon extends MovableObject {
       right: GAME_CONFIG.ENEMY.DRAGON.OFFSET.RIGHT,
       bottom: GAME_CONFIG.ENEMY.DRAGON.OFFSET.BOTTOM,
     };
+
+    this.startX =  this.x;
   }
+
 }

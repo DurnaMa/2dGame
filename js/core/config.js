@@ -110,6 +110,9 @@ const GAME_CONFIG = {
         BOTTOM: 100,
       },
     },
+    DRAGON: {
+
+    },
     BOSS: {
       Y: 220,
       START_X: 7500,

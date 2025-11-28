@@ -26,7 +26,6 @@ class Character extends MovableObject {
 
   isDeath() {
     if (this.energy == 0) {
-      this.stopAllIntervals();
       return true;
     }
     return false;

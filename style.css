@@ -57,3 +57,21 @@ h1 {
     width: 100vh;
   }
 } */
+
+/* Smartphone */
+@media only screen and (max-width: 720px) {
+  canvas {
+    width: 100%;
+  }
+}
+
+/* Smartphone */
+@media only screen and (max-height: 480px) {
+  canvas {
+    height: 100dvh;
+  }
+
+  h1 {
+    display: none;
+  }
+}

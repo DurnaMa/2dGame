@@ -6,10 +6,6 @@ let gameOverScreen;
 function init() {
   canvas = document.getElementById('canvas');
 
-  // Erst GameOverScreen initialisieren
-  window.gameOverScreen = new GameOverScreen();
-  gameOverScreen = window.gameOverScreen;
-
   // Dann World initialisieren
   window.world = new World(canvas, keyboard);
   world = window.world;
@@ -26,10 +22,6 @@ function handleClick(event) {
   const rect = canvas.getBoundingClientRect();
   const clickX = event.clientX - rect.left;
   const clickY = event.clientY - rect.top;
-
-  if (gameOverScreen.isRetryButtonClicked(clickX, clickY)) {
-    restartGame();
-  }
 }
 
 function restartGame() {
