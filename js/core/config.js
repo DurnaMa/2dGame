@@ -100,8 +100,8 @@ const GAME_CONFIG = {
       HEIGHT: 300,
       MIN_X_RANDOM: 250,
       MAX_X_RANDOM_RANGE: 500,
-      MIN_SPEED: 0.15,
-      MAX_SPEED_RANGE: 0.55,
+      MIN_SPEED: 1.5,
+      MAX_SPEED_RANGE: 2.0,
       ANIMATION_SPEED: 200,
       OFFSET: {
         TOP: 95,
