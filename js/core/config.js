@@ -111,7 +111,21 @@ const GAME_CONFIG = {
       },
     },
     DRAGON: {
-
+      Y: 352,
+      START_X: 40,
+      WIDTH: 300,
+      HEIGHT: 300,
+      MIN_X_RANDOM: 250,
+      MAX_X_RANDOM_RANGE: 500,
+      MIN_SPEED: 1.5,
+      MAX_SPEED_RANGE: 2.0,
+      ANIMATION_SPEED: 200,
+      OFFSET: {
+        TOP: 112,
+        LEFT: 40,
+        RIGHT: 88,
+        BOTTOM: 113,
+      },
     },
     BOSS: {
       Y: 220,

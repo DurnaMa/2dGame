@@ -43,7 +43,8 @@ class DrawableObject {
       this instanceof BigKnight ||
       this instanceof Endboss ||
       this instanceof Bottle ||
-      this instanceof Coin
+      this instanceof Coin ||
+      this instanceof Dragon
     ) {
       ctx.beginPath();
       ctx.lineWidth = GAME_CONFIG.DRAWABLE.BORDER_WIDTH;
@@ -62,7 +63,8 @@ class DrawableObject {
     if (
       this instanceof Character ||
       this instanceof BigKnight ||
-      this instanceof Endboss
+      this instanceof Endboss ||
+      this instanceof Dragon
       //this instanceof Bottle ||
       //this instanceof Coins
     ) {

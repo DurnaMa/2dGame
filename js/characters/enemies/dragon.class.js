@@ -36,7 +36,42 @@ class Dragon extends MovableObject {
       bottom: GAME_CONFIG.ENEMY.DRAGON.OFFSET.BOTTOM,
     };
 
-    this.startX =  this.x;
+    this.startX = this.x;
+    this.isActive = true;
+    this.movingRight = false;
+    this.speed = GAME_CONFIG.ENEMY.BOSS.SPEED;
+
+    this.animate();
+  }
+  animate() {
+    this.moveInterval = setInterval(() => {
+      if (!this.isDead) {
+        this.moveLeft();
+      }
+    }, 1000 / GAME_CONFIG.FRAME_RATE);
+
+    this.animationInterval = setInterval(() => {
+      if (this.isDead) {
+        // Todesanimation abspielen
+        this.playAnimation(this.IMAGES_DEATH);
+        // Nach der Animation verschwinden
+        if (this.currentImage >= this.IMAGES_DEATH.length) {
+          this.remove();
+        }
+      } else {
+        this.playAnimation(this.IMAGES_WALKING);
+      }
+    }, GAME_CONFIG.ENEMY.BIGKNIGHT.ANIMATION_SPEED);
   }
 
+  remove() {
+    // Intervalle stoppen
+    clearInterval(this.moveInterval);
+    clearInterval(this.animationInterval);
+    // Gegner unsichtbar machen
+    this.width = 0;
+    this.height = 0;
+    // Markiere für vollständige Entfernung aus dem Array
+    this.markedForRemoval = true;
+  }
 }
