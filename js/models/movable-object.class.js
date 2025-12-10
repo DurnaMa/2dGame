@@ -85,9 +85,9 @@ class MovableObject extends DrawableObject {
   }
 
   isHurt() {
-    let timepassed = new Date().getTime() - this.lastHit;
-    timepassed = timepassed / 1000;
-    return timepassed < GAME_CONFIG.MOVABLE.HURT_DURATION;
+    let timestamped = new Date().getTime() - this.lastHit;
+    timestamped = timestamped / 1000;
+    return timestamped < GAME_CONFIG.MOVABLE.HURT_DURATION;
   }
 
   isIdle() {

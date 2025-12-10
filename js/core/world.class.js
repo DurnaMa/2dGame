@@ -6,8 +6,6 @@ class World {
   ctx;
   keyboard;
   camera_x = 0;
-  coins;
-  bottles;
   collisionManager;
   statusBar = new Statusbar();
   magicBar = new Magicbar();
@@ -62,7 +60,7 @@ class World {
 
   checkThrowableObject() {
     if (this.keyboard.X && !this.firePressed && this.magicBar.shots > 0) {
-      let fire = new ThrowableObject(this.character.x + GAME_CONFIG.WORLD.FIRE_OFFSET_X, this.character.y);
+      let fire = new ThrowableObject(this.character.x + GAME_CONFIG.WORLD.FIRE_OFFSET_X, this.character.y, this);
       this.throwableObject.push(fire);
       this.firePressed = true;
       this.magicBar.useMagic(GAME_CONFIG.WORLD.MAGIC_USE_PER_FIRE); // Verringert die Magie langsamer

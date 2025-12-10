@@ -4,7 +4,6 @@ class Character extends MovableObject {
   speed = GAME_CONFIG.CHARACTER.SPEED;
 
   moveInterval;
-  animateionInterval;
 
   constructor() {
     super().loadImage('assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/rogue.png');
@@ -25,11 +24,7 @@ class Character extends MovableObject {
   }
 
   isDeath() {
-    if (this.energy == 0) {
-      return true;
-    }
-    return false;
-    //return this.energy == 0;
+    return this.energy === 0;
   }
 
   animate() {

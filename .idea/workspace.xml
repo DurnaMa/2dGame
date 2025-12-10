@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="915bc3c1-ffb3-4df0-840e-1c842cc36a3c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/fantasy-platformer-pixel-art_2d.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/fantasy-platformer-pixel-art_2d.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/git_toolbox_prj.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/characters/character.class.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/characters/character.class.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/core/world.class.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/core/world.class.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/models/movable-object.class.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/models/movable-object.class.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/models/thorwable-object.class.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/models/thorwable-object.class.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;DurnaMa&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:DurnaMa/2dGame.git&quot;,
+    &quot;accountId&quot;: &quot;a5abb64a-b943-43ed-8ec5-21a8a1daf4d9&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="36ZoYlYLrMvh52UB4DJBMN1dM0H" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "main",
+    "javascript.preferred.runtime.type.id": "node",
+    "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "/home/mahirdurna/dev/01projektArbeit/fantasy-platformer-pixel-art_2d",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.keymap",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-c7e53b3be11b-JavaScript-WS-253.28294.332" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="915bc3c1-ffb3-4df0-840e-1c842cc36a3c" name="Changes" comment="" />
+      <created>1765223503528</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1765223503528</updated>
+      <workItem from="1765223504623" duration="2406000" />
+      <workItem from="1765306180396" duration="204000" />
+      <workItem from="1765306394413" duration="134000" />
+      <workItem from="1765306542288" duration="75000" />
+      <workItem from="1765306627964" duration="149000" />
+      <workItem from="1765306788605" duration="2933000" />
+      <workItem from="1765389213005" duration="4957000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
