@@ -24,6 +24,16 @@ class World {
     this.statusBar.setPercentage(this.character.energy);
   }
 
+  /**
+   * Initializes the world reference for all game objects and UI elements.
+   * This method assigns the current world instance to the character, all level entities
+   * (enemies, obstacles, collectibles, throwable objects), and UI components.
+   * This allows all objects to access the world instance via this.world.
+   *
+   * @function setWorld
+   * @memberof World
+   * @returns {void}
+   */
   setWorld() {
     this.character.world = this;
 
@@ -51,6 +61,11 @@ class World {
     if (this.magicBar) this.magicBar.world = this;
   }
 
+  /**
+   * Starts the game loop that continuously checks collisions and throwable objects.
+   * Runs at the frame rate specified in GAME_CONFIG.FRAME_RATE.
+   * @returns {void}
+   */
   run() {
     this.gameInterval = setInterval(() => {
       this.collisionManager.checkAllCollisions();
@@ -58,6 +73,14 @@ class World {
     }, 1000 / GAME_CONFIG.FRAME_RATE);
   }
 
+  /**
+   * Checks if the player is attempting to throw a fire object and manages the throw action.
+   * Creates a new throwable fire object at the character's position if the throw key (X) is pressed,
+   * magic is available, and a throw is not already in progress. Tracks the throw state to prevent
+   * multiple throws from a single key press and consumes magic from the magic bar.
+   *
+   * @returns {void}
+   */
   checkThrowableObject() {
     if (this.keyboard.X && !this.firePressed && this.magicBar.shots > 0) {
       let fire = new ThrowableObject(this.character.x + GAME_CONFIG.WORLD.FIRE_OFFSET_X, this.character.y, this);
@@ -71,6 +94,19 @@ class World {
     }
   }
 
+  /**
+   * Renders the game frame by drawing all game objects in the correct order.
+   *
+   * Clears the canvas and redraws:
+   * - Background objects (rocks)
+   * - Status bar and magic bar (with camera offset adjustment)
+   * - Main character and game objects (throwable objects, enemies, coins, bottles)
+   * - Game over screen (if character is dead, positioned at screen center)
+   *
+   * Continuously calls itself using requestAnimationFrame for smooth animation.
+   *
+   * @returns {void}
+   */
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -110,6 +146,7 @@ class World {
     });
   }
 
+
   addToMap(mo) {
     // Nicht zeichnen wenn Objekt nicht sichtbar ist
     if (mo.visible === false || (mo.isVisible && mo.isVisible() === false)) {
@@ -132,20 +169,30 @@ class World {
       mo.draw(this.ctx);
       mo.drawBorder(this.ctx);
       mo.drawCollisionBorder(this.ctx);
+      mo.drawCollisionMagic(this.ctx);
     } else {
       mo.draw(this.ctx);
       mo.drawBorder(this.ctx);
       mo.drawCollisionBorder(this.ctx);
+      mo.drawCollisionMagic(this.ctx);
     }
     this.ctx.restore();
   }
 
+  /**
+   * Adds multiple objects to the map.
+   * @param {Object[]} objects - An array of objects to be added to the map.
+   */
   addObjectsToMap(objects) {
-    objects.forEach((o) => {
-      this.addToMap(o);
+    objects.forEach((gameObject) => {
+      this.addToMap(gameObject);
     });
   }
 
+  /**
+   * Stops the game by clearing the game interval and stopping all character animations/intervals.
+   * @returns {void}
+   */
   stopGame() {
     clearInterval(this.gameInterval);
     if (this.character) {

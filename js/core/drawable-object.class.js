@@ -6,6 +6,8 @@ class DrawableObject {
   y = GAME_CONFIG.DRAWABLE.Y;
   height = GAME_CONFIG.DRAWABLE.HEIGHT;
   width = GAME_CONFIG.DRAWABLE.WIDTH;
+  otherDirection;
+  offset;
 
   loadImage(path) {
     this.img = new Image();
@@ -89,5 +91,31 @@ class DrawableObject {
       }
       ctx.stroke();
     }
+  }
+
+  drawCollisionMagic(ctx) {
+    if (this instanceof ThrowableObject) {
+      ctx.beginPath();
+      ctx.lineWidth = GAME_CONFIG.DRAWABLE.BORDER_WIDTH;
+      ctx.strokeStyle = 'yellow';
+
+      if (this.otherDirection) {
+        ctx.rect(
+          this.offset.left,
+          this.offset.top,
+          this.width - this.offset.right - this.offset.left,
+          this.height - this.offset.bottom - this.offset.top
+        );
+      } else {
+        ctx.rect(
+          this.x + this.offset.left,
+          this.y + this.offset.top,
+          this.width - this.offset.right - this.offset.left,
+          this.height - this.offset.bottom - this.offset.top
+        );
+      }
+      ctx.stroke();
+    }
+
   }
 }
