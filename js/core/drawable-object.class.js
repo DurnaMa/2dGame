@@ -26,11 +26,6 @@ class DrawableObject {
     }
   }
 
-  /**
-   *
-   * @param {Array} arr - ['/assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Walk/walk1.png',
-   * '/assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/Walk/walk2.png' ...]
-   */
   loadImages(arr) {
     arr.forEach((path) => {
       let img = new Image();
@@ -79,14 +74,14 @@ class DrawableObject {
           this.offset.left,
           this.offset.top,
           this.width - this.offset.right - this.offset.left,
-          this.height - this.offset.bottom - this.offset.top
+          this.height - this.offset.bottom - this.offset.top,
         );
       } else {
         ctx.rect(
           this.x + this.offset.left,
           this.y + this.offset.top,
           this.width - this.offset.right - this.offset.left,
-          this.height - this.offset.bottom - this.offset.top
+          this.height - this.offset.bottom - this.offset.top,
         );
       }
       ctx.stroke();

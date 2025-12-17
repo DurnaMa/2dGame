@@ -39,27 +39,6 @@ class Character extends MovableObject {
     return this.energy === 0;
   }
 
-  /**
-   * Initializes and starts the animation loops for character movement and sprite animation.
-   *
-   * Sets up two intervals:
-   * 1. Movement interval - Handles keyboard input for left/right movement and jumping.
-   *    Updates camera position to follow the character.
-   * 2. Animation interval - Updates the character's sprite animation.
-   *
-   * @function animate
-   * @returns {void}
-   *
-   * @description
-   * - Processes RIGHT input to move character right (bounded by level_end_x)
-   * - Processes LEFT input to move character left (bounded by CHARACTER.START_X)
-   * - Processes SPACE input to initiate jump if character is on ground
-   * - Updates camera position based on character's x position and configured offset
-   * - Runs movement logic at FRAME_RATE fps
-   * - Runs animation update at ANIMATION_SPEED fps
-   *
-   * @private
-   */
   animate() {
     this.moveInterval = setInterval(() => {
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
@@ -83,18 +62,6 @@ class Character extends MovableObject {
     }, GAME_CONFIG.ANIMATION_SPEED);
   }
 
-  /**
-   * Animates the character based on its current state.
-   * The animation will change depending on whether the character is:
-   * - Dead: Plays the death animation.
-   * - Above ground: Handles the jump animation.
-   * - Idle: Plays the idle animation.
-   * - Hurt: Plays the hurt animation.
-   * - Moving left or right: Plays the walking animation.
-   * - None of the above: Plays the standing animation.
-   *
-   * @returns {void} This function does not return a value.
-   */
   animateSetInterval() {
     if (this.isDeath()) {
       this.playAnimation(this.IMAGES_DEATH);
@@ -111,17 +78,6 @@ class Character extends MovableObject {
     }
   }
 
-
-  /**
-   * Handles the jump animation for the character.
-   * This method initiates the jump animation by setting the current image
-   * to the first frame and starting an interval to play the jump animation frames.
-   * It ensures that the jump animation is not already running by using a flag.
-   * The animation will continue for a specified duration before stopping.
-   *
-   * @function handleJumpAnimation
-   * @returns {void}
-   */
   handleJumpAnimation() {
     if (!this.checkAlreadyRunning) {
       this.checkAlreadyRunning = true;
@@ -137,11 +93,6 @@ class Character extends MovableObject {
     }
   }
 
-  /**
-   * Stops all active intervals related to the character.
-   * This includes the movement interval, animation interval,
-   * and the game interval if it exists within the world object.
-   */
   stopAllIntervals() {
     if (this.moveInterval) clearInterval(this.moveInterval);
     if (this.animationInterval) clearInterval(this.animationInterval);

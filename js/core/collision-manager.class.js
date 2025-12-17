@@ -21,7 +21,7 @@ class CollisionManager {
     const isPositionedAbove = playerCenter < enemyCenter;
     return isPlayerFalling && isHittingWithFeet && isPositionedAbove;
   }
-
+  
   checkAllCollisions() {
     this.checkEnemyCollisions();
     this.checkItemCollisions();

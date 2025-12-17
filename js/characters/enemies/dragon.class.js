@@ -51,15 +51,15 @@ class Dragon extends MovableObject {
     }, 1000 / GAME_CONFIG.FRAME_RATE);
 
     this.animationInterval = setInterval(() => {
-      if (this.isDead) {
+      if (!this.isDead) {
+        this.playAnimation(this.IMAGES_WALKING);
+      } else {
         // Todesanimation abspielen
         this.playAnimation(this.IMAGES_DEATH);
         // Nach der Animation verschwinden
         if (this.currentImage >= this.IMAGES_DEATH.length) {
           this.remove();
         }
-      } else {
-        this.playAnimation(this.IMAGES_WALKING);
       }
     }, GAME_CONFIG.ENEMY.BIGKNIGHT.ANIMATION_SPEED);
   }
