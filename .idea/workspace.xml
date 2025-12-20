@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="915bc3c1-ffb3-4df0-840e-1c842cc36a3c" name="Changes" comment="Fix: drawCollisionMagic collision border for projectiles">
+    <list default="true" id="915bc3c1-ffb3-4df0-840e-1c842cc36a3c" name="Changes" comment="Refactor isJumpingOnEnemy for readability&#10;&#10;- Use clearer variable names for player/enemy positions&#10;- Extract collision checks into small helper methods&#10;- Add comments to explain each condition">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/characters/character.class.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/characters/character.class.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/characters/enemies/dragon.class.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/characters/enemies/dragon.class.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/core/collision-manager.class.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/core/collision-manager.class.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/core/drawable-object.class.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/core/drawable-object.class.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/core/world.class.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/core/world.class.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/models/movable-object.class.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/models/movable-object.class.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +30,9 @@
     &quot;accountId&quot;: &quot;a5abb64a-b943-43ed-8ec5-21a8a1daf4d9&quot;
   }
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
 }</component>
@@ -65,7 +66,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-c7e53b3be11b-JavaScript-WS-253.28294.332" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-WS-253.29346.143" />
       </set>
     </attachedChunks>
   </component>
@@ -89,7 +90,9 @@
       <workItem from="1765918507386" duration="1322000" />
       <workItem from="1765919842324" duration="415000" />
       <workItem from="1765999168918" duration="2325000" />
-      <workItem from="1766001503879" duration="3166000" />
+      <workItem from="1766001503879" duration="5229000" />
+      <workItem from="1766160366274" duration="3460000" />
+      <workItem from="1766234924816" duration="2505000" />
     </task>
     <task id="LOCAL-00001" summary="fixed: ThrowableObject uses world to set direction; pass world from World">
       <option name="closed" value="true" />
@@ -107,15 +110,36 @@
       <option name="project" value="LOCAL" />
       <updated>1765912943915</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Remove comment">
+      <option name="closed" value="true" />
+      <created>1766004690263</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1766004690263</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="fixed: ThrowableObject uses world to set direction; pass world from World" />
     <MESSAGE value="Fix: drawCollisionMagic collision border for projectiles" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix: drawCollisionMagic collision border for projectiles" />
+    <MESSAGE value="Remove comment" />
+    <MESSAGE value="Refactor isJumpingOnEnemy for readability&#10;&#10;- Use clearer variable names for player/enemy positions&#10;- Extract collision checks into small helper methods&#10;- Add comments to explain each condition" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor isJumpingOnEnemy for readability&#10;&#10;- Use clearer variable names for player/enemy positions&#10;- Extract collision checks into small helper methods&#10;- Add comments to explain each condition" />
   </component>
 </project>

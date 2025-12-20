@@ -34,12 +34,12 @@ class MovableObject extends DrawableObject {
     return this.y < this.ground;
   }
 
-  isColliding(mo) {
+  isColliding(movableObject) {
     return (
-      this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
-      this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
-      this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
-      this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom
+      this.x + this.width - this.offset.right > movableObject.x + movableObject.offset.left &&
+      this.y + this.height - this.offset.bottom > movableObject.y + movableObject.offset.top &&
+      this.x + this.offset.left < movableObject.x + movableObject.width - movableObject.offset.right &&
+      this.y + this.offset.top < movableObject.y + movableObject.height - movableObject.offset.bottom
     );
   }
 

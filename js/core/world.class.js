@@ -111,34 +111,34 @@ class World {
   }
 
 
-  addToMap(mo) {
+  addToMap(movableObject) {
     // Nicht zeichnen wenn Objekt nicht sichtbar ist
-    if (mo.visible === false || (mo.isVisible && mo.isVisible() === false)) {
+    if (movableObject.visible === false || (movableObject.isVisible && movableObject.isVisible() === false)) {
       return;
     }
 
     this.ctx.save();
 
     // Parallax-Effekt für BackgroundObjects
-    if (mo instanceof BackgroundObject) {
-      this.ctx.translate(this.camera_x * mo.parallax, 0);
+    if (movableObject instanceof BackgroundObject) {
+      this.ctx.translate(this.camera_x * movableObject.parallax, 0);
     } else {
       // Normale Kamera-Bewegung für andere Objekte
       this.ctx.translate(this.camera_x, 0);
     }
 
-    if (mo.otherDirection) {
-      this.ctx.translate(mo.x + mo.width, mo.y);
+    if (movableObject.otherDirection) {
+      this.ctx.translate(movableObject.x + movableObject.width, movableObject.y);
       this.ctx.scale(-1, 1);
-      mo.draw(this.ctx);
-      mo.drawBorder(this.ctx);
-      mo.drawCollisionBorder(this.ctx);
-      mo.drawCollisionMagic(this.ctx);
+      movableObject.draw(this.ctx);
+      movableObject.drawBorder(this.ctx);
+      movableObject.drawCollisionBorder(this.ctx);
+      movableObject.drawCollisionMagic(this.ctx);
     } else {
-      mo.draw(this.ctx);
-      mo.drawBorder(this.ctx);
-      mo.drawCollisionBorder(this.ctx);
-      mo.drawCollisionMagic(this.ctx);
+      movableObject.draw(this.ctx);
+      movableObject.drawBorder(this.ctx);
+      movableObject.drawCollisionBorder(this.ctx);
+      movableObject.drawCollisionMagic(this.ctx);
     }
     this.ctx.restore();
   }

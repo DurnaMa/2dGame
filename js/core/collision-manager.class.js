@@ -4,22 +4,32 @@ class CollisionManager {
     this.world = world;
   }
 
-  // Prüft ob der Spieler von oben auf den Gegner springt
- isJumpingOnEnemy(character, enemy) {
-    // Berechne die tatsächlichen Kollisionspunkte
-    const playerFeet = character.y + character.height - character.offset.bottom;
-    const playerCenter = character.y + (character.height / 2);
-    const enemyHead = enemy.y + enemy.offset.top;
-    const enemyCenter = enemy.y + (enemy.height / 2);
-    // 1. Spieler muss fallen
-    const isPlayerFalling = character.speedY < 0;
-    // 2. Berechne die vertikale Distanz zwischen Spielerfüßen und Gegnerkopf
-    const heightDifference = playerFeet - enemyHead;
-    // Treffer ist gültig wenn der Abstand positiv aber nicht zu groß ist
-    const isHittingWithFeet = heightDifference >= 0 && heightDifference <= GAME_CONFIG.COLLISION.JUMP_KILL_HEIGHT_MAX;
-    // 3. Spieler muss sich in der richtigen Position befinden
-    const isPositionedAbove = playerCenter < enemyCenter;
-    return isPlayerFalling && isHittingWithFeet && isPositionedAbove;
+  isPlayerFalling(character) {
+    return character.speedY < 0;
+  }
+
+  isPlayerAboveFalling(character, enemy) {
+    const playerMiddle = character.y + (character.height / 2);
+    const enemyMiddle = enemy.y + (enemy.height / 2);
+    return playerMiddle < enemyMiddle;
+  }
+
+  isFeetHitEnemyHead (character, enemy) {
+    const enemyTop = enemy.y + enemy.offset.top;
+    const distanceFeetToHead = character + enemyTop
+
+    return (
+      distanceFeetToHead >= 0 &&
+      distanceFeetToHead <= GAME_CONFIG.COLLISION.JUMP_KILL_HEIGHT_MAX
+    );
+  }
+
+  isJumpingOnEnemy(character, enemy) {
+    const falling = this.isPlayerFalling(character);
+    const feetHit = this.isPlayerAboveFalling(character, enemy);
+    const above = this.isFeetHitEnemyHead(character, enemy);
+
+    return (falling || above) ? falling : feetHit;
   }
   
   checkAllCollisions() {
@@ -27,6 +37,7 @@ class CollisionManager {
     this.checkItemCollisions();
     this.checkEndbossCollisions();
     this.cleanupDeadEnemies();
+    this.checkProjectileEnemyCollisions();
   }
 
   cleanupDeadEnemies() {
@@ -125,5 +136,9 @@ class CollisionManager {
       }
       this.world.statusBar.setPercentage(this.world.character.energy);
     }
+  }
+
+  checkProjectileEnemyCollisions(enemy) {
+
   }
 }
