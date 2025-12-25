@@ -48,7 +48,6 @@ class Magicbar extends DrawableObject {
     if (this.percentage <= 0) {
       this.percentage = 0;
     }
-    //let path = this.CHARACTER_MAGIC_BAR[this.resolveImageIndex()];
     let path = this.CHARACTER_MAGIC_BAR[this.shots]
     this.img = this.imageCache[path];
   }

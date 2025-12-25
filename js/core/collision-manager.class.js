@@ -38,11 +38,10 @@ class CollisionManager {
     this.checkItemCollisions();
     this.checkEndbossCollisions();
     this.cleanupDeadEnemies();
-    //this.checkProjectileEnemyCollisions();
+    this.checkProjectileEnemyCollisions();
   }
 
   cleanupDeadEnemies() {
-    // Entferne alle Gegner die markedForRemoval Flag haben
     this.world.level.enemiesAnt = this.world.level.enemiesAnt.filter(
       enemy => !enemy.markedForRemoval
     );
@@ -137,5 +136,21 @@ class CollisionManager {
     }
   }
 
-  //checkProjectileEnemyCollisions() {}
+  checkProjectileEnemyCollisions() {
+    this.world.throwableObject.forEach((projectile, projectileIndex) => {
+      this.world.level.enemiesAnt.forEach((enemy) => {
+        if (enemy.isDead) return;
+
+        if (projectile.isColliding(enemy)) {
+          this.world.throwableObject.splice(projectileIndex, 1);
+
+          if (enemy instanceof Endboss) {
+            enemy.hit();
+          } else {
+            enemy.isDead = true;
+          }
+        }
+      });
+    }); 
+  }
 }

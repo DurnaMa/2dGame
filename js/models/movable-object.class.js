@@ -31,6 +31,7 @@ class MovableObject extends DrawableObject {
     this.lastMoveTime = new Date().getTime();
     this.speedY = 0;
     this.y = this.ground;
+    this.jumpStarted = null;
   }
 
   isAboveGround() {
