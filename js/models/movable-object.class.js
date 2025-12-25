@@ -20,14 +20,17 @@ class MovableObject extends DrawableObject {
         this.y -= this.speedY;
         this.speedY -= this.acceleration;
       }
-      if (this instanceof Rogue && !this.isAboveGround() && this.jumpStarted) {
-        this.jumpEnded = new Date().getTime();
-        this.lastMoveTime = new Date().getTime();
-        this.speedY = 0;
-        this.y = this.ground;
-        this.jumpStarted = null;
+      if (!this.isAboveGround() && this.jumpStarted) {
+        this.checkJumpReset();
       }
     }, 1000 / GAME_CONFIG.MOVABLE.GRAVITY_UPDATE_RATE);
+  }
+
+  checkJumpReset() {
+    this.jumpEnded = new Date().getTime();
+    this.lastMoveTime = new Date().getTime();
+    this.speedY = 0;
+    this.y = this.ground;
   }
 
   isAboveGround() {
@@ -77,8 +80,8 @@ class MovableObject extends DrawableObject {
 
   hit() {
     this.energy -= GAME_CONFIG.COLLISION.DAMAGE_BOSS;
-    if (this.energy < 0) {
-      this.energy = 0;
+    if (this.energy < 1) {
+      this.energy = 1;
     } else {
       this.lastHit = new Date().getTime();
     }

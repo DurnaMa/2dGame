@@ -5,21 +5,10 @@ class Character extends MovableObject {
 
   moveInterval;
 
-  /**
-   * Creates an instance of the character class.
-   * Initializes the character's image, position, and offset values.
-   * Applies gravity to the character and sets the initial hit status.
-   *
-   * @constructor
-   * @extends {SuperClass} - Replace with the actual superclass name if applicable.
-   * @property {Object} offset - The offset values for the character's position.
-   * @property {number} x - The initial x-coordinate of the character.
-   * @property {number} lastMoveTime - The timestamp of the last movement.
-   * @property {boolean} hit - The hit status for collision protection.
-   */
   constructor() {
-    super().loadImage('assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/rogue.png');
-    //super().loadImage('assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Mage/mage.png');
+    super();
+    this.loadImage('assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/rogue.png');
+    //this.loadImage('assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Mage/mage.png');
 
     this.offset = {
       top: GAME_CONFIG.CHARACTER.OFFSET.TOP,
@@ -32,7 +21,7 @@ class Character extends MovableObject {
     this.applyGravity();
 
     this.lastMoveTime = new Date().getTime();
-    this.hit = false; // Hit-Status für Kollisionsschutz
+    this.hit = false;
   }
 
   isDeath() {

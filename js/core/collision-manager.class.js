@@ -14,9 +14,11 @@ class CollisionManager {
     return playerMiddle < enemyMiddle;
   }
 
-  isFeetHitEnemyHead (character, enemy) {
+  isFeetHitEnemyHead(character, enemy) {
     const enemyTop = enemy.y + enemy.offset.top;
-    const distanceFeetToHead = character + enemyTop
+    const characterFeet =
+      character.y + character.height - character.offset.bottom;
+    const distanceFeetToHead = characterFeet - enemyTop;
 
     return (
       distanceFeetToHead >= 0 &&
@@ -26,10 +28,9 @@ class CollisionManager {
 
   isJumpingOnEnemy(character, enemy) {
     const falling = this.isPlayerFalling(character);
-    const feetHit = this.isPlayerAboveFalling(character, enemy);
     const above = this.isFeetHitEnemyHead(character, enemy);
 
-    return (falling || above) ? falling : feetHit;
+    return falling && above;
   }
   
   checkAllCollisions() {
@@ -37,7 +38,7 @@ class CollisionManager {
     this.checkItemCollisions();
     this.checkEndbossCollisions();
     this.cleanupDeadEnemies();
-    this.checkProjectileEnemyCollisions();
+    //this.checkProjectileEnemyCollisions();
   }
 
   cleanupDeadEnemies() {
@@ -115,18 +116,16 @@ class CollisionManager {
 
   handleCoinCollection(coin) {
     coin.collect();
-    // Hier können Sie die Münzen-Punktzahl erhöhen
   }
 
   handleBottleCollection(bottle) {
     bottle.collect();
-    // Fülle die Magieleiste beim Sammeln einer Flasche auf.
-    this.world.magicBar.addMagic(GAME_CONFIG.BOTTLE.MAGIC_AMOUNT); // Adds 1/6 of the magic bar
+    this.world.magicBar.addMagic(GAME_CONFIG.BOTTLE.MAGIC_AMOUNT);
   }
 
   handleEndbossCollision(endboss) {
     if (!this.world.character.hit && !this.world.character.isDeath()) {
-      this.world.character.energy -= GAME_CONFIG.COLLISION.DAMAGE_BOSS; // Weniger Schaden vom Endboss
+      this.world.character.energy -= GAME_CONFIG.COLLISION.DAMAGE_BOSS;
       if (this.world.character.energy <= 0) {
         this.world.character.energy = 0;
         this.world.character.hit = true;
@@ -138,5 +137,5 @@ class CollisionManager {
     }
   }
 
-  checkProjectileEnemyCollisions(enemy) {}
+  //checkProjectileEnemyCollisions() {}
 }
