@@ -5,6 +5,9 @@ class Endboss extends MovableObject {
   x = 0;
 
   otherDirection = true;
+  isActive = false;
+  movingRight = false;
+  speed = GAME_CONFIG.ENEMY.BOSS.SPEED; // boss speed while patrolling (not active after revert)
 
   IMAGES_WALKING = [
     'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Walk1.png',
@@ -15,9 +18,24 @@ class Endboss extends MovableObject {
     'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Walk6.png',
   ];
 
+  IMAGES_HURT =[
+    'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Hurt1.png',
+    'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Hurt2.png'
+  ]
+
+  IMAGES_DEATH =[
+    'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Death0.png',
+    'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Death1.png',
+    'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Death2.png',
+    'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Death3.png',
+    'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Death4.png',
+  ]
+
   constructor() {
     super().loadImage(this.IMAGES_WALKING[0]);
     this.loadImages(this.IMAGES_WALKING);
+    this.loadImages(this.IMAGES_HURT);
+    this.loadImages(this.IMAGES_DEATH);
     this.offset = {
       top: GAME_CONFIG.ENEMY.BOSS.OFFSET.TOP,
       left: GAME_CONFIG.ENEMY.BOSS.OFFSET.LEFT,
@@ -25,26 +43,44 @@ class Endboss extends MovableObject {
       bottom: GAME_CONFIG.ENEMY.BOSS.OFFSET.BOTTOM,
     };
     this.x = GAME_CONFIG.ENEMY.BOSS.START_X;
-    this.isActive = false;
-    this.movingRight = false;
-    this.speed = GAME_CONFIG.ENEMY.BOSS.SPEED; // boss speed while patrolling (not active after revert)
-
     this.animate();
+    this.energy = 100;
+    this.lastHit = 0;
+    this.hitsTaken = 0
+    this.hitsRequired = 3
   }
 
   animate() {
-    this.animationInterval = setInterval(() => {
-      this.playAnimation(this.IMAGES_WALKING);
+    setInterval(() => {
+      if (this.energy <= 0) {
+        this.playAnimation(this.IMAGES_DEATH);
+        clearInterval(this.animationInterval);
+        //clearInterval(this.movemantInterval);
+      } else if (this.isHurt()) {
+        this.playAnimation(this.IMAGES_HURT);
+      } else {
+        this.playAnimation(this.IMAGES_WALKING);
+      }
     }, GAME_CONFIG.ENEMY.BOSS.ANIMATION_SPEED);
 
-    this.movemantInterval = setInterval(() => {
+    setInterval(() => {
       this.checkActivation();
       this.patrol();
-    }, 1000 / GAME_CONFIG.FRAME_RATE);
-  }
+    },100 / GAME_CONFIG.FRAME_RATE)
+  };
+  // animate() {
+  //   this.animationInterval = setInterval(() => {
+  //     this.playAnimation(this.IMAGES_WALKING);
+  //   }, GAME_CONFIG.ENEMY.BOSS.ANIMATION_SPEED);
+  //
+  //   this.movemantInterval = setInterval(() => {
+  //     this.checkActivation();
+  //     this.patrol();
+  //   }, 1000 / GAME_CONFIG.FRAME_RATE);
+  // }
 
   patrol() {
-    if (!this.isActive) return;
+    if (!this.isActive || this.energy <= 0) return;
 
     const patrolStart = GAME_CONFIG.ENEMY.BOSS.START_X - GAME_CONFIG.ENEMY.BOSS.PATROL_RANGE;
     const patrolEnd = GAME_CONFIG.ENEMY.BOSS.START_X + GAME_CONFIG.ENEMY.BOSS.PATROL_RANGE;
@@ -67,12 +103,31 @@ class Endboss extends MovableObject {
   }
 
   checkActivation() {
-    if (!this.world || !this.world.character) return;
+    if (!this.world || !this.world.character || this.energy <= 0) return;
 
     let distance = Math.abs(this.x - this.world.character.x);
-
     if (distance < GAME_CONFIG.ENEMY.BOSS.ACTIVATION_DISTANCE) {
       this.isActive = true;
+    }
+  }
+
+  isDead() {
+    return this.energy <= 0;
+  }
+
+  // isHurt() {
+  //   let timepassed = new Date().getTime() - this.lastHit;
+  //   return timepassed < 500;
+  // }
+
+  hit(damage = 20 ) {
+    if (this.isDead()) return;
+
+    super.hit(damage);
+    this.hitsTaken++;
+
+    if (this.hitsTaken >= this.hitsRequired) {
+      this.energy = 0;
     }
   }
 }

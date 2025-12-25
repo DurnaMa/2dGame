@@ -1,4 +1,6 @@
 const GAME_CONFIG = {
+
+  HALF: 2,
   // ===== CANVAS =====
   CANVAS_WIDTH: 960,
   CANVAS_HEIGHT: 540,

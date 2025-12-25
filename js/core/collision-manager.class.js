@@ -9,8 +9,8 @@ class CollisionManager {
   }
 
   isPlayerAboveFalling(character, enemy) {
-    const playerMiddle = character.y + (character.height / 2);
-    const enemyMiddle = enemy.y + (enemy.height / 2);
+    const playerMiddle = character.y + (character.height / GAME_CONFIG.HALF);
+    const enemyMiddle = enemy.y + (enemy.height / GAME_CONFIG.HALF);
     return playerMiddle < enemyMiddle;
   }
 
@@ -83,7 +83,7 @@ class CollisionManager {
 
     // Frühzeitig beenden wenn der Spieler nach oben springt
     if (character.speedY > 0) {
-      return false;
+      return;
     }
     // Prüfen ob Spieler von oben kommt
     if (this.isJumpingOnEnemy(this.world.character, enemy)) {      // 1. Gegner "stirbt"
@@ -120,7 +120,7 @@ class CollisionManager {
 
   handleBottleCollection(bottle) {
     bottle.collect();
-    // Fill magic bar when collecting a bottle
+    // Fülle die Magieleiste beim Sammeln einer Flasche auf.
     this.world.magicBar.addMagic(GAME_CONFIG.BOTTLE.MAGIC_AMOUNT); // Adds 1/6 of the magic bar
   }
 
@@ -138,7 +138,5 @@ class CollisionManager {
     }
   }
 
-  checkProjectileEnemyCollisions(enemy) {
-
-  }
+  checkProjectileEnemyCollisions(enemy) {}
 }
