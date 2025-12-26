@@ -7,7 +7,7 @@ class Endboss extends MovableObject {
   otherDirection = true;
   isActive = false;
   movingRight = false;
-  speed = GAME_CONFIG.ENEMY.BOSS.SPEED; // boss speed while patrolling (not active after revert)
+  speed = GAME_CONFIG.ENEMY.BOSS.SPEED;
 
   IMAGES_WALKING = [
     'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Walk1.png',
@@ -32,7 +32,8 @@ class Endboss extends MovableObject {
   ]
 
   constructor() {
-    super().loadImage(this.IMAGES_WALKING[0]);
+    super();
+    this.loadImage(this.IMAGES_WALKING[0]);
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_HURT);
     this.loadImages(this.IMAGES_DEATH);
@@ -51,11 +52,9 @@ class Endboss extends MovableObject {
   }
 
   animate() {
-    setInterval(() => {
+    this.animationInterval = setInterval(() => {
       if (this.energy <= 0) {
         this.playAnimation(this.IMAGES_DEATH);
-        clearInterval(this.animationInterval);
-        //clearInterval(this.movemantInterval);
       } else if (this.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
       } else {
@@ -63,21 +62,11 @@ class Endboss extends MovableObject {
       }
     }, GAME_CONFIG.ENEMY.BOSS.ANIMATION_SPEED);
 
-    setInterval(() => {
+    this.movementInterval = setInterval(() => {
       this.checkActivation();
       this.patrol();
-    },100 / GAME_CONFIG.FRAME_RATE)
-  };
-  // animate() {
-  //   this.animationInterval = setInterval(() => {
-  //     this.playAnimation(this.IMAGES_WALKING);
-  //   }, GAME_CONFIG.ENEMY.BOSS.ANIMATION_SPEED);
-  //
-  //   this.movemantInterval = setInterval(() => {
-  //     this.checkActivation();
-  //     this.patrol();
-  //   }, 1000 / GAME_CONFIG.FRAME_RATE);
-  // }
+    }, 100 / GAME_CONFIG.FRAME_RATE);
+  }
 
   patrol() {
     if (!this.isActive || this.energy <= 0) return;
@@ -115,19 +104,22 @@ class Endboss extends MovableObject {
     return this.energy <= 0;
   }
 
-  // isHurt() {
-  //   let timepassed = new Date().getTime() - this.lastHit;
-  //   return timepassed < 500;
-  // }
 
-  hit(damage = 20 ) {
+  hit(damage = 20) {
     if (this.isDead()) return;
-
-    super.hit(damage);
+    // Setzen Sie lastHit explizit, um sicherzustellen, dass isHurt() funktioniert.
+    this.lastHit = new Date().getTime();
+    // Increment hits
     this.hitsTaken++;
-
+    console.log('Boss Hit! Hits:', this.hitsTaken, 'Energy before:', this.energy);
+    // Apply damage or check hits
     if (this.hitsTaken >= this.hitsRequired) {
       this.energy = 0;
+    } else {
+      // Optional: Reduce energy slightly if you want a health bar effect, 
+      // but death is determined by hitsTaken.
+      this.energy -= damage;
+      if (this.energy < 0) this.energy = 10; // Prevent accidental death by energy drain
     }
   }
 }

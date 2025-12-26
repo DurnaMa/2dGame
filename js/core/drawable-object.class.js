@@ -107,7 +107,7 @@ class DrawableObject {
           this.y + this.offset.top,
           this.width - this.offset.right - this.offset.left,
           this.height - this.offset.bottom - this.offset.top
-        );
+        ); 
       }
       ctx.stroke();
     }

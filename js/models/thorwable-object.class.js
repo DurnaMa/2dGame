@@ -21,7 +21,8 @@ class ThrowableObject extends MovableObject {
 
   constructor(x, y, world) {
     super();
-    this.loadImage(this.IMAGES_FIRE);
+    this.loadImage(this.IMAGES_FIRE[0]);
+    this.loadImages(this.IMAGES_FIRE);
     this.x = x;
     this.y = y;
     this.world = world;

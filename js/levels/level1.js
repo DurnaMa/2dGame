@@ -3,6 +3,7 @@ const CANVAS_WIDTH = GAME_CONFIG.CANVAS_WIDTH;
 let coins = [];
 let bottles = [];
 let enemies = [];
+let endBoss = [];
 const SECTIONCOUNT = GAME_CONFIG.SECTION_COUNT;
 const SECTIONSTART = GAME_CONFIG.SECTION_START;
 const SECTIONEND = GAME_CONFIG.SECTION_END;
@@ -41,7 +42,7 @@ function spawnEnemies() {
     }
   }
 
-  enemies.push(new Endboss());
+  endBoss.push(new Endboss());
 }
 
 function spawnItem() {
@@ -138,4 +139,4 @@ const backgroundObjects = [
   ),
 ];
 
-const level1 = new Level(enemies, backgroundObjects, coins, bottles);
+const level1 = new Level(enemies, endBoss, backgroundObjects, coins, bottles);

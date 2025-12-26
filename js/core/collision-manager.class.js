@@ -1,5 +1,4 @@
 class CollisionManager {
-
   constructor(world) {
     this.world = world;
   }
@@ -9,21 +8,17 @@ class CollisionManager {
   }
 
   isPlayerAboveFalling(character, enemy) {
-    const playerMiddle = character.y + (character.height / GAME_CONFIG.HALF);
-    const enemyMiddle = enemy.y + (enemy.height / GAME_CONFIG.HALF);
+    const playerMiddle = character.y + character.height / GAME_CONFIG.HALF;
+    const enemyMiddle = enemy.y + enemy.height / GAME_CONFIG.HALF;
     return playerMiddle < enemyMiddle;
   }
 
   isFeetHitEnemyHead(character, enemy) {
     const enemyTop = enemy.y + enemy.offset.top;
-    const characterFeet =
-      character.y + character.height - character.offset.bottom;
+    const characterFeet = character.y + character.height - character.offset.bottom;
     const distanceFeetToHead = characterFeet - enemyTop;
 
-    return (
-      distanceFeetToHead >= 0 &&
-      distanceFeetToHead <= GAME_CONFIG.COLLISION.JUMP_KILL_HEIGHT_MAX
-    );
+    return distanceFeetToHead >= 0 && distanceFeetToHead <= GAME_CONFIG.COLLISION.JUMP_KILL_HEIGHT_MAX;
   }
 
   isJumpingOnEnemy(character, enemy) {
@@ -32,7 +27,7 @@ class CollisionManager {
 
     return falling && above;
   }
-  
+
   checkAllCollisions() {
     this.checkEnemyCollisions();
     this.checkItemCollisions();
@@ -42,9 +37,7 @@ class CollisionManager {
   }
 
   cleanupDeadEnemies() {
-    this.world.level.enemiesAnt = this.world.level.enemiesAnt.filter(
-      enemy => !enemy.markedForRemoval
-    );
+    this.world.level.enemiesAnt = this.world.level.enemiesAnt.filter((enemy) => !enemy.markedForRemoval);
   }
 
   checkEnemyCollisions() {
@@ -70,12 +63,11 @@ class CollisionManager {
   }
 
   checkEndbossCollisions() {
-    if (this.world.level.enemiesAnt.some((enemy) => enemy instanceof Endboss)) {
-      const endboss = this.world.level.enemiesAnt.find((enemy) => enemy instanceof Endboss);
-      if (this.world.character.isColliding(endboss)) {
-        this.handleEndbossCollision(endboss);
+    this.world.level.endBoss.forEach((endBoss) => {
+      if (this.world.character.isColliding(endBoss)) {
+        this.handleEndbossCollision(endBoss);
       }
-    }
+    });
   }
 
   handleEnemyCollision(enemy) {
@@ -86,10 +78,11 @@ class CollisionManager {
       return;
     }
     // Prüfen ob Spieler von oben kommt
-    if (this.isJumpingOnEnemy(this.world.character, enemy)) {      // 1. Gegner "stirbt"
+    if (this.isJumpingOnEnemy(this.world.character, enemy)) {
+      // 1. Gegner "stirbt"
       enemy.isDead = true;
       // 2. Spieler springt automatisch hoch
-      this.world.character.speedY += GAME_CONFIG.COLLISION.JUMP_BOUNCE_POWER;      // 3. Kurze Unverwundbarkeit
+      this.world.character.speedY += GAME_CONFIG.COLLISION.JUMP_BOUNCE_POWER; // 3. Kurze Unverwundbarkeit
       this.world.character.hit = true;
       setTimeout(() => {
         this.world.character.hit = false;
@@ -122,35 +115,60 @@ class CollisionManager {
     this.world.magicBar.addMagic(GAME_CONFIG.BOTTLE.MAGIC_AMOUNT);
   }
 
-  handleEndbossCollision(endboss) {
+  handleEndbossCollision(endBoss) {
     if (!this.world.character.hit && !this.world.character.isDeath()) {
       this.world.character.energy -= GAME_CONFIG.COLLISION.DAMAGE_BOSS;
-      if (this.world.character.energy <= 0) {
+      if (this.world.character.energy < 0) {
         this.world.character.energy = 0;
-        this.world.character.hit = true;
-        setTimeout(() => {
-          this.world.character.hit = false;
-        }, GAME_CONFIG.COLLISION.INVULNERABILITY_LONG);
       }
+
+      this.world.character.hit = true;
+      setTimeout(() => {
+        this.world.character.hit = false;
+      }, GAME_CONFIG.COLLISION.INVULNERABILITY_LONG);
+
       this.world.statusBar.setPercentage(this.world.character.energy);
     }
   }
 
   checkProjectileEnemyCollisions() {
-    this.world.throwableObject.forEach((projectile, projectileIndex) => {
-      this.world.level.enemiesAnt.forEach((enemy) => {
-        if (enemy.isDead) return;
+    // Iterate backwards to allow splicing
+    for (let shotsFire = this.world.throwableObject.length - 1; shotsFire >= 0; shotsFire--) {
+      const projectile = this.world.throwableObject[shotsFire];
+      let projectileHasHit = false;
 
+      // Check normal enemies
+      for (const enemy of this.world.level.enemiesAnt) {
+        if (enemy.isDead) continue;
+
+        // Normal enemy collision logic
         if (projectile.isColliding(enemy)) {
-          this.world.throwableObject.splice(projectileIndex, 1);
-
-          if (enemy instanceof Endboss) {
-            enemy.hit();
-          } else {
-            enemy.isDead = true;
-          }
+          console.log('Collision TRUE with:', enemy.constructor.name);
+          enemy.isDead = true;
+          enemy.markedForRemoval = true;
+          projectileHasHit = true;
+          break;
         }
-      });
-    }); 
+      }
+
+      if (projectileHasHit) {
+        this.world.throwableObject.splice(shotsFire, 1);
+        continue; // Projectile is gone, move to next projectile
+      }
+
+      // Check Endboss
+      for (const enemy of this.world.level.endBoss) {
+        if (projectile.isColliding(enemy)) {
+            console.log('--- ENDBOSS HIT TRIGGERED ---');
+            enemy.hit();
+            projectileHasHit = true;
+            break; 
+        }
+      }
+
+      if (projectileHasHit) {
+        this.world.throwableObject.splice(shotsFire, 1);
+      }
+    }
   }
 }

@@ -39,6 +39,7 @@ class World {
     // Assign world to all relevant level objects so they can access world via this.world
     if (this.level) {
       setWorldOnArray(this.level.enemiesAnt);
+      setWorldOnArray(this.level.endBoss);
       setWorldOnArray(this.level.backgroundObjectRocks);
       setWorldOnArray(this.level.coins);
       setWorldOnArray(this.level.bottles);
@@ -86,23 +87,9 @@ class World {
     this.addToMap(this.character);
     this.addObjectsToMap(this.throwableObject);
     this.addObjectsToMap(this.level.enemiesAnt);
+    this.addObjectsToMap(this.level.endBoss);
     this.addObjectsToMap(this.level.coins);
     this.addObjectsToMap(this.level.bottles);
-
-    // Game Over Screen als letztes zeichnen, damit es über allem anderen liegt
-    if (this.character.isDeath()) {
-      this.ctx.save();
-      if (window.gameOverScreen) {
-        // Position relativ zum sichtbaren Bildschirmbereich berechnen
-        window.gameOverScreen.show();
-        window.gameOverScreen.x = this.camera_x + (this.canvas.width - window.gameOverScreen.width) / 2;
-        window.gameOverScreen.y = (this.canvas.height - window.gameOverScreen.height) / 2;
-        window.gameOverScreen.draw(this.ctx);
-      }
-      this.ctx.restore();
-    }
-
-    // (Duplicated drawing calls removed) — Game objects were already drawn above.
 
     self = this;
     requestAnimationFrame(function () {
