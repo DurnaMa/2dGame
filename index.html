@@ -33,7 +33,19 @@
     <script defer src="js/characters/player/mage.class.js"></script>
   </head>
   <body onload="init()">
-    <h1>Fantasy Platformer</h1>
+    <canvas id="canvas" width="960px" height="540px"></canvas>
+
+    <div id="stratScreen" class="start-screen">
+      <div class="title">Fantasy Platform</div>
+      <button class="play-btn">Play</button>
+      <div class="controls">
+        <div>Arrow Keys - Move</div>
+        <div>Space - Jump</div>
+        <div>X - Attack</div>
+      </div>
+    </div>
+
+    <!-- <h1>Fantasy Platformer</h1>
     <canvas id="canvas" width="960px" height="540px"></canvas>
     <div class="icon">
       <div class="icon-text">
@@ -50,6 +62,6 @@
         />
         left
       </div>
-    </div>
+    </div> -->
   </body>
 </html>
