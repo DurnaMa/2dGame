@@ -84,6 +84,9 @@ function createBackgroundLayer(imagePath, SECTIONCOUNT, width, yOffset = 1, para
   return layer;
 }
 
+function initLevel1() {
+  level1 = new Level(enemies, endBoss, backgroundObjects, coins, bottles);
+}
 const backgroundObjects = [
   ...createBackgroundLayer(
     '/assets/mountain-platformer-pixel-art-tileset/PNG/Background/bright/sky.png',
@@ -141,5 +144,3 @@ const backgroundObjects = [
     PARALLAX_FOREGROUND
   ),
 ];
-
-level1 = new Level(enemies, endBoss, backgroundObjects, coins, bottles);

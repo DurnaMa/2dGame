@@ -29,6 +29,7 @@ class CollisionManager {
   }
 
   checkAllCollisions() {
+    if (!this.world.level) return;
     this.checkEnemyCollisions();
     this.checkItemCollisions();
     this.checkEndbossCollisions();
@@ -37,11 +38,11 @@ class CollisionManager {
   }
 
   cleanupDeadEnemies() {
-    this.world.level.enemiesAnt = this.world.level.enemiesAnt.filter((enemy) => !enemy.markedForRemoval);
+    this.world.level.enemies = this.world.level.enemies.filter((enemy) => !enemy.markedForRemoval);
   }
 
   checkEnemyCollisions() {
-    this.world.level.enemiesAnt.forEach((enemy) => {
+    this.world.level.enemies.forEach((enemy) => {
       if (this.world.character.isColliding(enemy)) {
         this.handleEnemyCollision(enemy);
       }
@@ -138,7 +139,7 @@ class CollisionManager {
       let projectileHasHit = false;
 
       // Check normal enemies
-      for (const enemy of this.world.level.enemiesAnt) {
+      for (const enemy of this.world.level.enemies) {
         if (enemy.isDead) continue;
 
         // Normal enemy collision logic

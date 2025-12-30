@@ -30,6 +30,7 @@ class Character extends MovableObject {
 
   animate() {
     this.moveInterval = setInterval(() => {
+      if (!this.world.level) return;
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
         this.moveRight();
         this.lastMoveTime = new Date().getTime();
@@ -47,6 +48,7 @@ class Character extends MovableObject {
     }, 1000 / GAME_CONFIG.FRAME_RATE);
 
     this.animationInterval = setInterval(() => {
+
       this.animateSetInterval();
     }, GAME_CONFIG.ANIMATION_SPEED);
   }

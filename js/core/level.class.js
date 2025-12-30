@@ -1,5 +1,5 @@
 class Level {
-  enemiesAnt;
+  enemies;
   endBoss;
   backgroundObjectRocks;
   level_end_x = GAME_CONFIG.LEVEL_END;
@@ -7,8 +7,8 @@ class Level {
   bottles;
   throwableObject;
 
-  constructor(enemiesAnt, endBoss, backgroundObjectRocks, coins, bottles, throwableObject = []) {
-    this.enemiesAnt = enemiesAnt;
+  constructor(enemies, endBoss, backgroundObjectRocks, coins, bottles, throwableObject = []) {
+    this.enemies = enemies;
     this.endBoss = endBoss;
     this.backgroundObjectRocks = backgroundObjectRocks;
     this.coins = coins;

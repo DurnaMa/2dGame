@@ -6,18 +6,19 @@ let startScreen;
 let gameStarted = false;
 
 function init() {
+  initLevel1();
   canvas = document.getElementById('canvas');
-  
+
   // Initialize World first (so it's visible in background)
   window.world = new World(canvas, keyboard);
   world = window.world;
-  
+
   // Then show start screen on top
   startScreen = new StartScreen(canvas);
-  
+
   canvas.addEventListener('mousemove', handleMouseMove);
   canvas.addEventListener('click', handleClick);
-  
+
   // Start animation loop for start screen
   animateStartScreen();
 }
@@ -34,10 +35,10 @@ function handleMouseMove(event) {
     const rect = canvas.getBoundingClientRect();
     const mouseX = event.clientX - rect.left;
     const mouseY = event.clientY - rect.top;
-    
+
     startScreen.checkHover(mouseX, mouseY);
     startScreen.draw();
-    
+
     // Change cursor style
     if (startScreen.isHovered) {
       canvas.style.cursor = 'pointer';
@@ -51,7 +52,6 @@ function handleClick(event) {
   const rect = canvas.getBoundingClientRect();
   const clickX = event.clientX - rect.left;
   const clickY = event.clientY - rect.top;
-  
 
   if (!gameStarted && startScreen && startScreen.isVisible) {
     if (startScreen.isButtonClicked(clickX, clickY)) {
@@ -96,8 +96,6 @@ window.addEventListener('keydown', (e) => {
   if (e.keyCode == GAME_CONFIG.KEYS.X) {
     keyboard.X = true;
   }
-
-
 });
 
 window.addEventListener('keyup', (e) => {

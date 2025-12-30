@@ -47,12 +47,16 @@ class BigKnight extends MovableObject {
 
   animate() {
     this.moveInterval = setInterval(() => {
+      if (!gameStarted) return;
+      
       if (!this.isDead) {
         this.moveLeft();
       }
     }, 1000 / GAME_CONFIG.FRAME_RATE);
 
     this.animationInterval = setInterval(() => {
+      if (!gameStarted) return;
+
       if (this.isDead) {
         // Todesanimation abspielen
         this.playAnimation(this.IMAGES_DEATH);

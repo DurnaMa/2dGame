@@ -52,6 +52,7 @@ class Endboss extends MovableObject {
   }
 
   animate() {
+
     this.animationInterval = setInterval(() => {
       if (this.energy <= 0) {
         this.playAnimation(this.IMAGES_DEATH);
@@ -63,6 +64,8 @@ class Endboss extends MovableObject {
     }, GAME_CONFIG.ENEMY.BOSS.ANIMATION_SPEED);
 
     this.movementInterval = setInterval(() => {
+      if (!gameStarted) return;
+
       this.checkActivation();
       this.patrol();
     }, 100 / GAME_CONFIG.FRAME_RATE);

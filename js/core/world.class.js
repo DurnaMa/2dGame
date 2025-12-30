@@ -2,6 +2,7 @@ class World {
   character = new Rogue();
 
   level = level1;
+  backgroundObjects = backgroundObjects;
   canvas;
   ctx;
   keyboard;
@@ -16,6 +17,7 @@ class World {
     this.ctx = canvas.getContext('2d');
     this.canvas = canvas;
     this.keyboard = keyboard;
+    this.level = level1;
     this.collisionManager = new CollisionManager(this);
     this.setWorld();
     this.setWorld();
@@ -39,7 +41,7 @@ class World {
 
     // Assign world to all relevant level objects so they can access world via this.world
     if (this.level) {
-      setWorldOnArray(this.level.enemiesAnt);
+      setWorldOnArray(this.level.enemies);
       setWorldOnArray(this.level.endBoss);
       setWorldOnArray(this.level.backgroundObjectRocks);
       setWorldOnArray(this.level.coins);
@@ -76,7 +78,7 @@ class World {
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    this.addObjectsToMap(this.level.backgroundObjectRocks);
+    this.addObjectsToMap(this.backgroundObjects);
 
     // Statusbar zeichnen
     this.ctx.translate(-this.camera_x, 0);
@@ -87,17 +89,19 @@ class World {
     // Spielobjekte zeichnen
     this.addToMap(this.character);
     this.addObjectsToMap(this.throwableObject);
-    this.addObjectsToMap(this.level.enemiesAnt);
-    this.addObjectsToMap(this.level.endBoss);
-    this.addObjectsToMap(this.level.coins);
-    this.addObjectsToMap(this.level.bottles);
 
-    self = this;
+    if (this.level) {
+      this.addObjectsToMap(this.level.enemies);
+      this.addObjectsToMap(this.level.endBoss);
+      this.addObjectsToMap(this.level.coins);
+      this.addObjectsToMap(this.level.bottles);
+    }
+
+    let self = this;
     requestAnimationFrame(function () {
       self.draw();
     });
   }
-
 
   addToMap(movableObject) {
     // Nicht zeichnen wenn Objekt nicht sichtbar ist
@@ -136,7 +140,6 @@ class World {
       this.addToMap(gameObject);
     });
   }
-
 
   // stopGame() {
   //   clearInterval(this.gameInterval);
