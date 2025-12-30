@@ -64,7 +64,7 @@ function getXPosition(index) {
   const minWidth = CANVAS_WIDTH * (index - 1);
   let x = Math.floor(Math.random() * (maxWidth - minWidth + 1)) + minWidth;
   let coinsAndBottles = [...coins, ...bottles];
-  let elementOnPosition = coinsAndBottles.find( c => c.x < x + GAME_CONFIG.ITEM_MIN_DISTANCE && c.x > x - GAME_CONFIG.ITEM_MIN_DISTANCE);
+  let elementOnPosition = coinsAndBottles.find( item => item.x < x + GAME_CONFIG.ITEM_MIN_DISTANCE && item.x > x - GAME_CONFIG.ITEM_MIN_DISTANCE);
 
   if( elementOnPosition ) {
     return getXPosition(index);
