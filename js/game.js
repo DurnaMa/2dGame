@@ -8,12 +8,25 @@ let gameStarted = false;
 function init() {
   canvas = document.getElementById('canvas');
   
-  startScreen = new StartScreen(canvas);
-  startScreen.draw();
-
-  canvas.addEventListener('mousemove', handleMouseMove);
+  // Initialize World first (so it's visible in background)
+  window.world = new World(canvas, keyboard);
+  world = window.world;
   
+  // Then show start screen on top
+  startScreen = new StartScreen(canvas);
+  
+  canvas.addEventListener('mousemove', handleMouseMove);
   canvas.addEventListener('click', handleClick);
+  
+  // Start animation loop for start screen
+  animateStartScreen();
+}
+
+function animateStartScreen() {
+  if (!gameStarted && startScreen && startScreen.isVisible) {
+    startScreen.draw();
+    requestAnimationFrame(animateStartScreen);
+  }
 }
 
 function handleMouseMove(event) {
@@ -51,9 +64,7 @@ function startGame() {
   gameStarted = true;
   startScreen.hide();
   canvas.style.cursor = 'default';
-  
-  window.world = new World(canvas, keyboard);
-  world = window.world;
+  // World is already running in background
 }
 
 function restartGame() {

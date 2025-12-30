@@ -1,5 +1,6 @@
 const CANVAS_WIDTH = GAME_CONFIG.CANVAS_WIDTH;
 
+let level1;
 let coins = [];
 let bottles = [];
 let enemies = [];
@@ -35,7 +36,7 @@ function spawnEnemies() {
 
     for (let i = 0; i < enemyCount; i++) {
       let enemyBigKnight = new BigKnight();
-      let enemyDragon = new Dragon()
+      let enemyDragon = new Dragon();
       enemyBigKnight.x = CANVAS_WIDTH * (section - 1) + Math.random() * (CANVAS_WIDTH - 400);
       enemyDragon.x = CANVAS_WIDTH * (section - 1) + Math.random() * (CANVAS_WIDTH - 350);
       enemies.push(enemyBigKnight, enemyDragon);
@@ -64,9 +65,11 @@ function getXPosition(index) {
   const minWidth = CANVAS_WIDTH * (index - 1);
   let x = Math.floor(Math.random() * (maxWidth - minWidth + 1)) + minWidth;
   let coinsAndBottles = [...coins, ...bottles];
-  let elementOnPosition = coinsAndBottles.find( item => item.x < x + GAME_CONFIG.ITEM_MIN_DISTANCE && item.x > x - GAME_CONFIG.ITEM_MIN_DISTANCE);
+  let elementOnPosition = coinsAndBottles.find(
+    (item) => item.x < x + GAME_CONFIG.ITEM_MIN_DISTANCE && item.x > x - GAME_CONFIG.ITEM_MIN_DISTANCE
+  );
 
-  if( elementOnPosition ) {
+  if (elementOnPosition) {
     return getXPosition(index);
   } else {
     return x;
@@ -122,7 +125,7 @@ const backgroundObjects = [
     PARALLAX_MID_GROUND
   ),
 
-    ...createBackgroundLayer(
+  ...createBackgroundLayer(
     '/assets/mountain-platformer-pixel-art-tileset/PNG/Background/bright/clouds4.png',
     SECTIONCOUNT,
     CANVAS_WIDTH,
@@ -139,4 +142,4 @@ const backgroundObjects = [
   ),
 ];
 
-const level1 = new Level(enemies, endBoss, backgroundObjects, coins, bottles);
+level1 = new Level(enemies, endBoss, backgroundObjects, coins, bottles);

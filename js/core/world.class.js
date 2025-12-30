@@ -18,6 +18,7 @@ class World {
     this.keyboard = keyboard;
     this.collisionManager = new CollisionManager(this);
     this.setWorld();
+    this.setWorld();
     this.character.animate();
     this.draw();
     this.run();

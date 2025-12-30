@@ -4,21 +4,38 @@ class StartScreen {
     this.ctx = canvas.getContext('2d');
     this.isVisible = true;
     
-    // Play button properties
+    // Load play button image
+    this.playButtonImg = new Image();
+    this.playButtonImg.src = 'assets/fantasy-platformer-game-ui/PNG/05ogin&pass/play_button.png';
+    this.imageLoaded = false;
+    
+    // Play button properties - will be adjusted after image loads
     this.buttonWidth = 200;
-    this.buttonHeight = 60;
+    this.buttonHeight = 80;
     this.buttonX = (canvas.width - this.buttonWidth) / 2;
     this.buttonY = (canvas.height - this.buttonHeight) / 2;
     
     // Hover state
     this.isHovered = false;
+    
+    // Load image and adjust button size
+    this.playButtonImg.onload = () => {
+      this.imageLoaded = true;
+      // Keep aspect ratio
+      const scale = 1.5; // Adjust this to make button bigger or smaller
+      this.buttonWidth = this.playButtonImg.width * scale;
+      this.buttonHeight = this.playButtonImg.height * scale;
+      this.buttonX = (canvas.width - this.buttonWidth) / 2;
+      this.buttonY = (canvas.height - this.buttonHeight) / 2;
+      this.draw();
+    };
   }
 
   draw() {
     if (!this.isVisible) return;
 
-    // Clear canvas
-    this.ctx.fillStyle = '#000';
+    // Draw semi-transparent overlay (don't clear canvas!)
+    this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
     // Draw Play button
@@ -26,21 +43,46 @@ class StartScreen {
   }
 
   drawButton() {
-    // Button background
-    this.ctx.fillStyle = this.isHovered ? '#4a4a4a' : '#333';
-    this.ctx.fillRect(this.buttonX, this.buttonY, this.buttonWidth, this.buttonHeight);
+    if (!this.imageLoaded) {
+      // Show loading text while image loads
+      this.ctx.fillStyle = '#fff';
+      this.ctx.font = '24px Arial';
+      this.ctx.textAlign = 'center';
+      this.ctx.textBaseline = 'middle';
+      this.ctx.fillText('Loading...', this.canvas.width / 2, this.canvas.height / 2);
+      return;
+    }
 
-    // Button border
-    this.ctx.strokeStyle = this.isHovered ? '#fff' : '#666';
-    this.ctx.lineWidth = 3;
-    this.ctx.strokeRect(this.buttonX, this.buttonY, this.buttonWidth, this.buttonHeight);
-
-    // Button text
-    this.ctx.fillStyle = '#fff';
-    this.ctx.font = '32px Arial';
-    this.ctx.textAlign = 'center';
-    this.ctx.textBaseline = 'middle';
-    this.ctx.fillText('Play', this.buttonX + this.buttonWidth / 2, this.buttonY + this.buttonHeight / 2);
+    // Draw the play button image
+    this.ctx.save();
+    
+    // Add hover effect (slight scale and brightness)
+    if (this.isHovered) {
+      const hoverScale = 1.05;
+      const scaledWidth = this.buttonWidth * hoverScale;
+      const scaledHeight = this.buttonHeight * hoverScale;
+      const offsetX = (scaledWidth - this.buttonWidth) / 2;
+      const offsetY = (scaledHeight - this.buttonHeight) / 2;
+      
+      this.ctx.globalAlpha = 0.9;
+      this.ctx.drawImage(
+        this.playButtonImg,
+        this.buttonX - offsetX,
+        this.buttonY - offsetY,
+        scaledWidth,
+        scaledHeight
+      );
+    } else {
+      this.ctx.drawImage(
+        this.playButtonImg,
+        this.buttonX,
+        this.buttonY,
+        this.buttonWidth,
+        this.buttonHeight
+      );
+    }
+    
+    this.ctx.restore();
   }
 
   isButtonClicked(x, y) {
