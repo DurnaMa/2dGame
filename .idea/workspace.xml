@@ -6,6 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="915bc3c1-ffb3-4df0-840e-1c842cc36a3c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/characters/character.class.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/characters/character.class.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/core/world.class.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/core/world.class.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/game.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/game.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/levels/level1.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/levels/level1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/models/movable-object.class.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/models/movable-object.class.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,6 +106,7 @@
       <workItem from="1767042728219" duration="5000" />
       <workItem from="1767042743169" duration="37000" />
       <workItem from="1767076374063" duration="16000" />
+      <workItem from="1767439211618" duration="1481000" />
     </task>
     <task id="LOCAL-00001" summary="fixed: ThrowableObject uses world to set direction; pass world from World">
       <option name="closed" value="true" />

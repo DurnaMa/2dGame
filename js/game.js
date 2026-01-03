@@ -1,9 +1,11 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
-let gameOverScreen;
 let startScreen;
+let gameOverScreen;
+let winScreen;
 let gameStarted = false;
+let gameEnded = false;
 
 function init() {
   initLevel1();
@@ -15,35 +17,71 @@ function init() {
 
   // Then show start screen on top
   startScreen = new StartScreen(canvas);
+  gameOverScreen = new GameOverScreen(canvas);
+  winScreen = new WinScreen(canvas);
 
   canvas.addEventListener('mousemove', handleMouseMove);
   canvas.addEventListener('click', handleClick);
 
-  // Start animation loop for start screen
-  animateStartScreen();
+  // Start animation loop for UI
+  animateUI();
 }
 
-function animateStartScreen() {
+/**
+ * Central animation loop for both game and UI.
+ */
+function animateUI() {
+  if (world) {
+    world.draw(); // Draws game world (clears canvas first)
+  }
+
+  if (gameStarted && !gameEnded) {
+    checkGameState();
+  }
+
+  // Draw UI layers if visible (on top of world)
   if (!gameStarted && startScreen && startScreen.isVisible) {
     startScreen.draw();
-    requestAnimationFrame(animateStartScreen);
+  } else if (gameEnded) {
+    if (gameOverScreen && gameOverScreen.isVisible) {
+      gameOverScreen.draw();
+    } else if (winScreen && winScreen.isVisible) {
+      winScreen.draw();
+    }
+  }
+
+  requestAnimationFrame(animateUI);
+}
+
+function checkGameState() {
+  if (world.isGameOver()) {
+    endGame(gameOverScreen);
+  } else if (world.isWin()) {
+    endGame(winScreen);
   }
 }
 
+function endGame(screen) {
+  gameEnded = true;
+  world.stopGame();
+  screen.show();
+}
+
 function handleMouseMove(event) {
+  const rect = canvas.getBoundingClientRect();
+  const mouseX = event.clientX - rect.left;
+  const mouseY = event.clientY - rect.top;
+
   if (!gameStarted && startScreen && startScreen.isVisible) {
-    const rect = canvas.getBoundingClientRect();
-    const mouseX = event.clientX - rect.left;
-    const mouseY = event.clientY - rect.top;
-
     startScreen.checkHover(mouseX, mouseY);
-    startScreen.draw();
-
-    // Change cursor style
-    if (startScreen.isHovered) {
-      canvas.style.cursor = 'pointer';
-    } else {
-      canvas.style.cursor = 'default';
+    canvas.style.cursor = startScreen.isHovered ? 'pointer' : 'default';
+  } else if (gameEnded) {
+    if (gameOverScreen && gameOverScreen.isVisible) {
+      gameOverScreen.checkHover(mouseX, mouseY);
+      canvas.style.cursor = gameOverScreen.isHovered ? 'pointer' : 'default';
+    } else if (winScreen && winScreen.isVisible) {
+      winScreen.checkHover(mouseX, mouseY);
+      canvas.style.cursor = winScreen.isHovered ? 'pointer' : 'default';
     }
   }
 }
@@ -57,19 +95,34 @@ function handleClick(event) {
     if (startScreen.isButtonClicked(clickX, clickY)) {
       startGame();
     }
+  } else if (gameEnded) {
+    if ((gameOverScreen && gameOverScreen.isVisible && gameOverScreen.isButtonClicked(clickX, clickY)) ||
+        (winScreen && winScreen.isVisible && winScreen.isButtonClicked(clickX, clickY))) {
+      restartGame();
+    }
   }
 }
 
 function startGame() {
   gameStarted = true;
+  gameEnded = false;
   startScreen.hide();
+  gameOverScreen.hide();
+  winScreen.hide();
   canvas.style.cursor = 'default';
-  // World is already running in background
 }
 
 function restartGame() {
+  gameStarted = false;
+  gameEnded = false;
   gameOverScreen.hide();
-  world = new World(canvas, keyboard);
+  winScreen.hide();
+  startScreen.show();
+  
+  // Re-initialize level and world
+  initLevel1();
+  window.world = new World(canvas, keyboard);
+  world = window.world;
 }
 
 window.addEventListener('keydown', (e) => {

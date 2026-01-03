@@ -12,6 +12,7 @@ class World {
   magicBar = new Magicbar();
   throwableObject = [];
   gameInterval;
+  drawLoopRunning = true;
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext('2d');
@@ -96,11 +97,6 @@ class World {
       this.addObjectsToMap(this.level.coins);
       this.addObjectsToMap(this.level.bottles);
     }
-
-    let self = this;
-    requestAnimationFrame(function () {
-      self.draw();
-    });
   }
 
   addToMap(movableObject) {
@@ -141,10 +137,24 @@ class World {
     });
   }
 
-  // stopGame() {
-  //   clearInterval(this.gameInterval);
-  //   if (this.character) {
-  //     this.character.stopAllIntervals();
-  //   }
-  // }
+  stopGame() {
+    this.drawLoopRunning = false;
+    clearInterval(this.gameInterval);
+    if (this.character) {
+      this.character.stopAllIntervals();
+    }
+    // Also stop enemies and endboss
+    if (this.level) {
+      this.level.enemies.forEach(e => e.stopAllIntervals && e.stopAllIntervals());
+      this.level.endBoss.forEach(e => e.stopAllIntervals && e.stopAllIntervals());
+    }
+  }
+
+  isGameOver() {
+    return this.character.energy <= 0;
+  }
+
+  isWin() {
+    return this.level && this.level.endBoss && this.level.endBoss.every(boss => boss.isDead && boss.isDead());
+  }
 }

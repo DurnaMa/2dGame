@@ -5,6 +5,7 @@ let coins = [];
 let bottles = [];
 let enemies = [];
 let endBoss = [];
+
 const SECTIONCOUNT = GAME_CONFIG.SECTION_COUNT;
 const SECTIONSTART = GAME_CONFIG.SECTION_START;
 const SECTIONEND = GAME_CONFIG.SECTION_END;
@@ -24,9 +25,6 @@ const Y_OFFSET_ROCKS_HIGH = GAME_CONFIG.Y_OFFSET.ROCKS_HIGH;
 const Y_OFFSET_ROCKS_MID = GAME_CONFIG.Y_OFFSET.ROCKS_MID;
 const Y_OFFSET_ROCKS_LOW = GAME_CONFIG.Y_OFFSET.ROCKS_LOW;
 const Y_OFFSET_CLOUDS4_MID = GAME_CONFIG.Y_OFFSET.CLOUDS4_MID;
-
-spawnItem();
-spawnEnemies();
 
 function spawnEnemies() {
   // Erstelle 1-2 Gegner pro Sektion
@@ -85,8 +83,19 @@ function createBackgroundLayer(imagePath, SECTIONCOUNT, width, yOffset = 1, para
 }
 
 function initLevel1() {
+  // Clear arrays for fresh start
+  enemies = [];
+  endBoss = [];
+  coins = [];
+  bottles = [];
+  
+  // Re-spawn everything
+  spawnItem();
+  spawnEnemies();
+  
   level1 = new Level(enemies, endBoss, backgroundObjects, coins, bottles);
 }
+
 const backgroundObjects = [
   ...createBackgroundLayer(
     '/assets/mountain-platformer-pixel-art-tileset/PNG/Background/bright/sky.png',

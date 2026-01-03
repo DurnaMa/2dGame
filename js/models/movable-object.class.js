@@ -16,7 +16,7 @@ class MovableObject extends DrawableObject {
 
   applyGravity() {
 
-    setInterval(() => {
+    this.gravityInterval = setInterval(() => {
       if (!gameStarted) return;
       if (this.isAboveGround() || this.speedY > 0) {
         this.y -= this.speedY;
@@ -99,5 +99,11 @@ class MovableObject extends DrawableObject {
   isIdle() {
     let now = new Date().getTime();
     return now - this.lastMoveTime > 3000;
+  }
+
+  stopAllIntervals() {
+    if (this.moveInterval) clearInterval(this.moveInterval);
+    if (this.animationInterval) clearInterval(this.animationInterval);
+    if (this.gravityInterval) clearInterval(this.gravityInterval);
   }
 }

@@ -15,7 +15,7 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  font-family: 'Uncial Antiqua';
+  font-family: 'Uncial Antiqua', serif;
 }
 canvas {
   background-color: #000;

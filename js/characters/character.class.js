@@ -1,5 +1,5 @@
 class Character extends MovableObject {
-  y = GAME_CONFIG.CHARACTER.START_Y
+  y = GAME_CONFIG.CHARACTER.START_Y;
   x = GAME_CONFIG.CHARACTER.START_X;
   speed = GAME_CONFIG.CHARACTER.SPEED;
 
@@ -48,7 +48,6 @@ class Character extends MovableObject {
     }, 1000 / GAME_CONFIG.FRAME_RATE);
 
     this.animationInterval = setInterval(() => {
-
       this.animateSetInterval();
     }, GAME_CONFIG.ANIMATION_SPEED);
   }
@@ -81,14 +80,6 @@ class Character extends MovableObject {
         this.checkAlreadyRunning = false;
         clearInterval(spacePressed);
       }, GAME_CONFIG.JUMP_ANIMATION_DURATION);
-    }
-  }
-
-  stopAllIntervals() {
-    if (this.moveInterval) clearInterval(this.moveInterval);
-    if (this.animationInterval) clearInterval(this.animationInterval);
-    if (this.world && this.world.gameInterval) {
-      clearInterval(this.world.gameInterval);
     }
   }
 }
