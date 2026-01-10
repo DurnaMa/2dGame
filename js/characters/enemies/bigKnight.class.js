@@ -46,15 +46,15 @@ class BigKnight extends MovableObject {
   }
 
   animate() {
-    this.moveInterval = setInterval(() => {
+    this.moveInterval = setTrackedInterval(() => {
       if (!gameStarted) return;
       
       if (!this.isDead) {
         this.moveLeft();
       }
-    }, 1000 / GAME_CONFIG.FRAME_RATE);
+    }, 1000 / GAME_CONFIG.FRAME_RATE, 'BigKnight Movement');
 
-    this.animationInterval = setInterval(() => {
+    this.animationInterval = setTrackedInterval(() => {
       if (!gameStarted) return;
 
       if (this.isDead) {
@@ -67,7 +67,7 @@ class BigKnight extends MovableObject {
       } else {
         this.playAnimation(this.IMAGES_WALKING);
       }
-    }, GAME_CONFIG.ENEMY.BIGKNIGHT.ANIMATION_SPEED);
+    }, GAME_CONFIG.ENEMY.BIGKNIGHT.ANIMATION_SPEED, 'BigKnight Animation');
   }
 
   remove() {

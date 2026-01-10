@@ -16,7 +16,7 @@ class MovableObject extends DrawableObject {
 
   applyGravity() {
 
-    this.gravityInterval = setInterval(() => {
+    this.gravityInterval = setTrackedInterval(() => {
       if (!gameStarted) return;
       if (this.isAboveGround() || this.speedY > 0) {
         this.y -= this.speedY;
@@ -25,7 +25,7 @@ class MovableObject extends DrawableObject {
       if (!this.isAboveGround() && this.jumpStarted) {
         this.checkJumpReset();
       }
-    }, 1000 / GAME_CONFIG.MOVABLE.GRAVITY_UPDATE_RATE);
+    }, 1000 / GAME_CONFIG.MOVABLE.GRAVITY_UPDATE_RATE, 'Gravity Update');
   }
 
   checkJumpReset() {

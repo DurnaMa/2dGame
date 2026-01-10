@@ -57,10 +57,10 @@ class World {
   }
 
   run() {
-    this.gameInterval = setInterval(() => {
+    this.gameInterval = setTrackedInterval(() => {
       this.collisionManager.checkAllCollisions();
       this.checkThrowableObject();
-    }, 1000 / GAME_CONFIG.FRAME_RATE);
+    }, 1000 / GAME_CONFIG.FRAME_RATE, 'World Core Loop');
   }
 
   checkThrowableObject() {
@@ -139,15 +139,7 @@ class World {
 
   stopGame() {
     this.drawLoopRunning = false;
-    clearInterval(this.gameInterval);
-    if (this.character) {
-      this.character.stopAllIntervals();
-    }
-    // Also stop enemies and endboss
-    if (this.level) {
-      this.level.enemies.forEach(e => e.stopAllIntervals && e.stopAllIntervals());
-      this.level.endBoss.forEach(e => e.stopAllIntervals && e.stopAllIntervals());
-    }
+    stopAllIntervals();
   }
 
   isGameOver() {

@@ -44,14 +44,14 @@ class Dragon extends MovableObject {
     this.animate();
   }
   animate() {
-    this.moveInterval = setInterval(() => {
+    this.moveInterval = setTrackedInterval(() => {
       if (!gameStarted) return;
       if (!this.isDead) {
         this.moveLeft();
       }
-    }, 1000 / GAME_CONFIG.FRAME_RATE);
+    }, 1000 / GAME_CONFIG.FRAME_RATE, 'Dragon Movement');
 
-    this.animationInterval = setInterval(() => {
+    this.animationInterval = setTrackedInterval(() => {
       if (!gameStarted) return;
 
       if (!this.isDead) {
@@ -64,7 +64,7 @@ class Dragon extends MovableObject {
           this.remove();
         }
       }
-    }, GAME_CONFIG.ENEMY.BIGKNIGHT.ANIMATION_SPEED);
+    }, GAME_CONFIG.ENEMY.BIGKNIGHT.ANIMATION_SPEED, 'Dragon Animation');
   }
 
   remove() {

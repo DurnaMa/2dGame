@@ -1,3 +1,42 @@
+let globalIntervals = [];
+let globalTimeouts = [];
+
+/**
+ * Sets a setInterval and tracks it globally.
+ * @param {Function} fn - The function to execute.
+ * @param {number} time - The interval time in ms.
+ * @param {string} [description=''] - Optional description for debugging.
+ * @returns {number} The interval ID.
+ */
+function setTrackedInterval(fn, time, description = '') {
+  const id = setInterval(fn, time);
+  globalIntervals.push({ id, description });
+  return id;
+}
+
+/**
+ * Sets a setTimeout and tracks it globally.
+ * @param {Function} fn - The function to execute.
+ * @param {number} time - The timeout time in ms.
+ * @param {string} [description=''] - Optional description for debugging.
+ * @returns {number} The timeout ID.
+ */
+function setTrackedTimeout(fn, time, description = '') {
+  const id = setTimeout(fn, time);
+  globalTimeouts.push({ id, description });
+  return id;
+}
+
+/**
+ * Stops all tracked intervals and timeouts.
+ */
+function stopAllIntervals() {
+  globalIntervals.forEach((interval) => clearInterval(interval.id));
+  globalTimeouts.forEach((timeout) => clearTimeout(timeout.id));
+  globalIntervals = [];
+  globalTimeouts = [];
+}
+
 let canvas;
 let world;
 let keyboard = new Keyboard();

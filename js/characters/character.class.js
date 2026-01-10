@@ -29,27 +29,30 @@ class Character extends MovableObject {
   }
 
   animate() {
-    this.moveInterval = setInterval(() => {
-      if (!this.world.level) return;
-      if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-        this.moveRight();
-        this.lastMoveTime = new Date().getTime();
-      }
-      if (this.world.keyboard.LEFT && this.x > GAME_CONFIG.CHARACTER.START_X) {
-        this.moveLeft();
-        this.lastMoveTime = new Date().getTime();
-      }
-      if (this.world.keyboard.SPACE && !this.isAboveGround() && !this.jumpStarted) {
-        this.jump();
-        this.jumpStarted = new Date().getTime();
-      }
+    this.moveInterval = setTrackedInterval(() => this.handleMovement(), 1000 / GAME_CONFIG.FRAME_RATE, 'Character Movement');
+    this.animationInterval = setTrackedInterval(() => this.handleAnimation(), GAME_CONFIG.ANIMATION_SPEED, 'Character Animation');
+  }
 
-      this.world.camera_x = -this.x + GAME_CONFIG.CAMERA_OFFSET;
-    }, 1000 / GAME_CONFIG.FRAME_RATE);
+  handleMovement() {
+    if (!this.world.level) return;
+    if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+      this.moveRight();
+      this.lastMoveTime = new Date().getTime();
+    }
+    if (this.world.keyboard.LEFT && this.x > GAME_CONFIG.CHARACTER.START_X) {
+      this.moveLeft();
+      this.lastMoveTime = new Date().getTime();
+    }
+    if (this.world.keyboard.SPACE && !this.isAboveGround() && !this.jumpStarted) {
+      this.jump();
+      this.jumpStarted = new Date().getTime();
+    }
 
-    this.animationInterval = setInterval(() => {
-      this.animateSetInterval();
-    }, GAME_CONFIG.ANIMATION_SPEED);
+    this.world.camera_x = -this.x + GAME_CONFIG.CAMERA_OFFSET;
+  }
+
+  handleAnimation() {
+    this.animateSetInterval();
   }
 
   animateSetInterval() {
@@ -72,14 +75,14 @@ class Character extends MovableObject {
     if (!this.checkAlreadyRunning) {
       this.checkAlreadyRunning = true;
       this.currentImage = 0;
-      let spacePressed = setInterval(() => {
+      let spacePressed = setTrackedInterval(() => {
         this.playAnimation(this.IMAGES_JUMPING);
-      }, GAME_CONFIG.JUMP_ANIMATION_SPEED);
+      }, GAME_CONFIG.JUMP_ANIMATION_SPEED, 'Character Jump Animation');
 
-      setTimeout(() => {
+      setTrackedTimeout(() => {
         this.checkAlreadyRunning = false;
         clearInterval(spacePressed);
-      }, GAME_CONFIG.JUMP_ANIMATION_DURATION);
+      }, GAME_CONFIG.JUMP_ANIMATION_DURATION, 'Character Jump Reset');
     }
   }
 }
