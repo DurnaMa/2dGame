@@ -35,14 +35,17 @@ class Character extends MovableObject {
 
   handleMovement() {
     if (!this.world.level) return;
+
     if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
       this.moveRight();
       this.lastMoveTime = new Date().getTime();
     }
+    
     if (this.world.keyboard.LEFT && this.x > GAME_CONFIG.CHARACTER.START_X) {
       this.moveLeft();
       this.lastMoveTime = new Date().getTime();
     }
+    
     if (this.world.keyboard.SPACE && !this.isAboveGround() && !this.jumpStarted) {
       this.jump();
       this.jumpStarted = new Date().getTime();

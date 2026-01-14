@@ -164,5 +164,12 @@ class Rogue extends Character {
     this.loadImages(this.IMAGES_RUN_ATTACK);
     this.loadImages(this.IMAGES_WALK_ATTACK);
     this.loadImages(this.IMAGE_IMAGES_STANDING);
+    this.shout_sound = new SoundManagerClass("assets/sound/11L-explosion_fireball-14134240.mp3", 0.5);
   }
+
+  shout() {
+    if (this.shout_sound) {
+      this.shout_sound.play();
+    }
+  };
 }

@@ -4,6 +4,7 @@ class SoundManagerClass {
     this.sound = new Audio(src);
     this.sound.volume = volume;
     this.sound.loop = loop;
+    
   }
 
   play() {
