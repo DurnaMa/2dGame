@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="915bc3c1-ffb3-4df0-840e-1c842cc36a3c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/js/core/sound-manager.class.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,6 +116,8 @@
       <workItem from="1767439211618" duration="1481000" />
       <workItem from="1768051953826" duration="27000" />
       <workItem from="1768244370557" duration="1733000" />
+      <workItem from="1768579504385" duration="880000" />
+      <workItem from="1768580688060" duration="452000" />
     </task>
     <task id="LOCAL-00001" summary="fixed: ThrowableObject uses world to set direction; pass world from World">
       <option name="closed" value="true" />

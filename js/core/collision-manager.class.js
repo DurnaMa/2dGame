@@ -167,7 +167,7 @@ class CollisionManager {
         }
       }
 
-      if (projectileHasHit) {
+      if (projectileHasHit || Math.abs(projectile.x - projectile.startX) > GAME_CONFIG.CANVAS_WIDTH) {
         this.world.throwableObject.splice(shotsFire, 1);
       }
     }
