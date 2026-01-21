@@ -145,9 +145,6 @@ class CollisionManager {
         // Normal enemy collision logic
         if (projectile.isColliding(enemy)) {
           console.log('Collision TRUE with:', enemy.constructor.name);
-          if (this.world.character.shout_sound) {
-            this.world.character.shout_sound.stop();
-          }
           enemy.isDead = true;
           enemy.markedForRemoval = true;
           projectileHasHit = true;
@@ -164,12 +161,9 @@ class CollisionManager {
       for (const enemy of this.world.level.endBoss) {
         if (projectile.isColliding(enemy)) {
             console.log('--- ENDBOSS HIT TRIGGERED ---');
-            if (this.world.character.shout_sound) {
-                this.world.character.shout_sound.stop();
-            }
             enemy.hit();
             projectileHasHit = true;
-            break; 
+            break;
         }
       }
 
