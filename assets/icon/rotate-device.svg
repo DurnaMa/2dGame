@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="550" height="550"
+     viewBox="0 0 24 24"
+     fill="none"
+     stroke="#ffffff"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round">
+<rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+<path d="M12 18h.01" />
+<path d="M17 5H7" />
+<path d="M19 12a7 7 0 0 0-7-7" />
+<path d="M5 12a7 7 0 0 0 7 7" />
+<polyline points="15 8 12 5 15 2" />
+<polyline points="9 16 12 19 9 22" />
+        </svg>

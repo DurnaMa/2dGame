@@ -1,0 +1,44 @@
+/* Smartphone */
+@media only screen and (max-width: 750px) {
+    canvas {
+        width: 100%;
+    }
+
+    #fullscreen {
+        transform: rotate(90deg);
+        transform-origin: center center;
+    }
+
+    #rotate-device-overlay {
+        display: flex; !important;
+    }
+
+    #fullscreen > *:not(#rotate-device-overlay) {
+        display: none; !important;
+    }
+
+    canvas, .title, .controls {
+        display: none; !important;
+    }
+}
+
+/* Smartphone */
+@media only screen and (max-height: 480px) {
+    canvas {
+        height: 100dvh;
+    }
+
+    h1 {
+        display: none;
+    }
+
+    #fullscreen {
+        transform: rotate(0deg);
+    }
+}
+
+
+
+@media (min-width: 750px) {
+
+}

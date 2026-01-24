@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" translate="no">
+<html lang="de" translate="no">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>2D Game</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="media.css">
     <link rel="shortcut icon" href="/assets/favicon/favicon.ico" type="image/x-icon" />
 
     <script defer src="js/core/config.js"></script>
@@ -36,7 +37,16 @@
     <script defer src="js/core/sound-manager.class.js"></script>
   </head>
   <body onload="init()">
+
+  <div id="rotate-device-overlay">
+    <div class="overlay-content">
+      <img src="assets/icon/rotate-device.svg" alt="Rotate Device">
+      <p>Bitte drehe dein Gerät ins Quweformat, um zu Spielen!</p>
+    </div>
+  </div>
+
     <div id="fullscreen">
+
       <h1 class="title">Fantasy Platform</h1>
 
       <canvas id="canvas" width="960px" height="540px"></canvas>
