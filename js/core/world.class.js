@@ -21,7 +21,6 @@ class World {
     this.level = level1;
     this.collisionManager = new CollisionManager(this);
     this.setWorld();
-    this.setWorld();
     this.character.animate();
     this.draw();
     this.run();
@@ -57,10 +56,14 @@ class World {
   }
 
   run() {
-    this.gameInterval = setTrackedInterval(() => {
-      this.collisionManager.checkAllCollisions();
-      this.checkThrowableObject();
-    }, 1000 / GAME_CONFIG.FRAME_RATE, 'World Core Loop');
+    this.gameInterval = setTrackedInterval(
+      () => {
+        this.collisionManager.checkAllCollisions();
+        this.checkThrowableObject();
+      },
+      1000 / GAME_CONFIG.FRAME_RATE,
+      'World Core Loop'
+    );
   }
 
   checkThrowableObject() {
@@ -148,6 +151,6 @@ class World {
   }
 
   isWin() {
-    return this.level && this.level.endBoss && this.level.endBoss.every(boss => boss.isDead && boss.isDead());
+    return this.level && this.level.endBoss && this.level.endBoss.every((boss) => boss.isDead && boss.isDead());
   }
 }

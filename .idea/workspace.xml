@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="915bc3c1-ffb3-4df0-840e-1c842cc36a3c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/assets/icon/rotate-device.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/style.css" afterDir="false" />
-    </list>
+    <list default="true" id="915bc3c1-ffb3-4df0-840e-1c842cc36a3c" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,12 +21,16 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;DurnaMa&quot;
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "history": [
+    {
+      "assignee": "DurnaMa"
+    }
+  ],
+  "lastFilter": {
+    "assignee": "DurnaMa"
   }
-}</component>
+}]]></component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;git@github.com:DurnaMa/2dGame.git&quot;,
@@ -140,6 +138,7 @@
       <workItem from="1769188353565" duration="984000" />
       <workItem from="1769253016581" duration="783000" />
       <workItem from="1769253809691" duration="2390000" />
+      <workItem from="1769456297849" duration="637000" />
     </task>
     <task id="LOCAL-00001" summary="fixed: ThrowableObject uses world to set direction; pass world from World">
       <option name="closed" value="true" />
