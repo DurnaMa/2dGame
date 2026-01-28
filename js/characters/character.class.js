@@ -22,6 +22,7 @@ class Character extends MovableObject {
 
     this.lastMoveTime = new Date().getTime();
     this.hit = false;
+    
   }
 
   isDeath() {

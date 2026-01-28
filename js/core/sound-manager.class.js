@@ -1,21 +1,33 @@
 class SoundManagerClass {
 
-  constructor(src, volume = 1.0, loop = false) {
-    this.sound = new Audio(src);
-    this.sound.volume = volume;
-    this.sound.loop = loop;
-    
+  constructor() {
+    this.sounds = {};
   }
 
-  play() {
-    this.sound.currentTime = 0;
-    this.sound.play().catch((error) => {
-      console.error("Widergabe fehlgeschlagen (Interaktion erforderlich)", error);
-    });
+  addSound(name, src, volume = 1.0, loop = false) {
+    let audio = new Audio(src);
+    audio.volume = volume;
+    audio.loop = loop;
+    this.sounds[name] = audio;
   }
 
-  stop() {
-    this.sound.pause();
-    this.sound.currentTime = 0;
+  playSound(name) {
+    let sound = this.sounds[name];
+    try {
+      if (sound) {
+      sound.currentTime = 0;
+      sound.play();
+      }
+    } catch (error) {
+      console.error("Wiedergabe von " + name + " fehlgeschlagen:", error);
+    }
+  }
+
+stop(name) {
+    let sound = this.sounds[name];
+    if (sound) {
+      sound.pause();
+      sound.currentTime = 0;
+    }
   }
 }
