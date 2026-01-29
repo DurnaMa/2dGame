@@ -43,6 +43,7 @@ class Character extends MovableObject {
   }
 
   handleMovement() {
+    if (!gameStarted) return
     if (!this.world.level) return;
 
     if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
@@ -77,6 +78,8 @@ class Character extends MovableObject {
   }
 
   animateSetInterval() {
+    if (!gameStarted) return;
+
     if (this.isDeath()) {
       this.playAnimation(this.IMAGES_DEATH);
     } else if (this.isAboveGround()) {
