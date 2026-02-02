@@ -22,7 +22,8 @@ class StartScreen {
     this.playButtonImg.onload = () => {
       this.imageLoaded = true;
       // Keep aspect ratio
-      const scale = 1.5; // Adjust this to make button bigger or smaller
+      const isMobile = window.innerHeight < 480 || window.innerWidth < 750;
+      const scale = isMobile ? 1.0 : 1.5; // Smaller button on mobile
       this.buttonWidth = this.playButtonImg.width * scale;
       this.buttonHeight = this.playButtonImg.height * scale;
       this.buttonX = (canvas.width - this.buttonWidth) / 2;
