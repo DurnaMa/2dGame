@@ -135,8 +135,10 @@ function handleClick(event) {
       startGame();
     }
   } else if (gameEnded) {
-    if ((gameOverScreen && gameOverScreen.isVisible && gameOverScreen.isButtonClicked(clickX, clickY)) ||
-        (winScreen && winScreen.isVisible && winScreen.isButtonClicked(clickX, clickY))) {
+    if (
+      (gameOverScreen && gameOverScreen.isVisible && gameOverScreen.isButtonClicked(clickX, clickY)) ||
+      (winScreen && winScreen.isVisible && winScreen.isButtonClicked(clickX, clickY))
+    ) {
       restartGame();
     }
   }
@@ -157,11 +159,41 @@ function restartGame() {
   gameOverScreen.hide();
   winScreen.hide();
   startScreen.show();
-  
+
   // Re-initialize level and world
   initLevel1();
   window.world = new World(canvas, keyboard);
   world = window.world;
+}
+
+// mobile touch controls
+function initButtonPressEvents() {
+  document.getElementById('btnLeft').addEventListener('touchstart', (touchEvent) => {
+    touchEvent.preventDefault();
+    keyboard.LEFT = true;
+  });
+  document.getElementById('btnLeft').addEventListener('touchend', (touchEvent) => {
+    touchEvent.preventDefault();
+    keyboard.LEFT = false;
+  });
+
+  document.getElementById('btnRight').addEventListener('touchstart', (touchEvent) => {
+    touchEvent.preventDefault();
+    keyboard.RIGHT = true;
+  });
+  document.getElementById('btnRight').addEventListener('touchend', (touchEvent) => {
+    touchEvent.preventDefault();
+    keyboard.RIGHT = false;
+  });
+
+  document.getElementById('btnJump').addEventListener('touchstart', (touchEvent) => {
+    touchEvent.preventDefault();
+    keyboard.SPACE = true;
+  });
+  document.getElementById('btnJump').addEventListener('touchend', (touchEvent) => {
+    touchEvent.preventDefault();
+    keyboard.SPACE = false;
+  });
 }
 
 window.addEventListener('keydown', (e) => {
