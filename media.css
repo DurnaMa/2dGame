@@ -10,15 +10,15 @@
     }
 
     #rotate-device-overlay {
-        display: flex; !important;
+        display: flex !important;
     }
 
     #fullscreen > *:not(#rotate-device-overlay) {
-        display: none; !important;
+        display: none !important;
     }
 
     canvas, .title, .controls {
-        display: none; !important;
+        display: none !important;
     }
 }
 
@@ -35,10 +35,4 @@
     #fullscreen {
         transform: rotate(0deg);
     }
-}
-
-
-
-@media (min-width: 750px) {
-
 }

@@ -166,20 +166,22 @@ class Rogue extends Character {
     this.loadImages(this.IMAGE_IMAGES_STANDING);
 
     this.soundManager = new SoundManagerClass();
-    this.soundManager.addSound("shout", "assets/sound/rogue/fireball.wav", 0.5);
-    this.soundManager.addSound("jump", "assets/sound/rogue/jump.wav", 0.5);
-    this.soundManager.addSound("walking", "assets/sound/rogue/walking.wav", 0.5);
+    this.soundManager.addSound('shout', 'assets/sound/rogue/fireball.wav', GAME_CONFIG.SOUNDS.VOLUME);
+    this.soundManager.addSound('jump', 'assets/sound/rogue/jump.wav', GAME_CONFIG.SOUNDS.VOLUME);
+    this.soundManager.addSound('walking', 'assets/sound/rogue/walking.wav', GAME_CONFIG.SOUNDS.VOLUME);
   }
 
   shout() {
-    this.soundManager.playSound("shout");
-  };
+    this.soundManager.playSound('shout');
+  }
 
   jumpSound() {
-    this.soundManager.playSound("jump");
+    this.soundManager.playSound('jump');
   }
 
   walkingSound() {
-    this.soundManager.playSound("walking");
+    setTimeout(() => {
+      this.soundManager.playSound('walking');
+    }, GAME_CONFIG.SOUNDS.DELAY);
   }
 }

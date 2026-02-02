@@ -1,5 +1,4 @@
 const GAME_CONFIG = {
-
   HALF: 2,
   // ===== CANVAS =====
   CANVAS_WIDTH: 960,
@@ -218,5 +217,11 @@ const GAME_CONFIG = {
     ARROW_LEFT: 37,
     SPACE: 32,
     X: 88,
+  },
+
+  // ===== SOUNDS =====
+  SOUNDS: {
+    VOLUME: 0.5,
+    DELAY: 100, // Millisekunden
   },
 };

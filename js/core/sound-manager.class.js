@@ -1,5 +1,4 @@
 class SoundManagerClass {
-
   constructor() {
     this.sounds = {};
   }
@@ -11,23 +10,78 @@ class SoundManagerClass {
     this.sounds[name] = audio;
   }
 
-  playSound(name) {
+  // playSound(name) {
+  //   let sound = this.sounds[name];
+  //   try {
+  //     if (sound) {
+  //       sound.currentTime = 0;
+  //       sound.play();
+  //     }
+  //   } catch (error) {
+  //     console.error('Wiedergabe von ' + name + ' fehlgeschlagen:', error);
+  //   }
+  // }
+
+  playSound(name, delay = 0) {
     let sound = this.sounds[name];
+
+    if (!sound) return;
+
     try {
-      if (sound) {
+      // Prüfen ob der Ton bereits spielt
+      if (!sound.paused) {
+        return; // Ton spielt bereits, nichts tun
+      }
+
+      // Prüfen ob wir noch in der Verzögerungsphase sind
+      const now = Date.now();
+      const lastEndTime = this.soundEndTimes?.[name] || 0;
+
+      if (now - lastEndTime < delay) {
+        return; // Noch in der Verzögerungsphase
+      }
+
+      // Ton abspielen
       sound.currentTime = 0;
       sound.play();
+
+      // Event-Listener für das Ende des Tons (nur einmal)
+      if (delay > 0) {
+        if (!this.soundEndTimes) {
+          this.soundEndTimes = {};
+        }
+
+        const onEnded = () => {
+          this.soundEndTimes[name] = Date.now();
+          sound.removeEventListener('ended', onEnded);
+        };
+
+        sound.addEventListener('ended', onEnded);
       }
     } catch (error) {
-      console.error("Wiedergabe von " + name + " fehlgeschlagen:", error);
+      console.error('Wiedergabe von ' + name + ' fehlgeschlagen:', error);
     }
   }
 
-stop(name) {
+  stop(name) {
     let sound = this.sounds[name];
     if (sound) {
       sound.pause();
       sound.currentTime = 0;
     }
+  }
+
+  shout() {
+    this.soundManager.playSound('shout');
+  }
+
+  jumpSound() {
+    this.soundManager.playSound('jump');
+  }
+
+  walkingSound() {
+    setTimeout(() => {
+      this.soundManager.playSound('walking');
+    }, GAME_CONFIG.SOUNDS.DELAY);
   }
 }
