@@ -61,9 +61,13 @@ function init() {
 
   canvas.addEventListener('mousemove', handleMouseMove);
   canvas.addEventListener('click', handleClick);
+  canvas.addEventListener('pointerdown', handleClick); // Support touch/modern pointer input
 
   // Start animation loop for UI
   animateUI();
+  
+  // Initialize mobile touch controls
+  initButtonPressEvents();
 }
 
 /**
@@ -108,8 +112,9 @@ function endGame(screen) {
 
 function handleMouseMove(event) {
   const rect = canvas.getBoundingClientRect();
-  const mouseX = event.clientX - rect.left;
-  const mouseY = event.clientY - rect.top;
+  // Scale to internal canvas coordinates (960x540)
+  const mouseX = ((event.clientX - rect.left) / rect.width) * canvas.width;
+  const mouseY = ((event.clientY - rect.top) / rect.height) * canvas.height;
 
   if (!gameStarted && startScreen && startScreen.isVisible) {
     startScreen.checkHover(mouseX, mouseY);
@@ -127,8 +132,9 @@ function handleMouseMove(event) {
 
 function handleClick(event) {
   const rect = canvas.getBoundingClientRect();
-  const clickX = event.clientX - rect.left;
-  const clickY = event.clientY - rect.top;
+  // Scale to internal canvas coordinates (960x540)
+  const clickX = ((event.clientX - rect.left) / rect.width) * canvas.width;
+  const clickY = ((event.clientY - rect.top) / rect.height) * canvas.height;
 
   if (!gameStarted && startScreen && startScreen.isVisible) {
     if (startScreen.isButtonClicked(clickX, clickY)) {
@@ -168,32 +174,45 @@ function restartGame() {
 
 // mobile touch controls
 function initButtonPressEvents() {
-  document.getElementById('btnLeft').addEventListener('touchstart', (touchEvent) => {
-    touchEvent.preventDefault();
-    keyboard.LEFT = true;
-  });
-  document.getElementById('btnLeft').addEventListener('touchend', (touchEvent) => {
-    touchEvent.preventDefault();
-    keyboard.LEFT = false;
-  });
+  const setupControl = (id, key) => {
+    const btn = document.getElementById(id);
+    if (!btn) return;
 
-  document.getElementById('btnRight').addEventListener('touchstart', (touchEvent) => {
-    touchEvent.preventDefault();
-    keyboard.RIGHT = true;
-  });
-  document.getElementById('btnRight').addEventListener('touchend', (touchEvent) => {
-    touchEvent.preventDefault();
-    keyboard.RIGHT = false;
-  });
+    // Use Pointer Events for universal support (Touch + Mouse)
+    btn.addEventListener('pointerdown', (e) => {
+      if (e.pointerType !== 'touch') return; // Only process touch input
+      e.preventDefault();
+      keyboard[key] = true;
+    });
 
-  document.getElementById('btnJump').addEventListener('touchstart', (touchEvent) => {
-    touchEvent.preventDefault();
-    keyboard.SPACE = true;
-  });
-  document.getElementById('btnJump').addEventListener('touchend', (touchEvent) => {
-    touchEvent.preventDefault();
-    keyboard.SPACE = false;
-  });
+    btn.addEventListener('pointerup', (e) => {
+      if (e.pointerType !== 'touch') return;
+      e.preventDefault();
+      keyboard[key] = false;
+    });
+
+    btn.addEventListener('pointerleave', (e) => {
+      if (e.pointerType !== 'touch') return;
+      e.preventDefault();
+      keyboard[key] = false;
+    });
+
+    // Fallback for older touch devices
+    btn.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      keyboard[key] = true;
+    }, { passive: false });
+
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      keyboard[key] = false;
+    }, { passive: false });
+  };
+
+  setupControl('btnLeft', 'LEFT');
+  setupControl('btnRight', 'RIGHT');
+  setupControl('btnJump', 'SPACE');
+  setupControl('btnAttack', 'X');
 }
 
 window.addEventListener('keydown', (e) => {

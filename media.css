@@ -32,24 +32,7 @@
     }
 
     .controls {
-        padding: 5px 15px;
-        flex-direction: row;
-        gap: 15px;
-    }
-
-    .controls div {
-        font-size: 14px;
-    }
-
-    /* Extrem niedrige Auflösungen (z.B. iPhone im Querformat mit Notch) */
-    @media (max-height: 360px) {
-        .controls {
-            padding: 2px 10px;
-            gap: 8px;
-        }
-        .controls div {
-            font-size: 12px;
-        }
+        display: none !important;
     }
 }
 
@@ -72,5 +55,29 @@
 
     #fullscreen {
         display: none !important;
+    }
+}
+
+@media only screen and (max-height: 480px) {
+    #mobileControls {
+        display: flex !important;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        justify-content: space-between;
+        align-items: flex-end;
+        padding: 20px 40px;
+        pointer-events: none;
+    }
+
+    .movement-controls, .action-controls {
+        display: flex;
+        gap: 20px;
+        pointer-events: none;
+    }
+    
+    .mobile-btn {
+        pointer-events: auto;
     }
 }
