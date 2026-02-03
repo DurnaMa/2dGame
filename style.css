@@ -197,8 +197,8 @@ h1 {
 }
 
 .mobile-btn {
-  width: 80px;
-  height: 80px;
+  width: 40px;
+  height: 40px;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -216,15 +216,15 @@ h1 {
 }
 
 #btnLeft {
-  background-image: url('assets/fantasy-platformer-game-ui/PNG/04settings/button_type4_left_arrow_yellow.png');
+  background-image: url('assets/fantasy-platformer-game-ui/PNG/03potions/backward.png');
 }
 
 #btnRight {
-  background-image: url('assets/fantasy-platformer-game-ui/PNG/04settings/button_type4_right_arrow_yellow.png');
+  background-image: url('assets/fantasy-platformer-game-ui/PNG/03potions/forward.png');
 }
 
 #btnJump {
-  background-image: url('assets/fantasy-platformer-game-ui/PNG/17Icons/yellow/play_button4_yellow.png');
+  background-image: url('assets/fantasy-platformer-game-ui/PNG/04settings/big-ball-button.png');
   transform: rotate(-90deg);
 }
 

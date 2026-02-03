@@ -76,7 +76,31 @@
         gap: 20px;
         pointer-events: none;
     }
-    
+
+    .mobile-btn {
+        pointer-events: auto;
+    }
+}
+
+@media only screen and (max-height: 320px) {
+    #mobileControls {
+        display: flex !important;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        justify-content: space-between;
+        align-items: flex-end;
+        padding: 20px 40px;
+        pointer-events: none;
+    }
+
+    .movement-controls, .action-controls {
+        display: flex;
+        gap: 20px;
+        pointer-events: none;
+    }
+
     .mobile-btn {
         pointer-events: auto;
     }
