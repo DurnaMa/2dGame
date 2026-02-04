@@ -110,6 +110,7 @@ const GAME_CONFIG = {
         RIGHT: 105,
         BOTTOM: 100,
       },
+      DELAY: 2000,
     },
     DRAGON: {
       Y: 352,
@@ -127,6 +128,7 @@ const GAME_CONFIG = {
         RIGHT: 88,
         BOTTOM: 113,
       },
+      DELAY: 100,
     },
     BOSS: {
       Y: 220,

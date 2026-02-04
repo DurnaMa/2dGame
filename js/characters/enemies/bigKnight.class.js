@@ -17,8 +17,8 @@ class BigKnight extends MovableObject {
     'assets/2d-pixel-art-evil-monster-sprites/PNG/Big_knight/big_knight16_death1.png',
     'assets/2d-pixel-art-evil-monster-sprites/PNG/Big_knight/big_knight17_death2.png',
     'assets/2d-pixel-art-evil-monster-sprites/PNG/Big_knight/big_knight18_death3.png',
-    'assets/2d-pixel-art-evil-monster-sprites/PNG/Big_knight/big_knight19_death4.png'
-  ]
+    'assets/2d-pixel-art-evil-monster-sprites/PNG/Big_knight/big_knight19_death4.png',
+  ];
 
   constructor() {
     super().loadImage('assets/2d-pixel-art-evil-monster-sprites/PNG/Big_knight/big_knight14_hurt1.png');
@@ -26,9 +26,9 @@ class BigKnight extends MovableObject {
     this.x = GAME_CONFIG.ENEMY.BIGKNIGHT.START_X + Math.random() * GAME_CONFIG.ENEMY.BIGKNIGHT.MAX_X_RANDOM_RANGE;
     this.speed = GAME_CONFIG.ENEMY.BIGKNIGHT.MIN_SPEED + Math.random() * GAME_CONFIG.ENEMY.BIGKNIGHT.MAX_SPEED_RANGE;
     this.loadImages(this.IMAGES_WALKING);
-    this.loadImages(this.IMAGES_DEATH);  // Lade auch die Todesanimation
-    this.isDead = false;  // Initialisiere isDead
-    this.markedForRemoval = false;  // Flag für vollständige Entfernung
+    this.loadImages(this.IMAGES_DEATH);
+    this.isDead = false;
+    this.markedForRemoval = false;
     this.animate();
     this.offset = {
       top: GAME_CONFIG.ENEMY.BIGKNIGHT.OFFSET.TOP,
@@ -40,44 +40,64 @@ class BigKnight extends MovableObject {
     this.startX = this.x;
     this.isActive = true;
     this.movingRight = false;
-    this.speed = GAME_CONFIG.ENEMY.BOSS.SPEED;
-
-    this.animate();
   }
 
   animate() {
-    this.moveInterval = setTrackedInterval(() => {
-      if (!gameStarted) return;
-      
-      if (!this.isDead) {
-        this.moveLeft();
-      }
-    }, 1000 / GAME_CONFIG.FRAME_RATE, 'BigKnight Movement');
+    this.moveInterval = setTrackedInterval(
+      () => {
+        if (!gameStarted) return;
 
-    this.animationInterval = setTrackedInterval(() => {
-      if (!gameStarted) return;
-
-      if (this.isDead) {
-        // Todesanimation abspielen
-        this.playAnimation(this.IMAGES_DEATH);
-        // Nach der Animation verschwinden
-        if (this.currentImage >= this.IMAGES_DEATH.length) {
-          this.remove();
+        if (!this.isDead) {
+          this.moveLeft();
         }
-      } else {
-        this.playAnimation(this.IMAGES_WALKING);
+      },
+      1000 / GAME_CONFIG.FRAME_RATE,
+      'BigKnight Movement'
+    );
+
+    this.animationInterval = setTrackedInterval(
+      () => {
+        if (!gameStarted) return;
+
+        if (this.isDead) {
+          this.handleDeathAnimation();
+        } else {
+          this.playAnimation(this.IMAGES_WALKING);
+        }
+      },
+      GAME_CONFIG.ENEMY.BIGKNIGHT.ANIMATION_SPEED,
+      'BigKnight Animation'
+    );
+  }
+
+  handleDeathAnimation() {
+    if (!this.deathAnimationStarted) {
+      this.currentImage = 0;
+      this.deathAnimationStarted = true;
+    }
+
+    if (this.currentImage < this.IMAGES_DEATH.length) {
+      this.playAnimation(this.IMAGES_DEATH);
+    } else {
+      // Hold the last frame
+      const lastFramePath = this.IMAGES_DEATH[this.IMAGES_DEATH.length - 1];
+      this.img = this.imageCache[lastFramePath];
+
+      // Delay removal for 2 seconds (using a timeout prevents multiple schedules)
+      if (!this.removalScheduled) {
+        this.removalScheduled = true;
+        setTimeout(() => {
+          this.remove();
+        }, GAME_CONFIG.ENEMY.BIGKNIGHT.DELAY);
       }
-    }, GAME_CONFIG.ENEMY.BIGKNIGHT.ANIMATION_SPEED, 'BigKnight Animation');
+    }
   }
 
   remove() {
-    // Intervalle stoppen
     clearInterval(this.moveInterval);
     clearInterval(this.animationInterval);
-    // Gegner unsichtbar machen
     this.width = 0;
     this.height = 0;
-    // Markiere für vollständige Entfernung aus dem Array
     this.markedForRemoval = true;
   }
 }

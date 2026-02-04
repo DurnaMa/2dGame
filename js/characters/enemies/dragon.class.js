@@ -39,42 +39,62 @@ class Dragon extends MovableObject {
     this.startX = this.x;
     this.isActive = true;
     this.movingRight = false;
-    this.speed = GAME_CONFIG.ENEMY.BOSS.SPEED;
-
-    this.animate();
   }
   animate() {
-    this.moveInterval = setTrackedInterval(() => {
-      if (!gameStarted) return;
-      if (!this.isDead) {
-        this.moveLeft();
-      }
-    }, 1000 / GAME_CONFIG.FRAME_RATE, 'Dragon Movement');
-
-    this.animationInterval = setTrackedInterval(() => {
-      if (!gameStarted) return;
-
-      if (!this.isDead) {
-        this.playAnimation(this.IMAGES_WALKING);
-      } else {
-        // Todesanimation abspielen
-        this.playAnimation(this.IMAGES_DEATH);
-        // Nach der Animation verschwinden
-        if (this.currentImage >= this.IMAGES_DEATH.length) {
-          this.remove();
+    this.moveInterval = setTrackedInterval(
+      () => {
+        if (!gameStarted) return;
+        if (!this.isDead) {
+          this.moveLeft();
         }
+      },
+      1000 / GAME_CONFIG.FRAME_RATE,
+      'Dragon Movement'
+    );
+
+    this.animationInterval = setTrackedInterval(
+      () => {
+        if (!gameStarted) return;
+
+        if (this.isDead) {
+          this.handleDeathAnimation();
+        } else {
+          this.playAnimation(this.IMAGES_WALKING);
+        }
+      },
+      GAME_CONFIG.ENEMY.DRAGON.ANIMATION_SPEED,
+      'Dragon Animation'
+    );
+  }
+
+  handleDeathAnimation() {
+    if (!this.deathAnimationStarted) {
+      this.currentImage = 0;
+      this.deathAnimationStarted = true;
+    }
+
+    if (this.currentImage < this.IMAGES_DEATH.length) {
+      this.playAnimation(this.IMAGES_DEATH);
+    } else {
+      // Hold the last frame
+      const lastFramePath = this.IMAGES_DEATH[this.IMAGES_DEATH.length - 1];
+      this.img = this.imageCache[lastFramePath];
+
+      // Delay removal for 2 seconds
+      if (!this.removalScheduled) {
+        this.removalScheduled = true;
+        setTimeout(() => {
+          this.remove();
+        }, GAME_CONFIG.ENEMY.DRAGON.DELAY);
       }
-    }, GAME_CONFIG.ENEMY.BIGKNIGHT.ANIMATION_SPEED, 'Dragon Animation');
+    }
   }
 
   remove() {
-    // Intervalle stoppen
     clearInterval(this.moveInterval);
     clearInterval(this.animationInterval);
-    // Gegner unsichtbar machen
     this.width = 0;
     this.height = 0;
-    // Markiere für vollständige Entfernung aus dem Array
     this.markedForRemoval = true;
   }
 }

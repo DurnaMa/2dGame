@@ -10,18 +10,6 @@ class SoundManagerClass {
     this.sounds[name] = audio;
   }
 
-  // playSound(name) {
-  //   let sound = this.sounds[name];
-  //   try {
-  //     if (sound) {
-  //       sound.currentTime = 0;
-  //       sound.play();
-  //     }
-  //   } catch (error) {
-  //     console.error('Wiedergabe von ' + name + ' fehlgeschlagen:', error);
-  //   }
-  // }
-
   playSound(name, delay = 0) {
     let sound = this.sounds[name];
 
