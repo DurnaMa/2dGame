@@ -20,8 +20,6 @@ class Statusbar extends DrawableObject {
     this.height = GAME_CONFIG.UI.STATUSBAR.HEIGHT;
     this.visible = true;
     this.setPercentage(GAME_CONFIG.UI.STATUSBAR.PERCENTAGE_START);
-
-
   }
 
   setPercentage(percentage) {
@@ -37,16 +35,21 @@ class Statusbar extends DrawableObject {
   }
 
   resolveImageIndex() {
-    if (this.percentage <= 0) return 0;
+    if (this.percentage === 0) return 0;
 
     switch (true) {
-      case this.percentage >= 100: return 6;
-      case this.percentage >= 83.33: return 5;
-      case this.percentage >= 66.66: return 4;
-      case this.percentage >= 50: return 3;
-      case this.percentage >= 33.33: return 2;
-      case this.percentage >= 16.66: return 1;
-      default: return 0;
+      case this.percentage >= 100:
+        return 6;
+      case this.percentage >= 80:
+        return 5;
+      case this.percentage >= 60:
+        return 4;
+      case this.percentage >= 40:
+        return 3;
+      case this.percentage >= 20:
+        return 2;
+      default:
+        return 1;
     }
   }
 }
