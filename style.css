@@ -126,7 +126,9 @@ h1 {
 .overlay-content p {
   font-size: 24px;
   margin-top: 20px;
-  font-family: Uncial Antiqua, sans-serif;
+  font-family:
+    Uncial Antiqua,
+    sans-serif;
   max-width: 80%; /* Verhindert, dass der Text an den Rand klatscht */
   line-height: 1.4;
   transform: none !important;
@@ -139,9 +141,15 @@ h1 {
 }
 
 @keyframes rotateAnim {
-  0% { transform: rotate(0deg); }
-  50% { transform: rotate(-90deg); }
-  100% { transform: rotate(0deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-90deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
 }
 
 #canvas {
@@ -216,22 +224,30 @@ h1 {
 }
 
 #btnLeft {
-  background-image: url('assets/fantasy-platformer-game-ui/PNG/03potions/backward.png');
+  background-image: url('assets/fantasy-platformer-game-ui/PNG/03potions/backward_button.png');
 }
 
 #btnRight {
-  background-image: url('assets/fantasy-platformer-game-ui/PNG/03potions/forward.png');
+  background-image: url('assets/fantasy-platformer-game-ui/PNG/03potions/forward_button.png');
 }
 
 #btnJump {
-  background-image: url('assets/fantasy-platformer-game-ui/PNG/04settings/big-ball-button.png');
-  transform: rotate(-90deg);
+  background-image: url('assets/fantasy-platformer-game-ui/PNG/04settings/backward_button.png');
+  transform: rotate(90deg);
 }
 
 #btnJump:active {
-  transform: rotate(-90deg) scale(0.9);
+  transform: rotate(90deg) scale(0.9);
 }
 
 #btnAttack {
-  background-image: url('assets/fantasy-platformer-game-ui/PNG/16Inner_Interface/sword_button.png');
+  background-image:
+    url('assets/fantasy-platformer-game-ui/PNG/16Inner_Interface/sword_button.png'),
+    url('assets/fantasy-platformer-game-ui/PNG/05ogin&pass/big-ball-button.png');
+  background-size: 60%, contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 50%;
+  border: none;
+  background-color: transparent;
 }
