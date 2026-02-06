@@ -3,7 +3,7 @@ class SoundManagerClass {
     this.sounds = {};
   }
 
-  addSound(name, src, volume = 1.0, loop = false) {
+  addSound(name, src, volume = GAME_CONFIG.SOUNDS.VOLUME, loop = GAME_CONFIG.SOUNDS.LOOP) {
     let audio = new Audio(src);
     audio.volume = volume;
     audio.loop = loop;

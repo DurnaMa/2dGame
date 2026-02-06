@@ -223,7 +223,13 @@ const GAME_CONFIG = {
 
   // ===== SOUNDS =====
   SOUNDS: {
-    VOLUME: 0.5,
-    DELAY: 100, // Millisekunden
+    VOLUME: 1,
+    DELAY: 100,
+    LOOP: false,
+    ATMOSPHERE: {
+      SRC: 'assets/sound/fantasy-space-atmosphere.mp3',
+      VOLUME: 1,
+      LOOP: true,
+    },
   },
 };

@@ -1,5 +1,6 @@
 let globalIntervals = [];
 let globalTimeouts = [];
+let soundManager;
 
 /**
  * Sets a setInterval and tracks it globally.
@@ -50,6 +51,16 @@ function init() {
   initLevel1();
   canvas = document.getElementById('canvas');
 
+  soundManager = new SoundManagerClass();
+  soundManager.addSound(
+    'fantasy-space-atmosphere',
+    GAME_CONFIG.SOUNDS.ATMOSPHERE.SRC,
+    GAME_CONFIG.SOUNDS.ATMOSPHERE.VOLUME,
+    GAME_CONFIG.SOUNDS.ATMOSPHERE.LOOP
+  );
+
+  window.soundManager = soundManager; // Make globally accessible for debugging
+
   // Initialize World first (so it's visible in background)
   window.world = new World(canvas, keyboard);
   world = window.world;
@@ -65,7 +76,7 @@ function init() {
 
   // Start animation loop for UI
   animateUI();
-  
+
   // Initialize mobile touch controls
   initButtonPressEvents();
 }
@@ -157,6 +168,7 @@ function startGame() {
   gameOverScreen.hide();
   winScreen.hide();
   canvas.style.cursor = 'default';
+  soundManager.playSound('fantasy-space-atmosphere');
 }
 
 function restartGame() {
@@ -198,15 +210,23 @@ function initButtonPressEvents() {
     });
 
     // Fallback for older touch devices
-    btn.addEventListener('touchstart', (e) => {
-      e.preventDefault();
-      keyboard[key] = true;
-    }, { passive: false });
+    btn.addEventListener(
+      'touchstart',
+      (e) => {
+        e.preventDefault();
+        keyboard[key] = true;
+      },
+      { passive: false }
+    );
 
-    btn.addEventListener('touchend', (e) => {
-      e.preventDefault();
-      keyboard[key] = false;
-    }, { passive: false });
+    btn.addEventListener(
+      'touchend',
+      (e) => {
+        e.preventDefault();
+        keyboard[key] = false;
+      },
+      { passive: false }
+    );
   };
 
   setupControl('btnLeft', 'LEFT');
