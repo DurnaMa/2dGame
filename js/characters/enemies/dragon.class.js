@@ -1,8 +1,14 @@
 class Dragon extends MovableObject {
-  y = GAME_CONFIG.ENEMY.DRAGON.Y;
-  x = GAME_CONFIG.ENEMY.DRAGON.X;
-  height = GAME_CONFIG.ENEMY.DRAGON.HEIGHT;
-  width = GAME_CONFIG.ENEMY.DRAGON.WIDTH;
+  y = 352;
+  start_x = 40;
+  height = 300;
+  width = 300;
+  min_x_random = 250;
+  max_x_random_range = 500;
+  min_speed = 1.5;
+  max_speed_range = 2.0;
+  animation_speed = 200;
+  delay = 2000;
 
   IMAGES_WALKING = [
     'assets/2d-pixel-art-evil-monster-sprites/PNG/Dragon/dragon04_walk1.png',
@@ -22,18 +28,18 @@ class Dragon extends MovableObject {
   constructor() {
     super().loadImage('assets/2d-pixel-art-evil-monster-sprites/PNG/Dragon/dragon01_idle1.png');
 
-    this.x = GAME_CONFIG.ENEMY.DRAGON.START_X + Math.random() * GAME_CONFIG.ENEMY.DRAGON.MAX_X_RANDOM_RANGE;
-    this.speed = GAME_CONFIG.ENEMY.DRAGON.MIN_SPEED + Math.random() * GAME_CONFIG.ENEMY.DRAGON.MAX_SPEED_RANGE;
+    this.x = this.start_x + Math.random() * this.max_x_random_range;
+    this.speed = this.min_speed + Math.random() * this.max_speed_range;
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_DEATH); // Lade auch die Todesanimation
     this.isDead = false; // Initialisiere isDead
     this.markedForRemoval = false; // Flag für vollständige Entfernung
     this.animate();
     this.offset = {
-      top: GAME_CONFIG.ENEMY.DRAGON.OFFSET.TOP,
-      left: GAME_CONFIG.ENEMY.DRAGON.OFFSET.LEFT,
-      right: GAME_CONFIG.ENEMY.DRAGON.OFFSET.RIGHT,
-      bottom: GAME_CONFIG.ENEMY.DRAGON.OFFSET.BOTTOM,
+      top: 112,
+      left: 40,
+      right: 88,
+      bottom: 113,
     };
 
     this.startX = this.x;
@@ -62,7 +68,7 @@ class Dragon extends MovableObject {
           this.playAnimation(this.IMAGES_WALKING);
         }
       },
-      GAME_CONFIG.ENEMY.DRAGON.ANIMATION_SPEED,
+      this.animation_speed,
       'Dragon Animation'
     );
   }
@@ -85,7 +91,7 @@ class Dragon extends MovableObject {
         this.removalScheduled = true;
         setTimeout(() => {
           this.remove();
-        }, GAME_CONFIG.ENEMY.DRAGON.DELAY);
+        }, this.delay);
       }
     }
   }

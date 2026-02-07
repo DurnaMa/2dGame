@@ -69,6 +69,8 @@ const GAME_CONFIG = {
   SECTION_START: 2,
   SECTION_END: 7,
   ITEM_MIN_DISTANCE: 50,
+  SECTION_START_ENDBOSS: 6,
+  SECTION_END_ENDBOSS: 7,
 
   // ===== PARALLAX =====
   PARALLAX: {
@@ -90,62 +92,6 @@ const GAME_CONFIG = {
     ROCKS_HIGH: 15,
     ROCKS_MID: 10,
     ROCKS_LOW: 5,
-  },
-
-  // ===== ENEMIES =====
-  ENEMY: {
-    BIGKNIGHT: {
-      Y: 340,
-      START_X: 40,
-      WIDTH: 300,
-      HEIGHT: 300,
-      MIN_X_RANDOM: 250,
-      MAX_X_RANDOM_RANGE: 500,
-      MIN_SPEED: 1.5,
-      MAX_SPEED_RANGE: 2.0,
-      ANIMATION_SPEED: 200,
-      OFFSET: {
-        TOP: 95,
-        LEFT: 115,
-        RIGHT: 105,
-        BOTTOM: 100,
-      },
-      DELAY: 2000,
-    },
-    DRAGON: {
-      Y: 352,
-      START_X: 40,
-      WIDTH: 300,
-      HEIGHT: 300,
-      MIN_X_RANDOM: 250,
-      MAX_X_RANDOM_RANGE: 500,
-      MIN_SPEED: 1.5,
-      MAX_SPEED_RANGE: 2.0,
-      ANIMATION_SPEED: 200,
-      OFFSET: {
-        TOP: 112,
-        LEFT: 40,
-        RIGHT: 88,
-        BOTTOM: 113,
-      },
-      DELAY: 100,
-    },
-    BOSS: {
-      Y: 220,
-      START_X: 7500,
-      WIDTH: 400,
-      HEIGHT: 400,
-      SPEED: 1,
-      ANIMATION_SPEED: 200,
-      PATROL_RANGE: 2000,
-      ACTIVATION_DISTANCE: 600,
-      OFFSET: {
-        TOP: 125,
-        LEFT: 165,
-        RIGHT: 75,
-        BOTTOM: 75,
-      },
-    },
   },
 
   // ===== MOVABLE OBJECT DEFAULTS =====

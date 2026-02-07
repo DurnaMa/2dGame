@@ -1,13 +1,19 @@
 class Endboss extends MovableObject {
-  height = GAME_CONFIG.ENEMY.BOSS.HEIGHT;
-  width = GAME_CONFIG.ENEMY.BOSS.WIDTH;
-  y = GAME_CONFIG.ENEMY.BOSS.Y;
-  x = 0;
+  y = 220;
+  start_x = 7500;
+  height = 400;
+  width = 400;
+  min_x_random = 250;
+  max_x_random_range = 500;
+  min_speed = 1.5;
+  animation_speed = 200;
+  patrol_range = 2000;
+  activation_distance = 600;
+  speed = 1;
 
   otherDirection = true;
   isActive = false;
   movingRight = false;
-  speed = GAME_CONFIG.ENEMY.BOSS.SPEED;
 
   IMAGES_WALKING = [
     'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Walk1.png',
@@ -18,18 +24,18 @@ class Endboss extends MovableObject {
     'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Walk6.png',
   ];
 
-  IMAGES_HURT =[
+  IMAGES_HURT = [
     'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Hurt1.png',
-    'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Hurt2.png'
-  ]
+    'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Hurt2.png',
+  ];
 
-  IMAGES_DEATH =[
+  IMAGES_DEATH = [
     'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Death0.png',
     'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Death1.png',
     'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Death2.png',
     'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Death3.png',
     'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Death4.png',
-  ]
+  ];
 
   constructor() {
     super();
@@ -38,21 +44,20 @@ class Endboss extends MovableObject {
     this.loadImages(this.IMAGES_HURT);
     this.loadImages(this.IMAGES_DEATH);
     this.offset = {
-      top: GAME_CONFIG.ENEMY.BOSS.OFFSET.TOP,
-      left: GAME_CONFIG.ENEMY.BOSS.OFFSET.LEFT,
-      right: GAME_CONFIG.ENEMY.BOSS.OFFSET.RIGHT,
-      bottom: GAME_CONFIG.ENEMY.BOSS.OFFSET.BOTTOM,
+      top: 125,
+      left: 165,
+      right: 75,
+      bottom: 75,
     };
-    this.x = GAME_CONFIG.ENEMY.BOSS.START_X;
+    this.x = this.start_x + Math.random() * this.max_x_random_range;
     this.animate();
     this.energy = 100;
     this.lastHit = 0;
-    this.hitsTaken = 0
-    this.hitsRequired = 3
+    this.hitsTaken = 0;
+    this.hitsRequired = 3;
   }
 
   animate() {
-
     this.animationInterval = setInterval(() => {
       if (this.energy <= 0) {
         this.playAnimation(this.IMAGES_DEATH);
@@ -61,7 +66,7 @@ class Endboss extends MovableObject {
       } else {
         this.playAnimation(this.IMAGES_WALKING);
       }
-    }, GAME_CONFIG.ENEMY.BOSS.ANIMATION_SPEED);
+    }, this.animation_speed);
 
     this.movementInterval = setInterval(() => {
       if (!gameStarted) return;
@@ -74,8 +79,8 @@ class Endboss extends MovableObject {
   patrol() {
     if (!this.isActive || this.energy <= 0) return;
 
-    const patrolStart = GAME_CONFIG.ENEMY.BOSS.START_X - GAME_CONFIG.ENEMY.BOSS.PATROL_RANGE;
-    const patrolEnd = GAME_CONFIG.ENEMY.BOSS.START_X + GAME_CONFIG.ENEMY.BOSS.PATROL_RANGE;
+    const patrolStart = GAME_CONFIG.SECTION_START_ENDBOSS * (GAME_CONFIG.LEVEL_END / GAME_CONFIG.SECTION_COUNT);
+    const patrolEnd = GAME_CONFIG.SECTION_END_ENDBOSS * (GAME_CONFIG.LEVEL_END / GAME_CONFIG.SECTION_COUNT);
 
     if (this.movingRight) {
       this.moveRight();
@@ -98,7 +103,7 @@ class Endboss extends MovableObject {
     if (!this.world || !this.world.character || this.energy <= 0) return;
 
     let distance = Math.abs(this.x - this.world.character.x);
-    if (distance < GAME_CONFIG.ENEMY.BOSS.ACTIVATION_DISTANCE) {
+    if (distance < this.activation_distance) {
       this.isActive = true;
     }
   }
@@ -106,7 +111,6 @@ class Endboss extends MovableObject {
   isDead() {
     return this.energy <= 0;
   }
-
 
   hit(damage = 20) {
     if (this.isDead()) return;
@@ -119,7 +123,7 @@ class Endboss extends MovableObject {
     if (this.hitsTaken >= this.hitsRequired) {
       this.energy = 0;
     } else {
-      // Optional: Reduce energy slightly if you want a health bar effect, 
+      // Optional: Reduce energy slightly if you want a health bar effect,
       // but death is determined by hitsTaken.
       this.energy -= damage;
       if (this.energy < 0) this.energy = 10; // Prevent accidental death by energy drain
