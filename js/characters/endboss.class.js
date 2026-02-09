@@ -43,7 +43,12 @@ class Endboss extends MovableObject {
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_HURT);
     this.loadImages(this.IMAGES_DEATH);
-    this.offset = Config.ENEMY.ENDBOSS.OFFSET;
+    this.offset = {
+      top: Config.ENEMY.ENDBOSS.OFFSET.TOP,
+      left: Config.ENEMY.ENDBOSS.OFFSET.LEFT,
+      right: Config.ENEMY.ENDBOSS.OFFSET.RIGHT,
+      bottom: Config.ENEMY.ENDBOSS.OFFSET.BOTTOM,
+    }
     this.x = this.start_x + Math.random() * this.max_x_random_range;
     this.animate();
     this.energy = 100;
