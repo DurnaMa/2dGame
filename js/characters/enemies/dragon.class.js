@@ -35,7 +35,12 @@ class Dragon extends MovableObject {
     this.isDead = false; // Initialisiere isDead
     this.markedForRemoval = false; // Flag für vollständige Entfernung
     this.animate();
-    this.offset = Config.ENEMY.DRAGON.OFFSET;
+    this.offset = {
+      top: Config.ENEMY.DRAGON.OFFSET.TOP,
+      left: Config.ENEMY.DRAGON.OFFSET.LEFT,
+      right: Config.ENEMY.DRAGON.OFFSET.RIGHT,
+      bottom: Config.ENEMY.DRAGON.OFFSET.BOTTOM,
+    };
 
     this.startX = this.x;
     this.isActive = true;

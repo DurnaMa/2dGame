@@ -36,7 +36,13 @@ class BigKnight extends MovableObject {
     this.isDead = false;
     this.markedForRemoval = false;
     this.animate();
-    this.offset = Config.ENEMY.BIGKNIGHT.OFFSET;
+    this.offset = {
+      top: Config.ENEMY.BIGKNIGHT.OFFSET.TOP,
+      left: Config.ENEMY.BIGKNIGHT.OFFSET.LEFT,
+      right: Config.ENEMY.BIGKNIGHT.OFFSET.RIGHT,
+      bottom: Config.ENEMY.BIGKNIGHT.OFFSET.BOTTOM,
+    };
+
     this.startX = this.x;
     this.isActive = true;
     this.movingRight = false;
