@@ -133,7 +133,7 @@ class Config {
       },
       DELAY: 2000,
     },
-    BOSS: {
+    ENDBOSS: {
       Y: 220,
       START_X: 7500,
       WIDTH: 400,

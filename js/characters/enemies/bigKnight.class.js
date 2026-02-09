@@ -1,14 +1,14 @@
 class BigKnight extends MovableObject {
-  y = 340;
-  start_x = 40;
-  height = 300;
-  width = 300;
-  min_x_random = 250;
-  max_x_random_range = 500;
-  min_speed = 1.5;
-  max_speed_range = 2.0;
-  animation_speed = 200;
-  delay = 2000;
+  y = Config.ENEMY.BIGKNIGHT.Y;
+  start_x = Config.ENEMY.BIGKNIGHT.START_X;
+  height = Config.ENEMY.BIGKNIGHT.HEIGHT;
+  width = Config.ENEMY.BIGKNIGHT.WIDTH;
+  min_x_random = Config.ENEMY.BIGKNIGHT.MIN_X_RANDOM;
+  max_x_random_range = Config.ENEMY.BIGKNIGHT.MAX_X_RANDOM_RANGE;
+  min_speed = Config.ENEMY.BIGKNIGHT.MIN_SPEED;
+  max_speed_range = Config.ENEMY.BIGKNIGHT.MAX_SPEED_RANGE;
+  animation_speed = Config.ENEMY.BIGKNIGHT.ANIMATION_SPEED;
+  delay = Config.ENEMY.BIGKNIGHT.DELAY;
 
   IMAGES_WALKING = [
     'assets/2d-pixel-art-evil-monster-sprites/PNG/Big_knight/big_knight04_walk1.png',
@@ -36,13 +36,7 @@ class BigKnight extends MovableObject {
     this.isDead = false;
     this.markedForRemoval = false;
     this.animate();
-    this.offset = {
-      top: 95,
-      left: 115,
-      right: 105,
-      bottom: 100,
-    };
-
+    this.offset = Config.ENEMY.BIGKNIGHT.OFFSET;
     this.startX = this.x;
     this.isActive = true;
     this.movingRight = false;

@@ -1,14 +1,14 @@
 class Dragon extends MovableObject {
-  y = 352;
-  start_x = 40;
-  height = 300;
-  width = 300;
-  min_x_random = 250;
-  max_x_random_range = 500;
-  min_speed = 1.5;
-  max_speed_range = 2.0;
-  animation_speed = 200;
-  delay = 2000;
+  y = Config.ENEMY.DRAGON.Y;
+  start_x = Config.ENEMY.DRAGON.START_X;
+  height = Config.ENEMY.DRAGON.HEIGHT;
+  width = Config.ENEMY.DRAGON.WIDTH;
+  min_x_random = Config.ENEMY.DRAGON.MIN_X_RANDOM;
+  max_x_random_range = Config.ENEMY.DRAGON.MAX_X_RANDOM_RANGE;
+  min_speed = Config.ENEMY.DRAGON.MIN_SPEED;
+  max_speed_range = Config.ENEMY.DRAGON.MAX_SPEED_RANGE;
+  animation_speed = Config.ENEMY.DRAGON.ANIMATION_SPEED;
+  delay = Config.ENEMY.DRAGON.DELAY;
 
   IMAGES_WALKING = [
     'assets/2d-pixel-art-evil-monster-sprites/PNG/Dragon/dragon04_walk1.png',
@@ -35,12 +35,7 @@ class Dragon extends MovableObject {
     this.isDead = false; // Initialisiere isDead
     this.markedForRemoval = false; // Flag für vollständige Entfernung
     this.animate();
-    this.offset = {
-      top: 112,
-      left: 40,
-      right: 88,
-      bottom: 113,
-    };
+    this.offset = Config.ENEMY.DRAGON.OFFSET;
 
     this.startX = this.x;
     this.isActive = true;

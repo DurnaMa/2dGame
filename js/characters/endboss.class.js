@@ -1,14 +1,14 @@
 class Endboss extends MovableObject {
-  y = 220;
-  start_x = 7500;
-  height = 400;
-  width = 400;
-  min_x_random = 250;
-  max_x_random_range = 500;
-  min_speed = 1.5;
-  animation_speed = 200;
-  patrol_range = 2000;
-  activation_distance = 600;
+  y = Config.ENEMY.ENDBOSS.Y;
+  start_x = Config.ENEMY.ENDBOSS.START_X;
+  height = Config.ENEMY.ENDBOSS.HEIGHT;
+  width = Config.ENEMY.ENDBOSS.WIDTH;
+  min_x_random = Config.ENEMY.ENDBOSS.MIN_X_RANDOM;
+  max_x_random_range = Config.ENEMY.ENDBOSS.MAX_X_RANDOM_RANGE;
+  min_speed = Config.ENEMY.ENDBOSS.MIN_SPEED;
+  animation_speed = Config.ENEMY.ENDBOSS.ANIMATION_SPEED;
+  patrol_range = Config.ENEMY.ENDBOSS.PATROL_RANGE;
+  activation_distance = Config.ENEMY.ENDBOSS.ACTIVATION_DISTANCE;
   speed = 1;
 
   otherDirection = true;
@@ -43,12 +43,7 @@ class Endboss extends MovableObject {
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_HURT);
     this.loadImages(this.IMAGES_DEATH);
-    this.offset = {
-      top: 125,
-      left: 165,
-      right: 75,
-      bottom: 75,
-    };
+    this.offset = Config.ENEMY.ENDBOSS.OFFSET;
     this.x = this.start_x + Math.random() * this.max_x_random_range;
     this.animate();
     this.energy = 100;
