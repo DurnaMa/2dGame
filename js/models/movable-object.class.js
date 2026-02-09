@@ -1,11 +1,11 @@
 class MovableObject extends DrawableObject {
-  speed = GAME_CONFIG.MOVABLE.SPEED;
+  speed = Config.MOVABLE.SPEED;
   otherDirection = false;
-  speedY = GAME_CONFIG.MOVABLE.SPEED_Y;
-  acceleration = GAME_CONFIG.ACCELERATION;
-  energy = GAME_CONFIG.MOVABLE.ENERGY;
+  speedY = Config.MOVABLE.SPEED_Y;
+  acceleration = Config.ACCELERATION;
+  energy = Config.MOVABLE.ENERGY;
   lastHit = 0;
-  ground = GAME_CONFIG.GROUND_LEVEL;
+  ground = Config.GROUND_LEVEL;
 
   offset = {
     top: 0,
@@ -26,7 +26,7 @@ class MovableObject extends DrawableObject {
           this.checkJumpReset();
         }
       },
-      1000 / GAME_CONFIG.MOVABLE.GRAVITY_UPDATE_RATE,
+      1000 / Config.MOVABLE.GRAVITY_UPDATE_RATE,
       'Gravity Update'
     );
   }
@@ -63,7 +63,7 @@ class MovableObject extends DrawableObject {
   }
 
   jump() {
-    this.speedY = GAME_CONFIG.JUMP_POWER;
+    this.speedY = Config.JUMP_POWER;
   }
 
   playAnimation(images) {
@@ -85,7 +85,7 @@ class MovableObject extends DrawableObject {
   }
 
   hit() {
-    this.energy -= GAME_CONFIG.COLLISION.DAMAGE_BOSS;
+    this.energy -= Config.COLLISION.DAMAGE_BOSS;
     if (this.energy < 0) {
       this.energy = 0;
     }
@@ -95,7 +95,7 @@ class MovableObject extends DrawableObject {
   isHurt() {
     let timestamped = new Date().getTime() - this.lastHit;
     timestamped = timestamped / 1000;
-    return timestamped < GAME_CONFIG.MOVABLE.HURT_DURATION;
+    return timestamped < Config.MOVABLE.HURT_DURATION;
   }
 
   isIdle() {

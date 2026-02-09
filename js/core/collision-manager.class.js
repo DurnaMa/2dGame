@@ -8,8 +8,8 @@ class CollisionManager {
   }
 
   isPlayerAboveFalling(character, enemy) {
-    const playerMiddle = character.y + character.height / GAME_CONFIG.HALF;
-    const enemyMiddle = enemy.y + enemy.height / GAME_CONFIG.HALF;
+    const playerMiddle = character.y + character.height / Config.HALF;
+    const enemyMiddle = enemy.y + enemy.height / Config.HALF;
     return playerMiddle < enemyMiddle;
   }
 
@@ -18,7 +18,7 @@ class CollisionManager {
     const characterFeet = character.y + character.height - character.offset.bottom;
     const distanceFeetToHead = characterFeet - enemyTop;
 
-    return distanceFeetToHead >= 0 && distanceFeetToHead <= GAME_CONFIG.COLLISION.JUMP_KILL_HEIGHT_MAX;
+    return distanceFeetToHead >= 0 && distanceFeetToHead <= Config.COLLISION.JUMP_KILL_HEIGHT_MAX;
   }
 
   isJumpingOnEnemy(character, enemy) {
@@ -80,23 +80,23 @@ class CollisionManager {
     }
     if (this.isJumpingOnEnemy(this.world.character, enemy)) {
       enemy.isDead = true;
-      this.world.character.speedY += GAME_CONFIG.COLLISION.JUMP_BOUNCE_POWER;
+      this.world.character.speedY += Config.COLLISION.JUMP_BOUNCE_POWER;
       this.world.character.hit = true;
       setTimeout(() => {
         this.world.character.hit = false;
-      }, GAME_CONFIG.COLLISION.INVULNERABILITY_SHORT);
+      }, Config.COLLISION.INVULNERABILITY_SHORT);
       return;
     }
     if (!this.world.character.hit && !this.world.character.isDeath()) {
       this.world.character.hit = true;
-      this.world.character.energy -= GAME_CONFIG.COLLISION.DAMAGE_NORMAL;
+      this.world.character.energy -= Config.COLLISION.DAMAGE_NORMAL;
       if (this.world.character.energy <= 0) {
         this.world.character.energy = 0;
       }
       this.world.statusBar.setPercentage(this.world.character.energy);
       setTimeout(() => {
         this.world.character.hit = false;
-      }, GAME_CONFIG.COLLISION.INVULNERABILITY_LONG);
+      }, Config.COLLISION.INVULNERABILITY_LONG);
     }
   }
 
@@ -106,12 +106,12 @@ class CollisionManager {
 
   handleBottleCollection(bottle) {
     bottle.collect();
-    this.world.magicBar.addMagic(GAME_CONFIG.BOTTLE.MAGIC_AMOUNT);
+    this.world.magicBar.addMagic(Config.BOTTLE.MAGIC_AMOUNT);
   }
 
   handleEndbossCollision(endBoss) {
     if (!this.world.character.hit && !this.world.character.isDeath()) {
-      this.world.character.energy -= GAME_CONFIG.COLLISION.DAMAGE_BOSS;
+      this.world.character.energy -= Config.COLLISION.DAMAGE_BOSS;
       if (this.world.character.energy < 0) {
         this.world.character.energy = 0;
       }
@@ -119,7 +119,7 @@ class CollisionManager {
       this.world.character.hit = true;
       setTimeout(() => {
         this.world.character.hit = false;
-      }, GAME_CONFIG.COLLISION.INVULNERABILITY_LONG);
+      }, Config.COLLISION.INVULNERABILITY_LONG);
 
       this.world.statusBar.setPercentage(this.world.character.energy);
     }
@@ -154,7 +154,7 @@ class CollisionManager {
         }
       }
 
-      if (projectileHasHit || Math.abs(projectile.x - projectile.startX) > GAME_CONFIG.CANVAS_WIDTH) {
+      if (projectileHasHit || Math.abs(projectile.x - projectile.startX) > Config.CANVAS_WIDTH) {
         this.world.throwableObject.splice(shotsFire, 1);
       }
     }

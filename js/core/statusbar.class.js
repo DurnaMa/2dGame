@@ -1,5 +1,5 @@
 class Statusbar extends DrawableObject {
-  percentage = GAME_CONFIG.UI.STATUSBAR.PERCENTAGE_START;
+  percentage = Config.UI.STATUSBAR.PERCENTAGE_START;
 
   CHARACTER_STATUSBAR = [
     'assets/fantasy-platformer-game-ui/PNG/16Inner_Interface/hpBar/hp_bar_full00.png',
@@ -14,12 +14,12 @@ class Statusbar extends DrawableObject {
   constructor() {
     super();
     this.loadImages(this.CHARACTER_STATUSBAR);
-    this.y = GAME_CONFIG.UI.STATUSBAR.Y;
-    this.x = GAME_CONFIG.UI.STATUSBAR.X;
-    this.width = GAME_CONFIG.UI.STATUSBAR.WIDTH;
-    this.height = GAME_CONFIG.UI.STATUSBAR.HEIGHT;
+    this.y = Config.UI.STATUSBAR.Y;
+    this.x = Config.UI.STATUSBAR.X;
+    this.width = Config.UI.STATUSBAR.WIDTH;
+    this.height = Config.UI.STATUSBAR.HEIGHT;
     this.visible = true;
-    this.setPercentage(GAME_CONFIG.UI.STATUSBAR.PERCENTAGE_START);
+    this.setPercentage(Config.UI.STATUSBAR.PERCENTAGE_START);
   }
 
   setPercentage(percentage) {

@@ -1,4 +1,5 @@
-const CANVAS_WIDTH = GAME_CONFIG.CANVAS_WIDTH;
+//const CANVAS_WIDTH = Config.CANVAS_WIDTH;
+const CANVAS_WIDTH = Config.CANVAS_WIDTH;
 
 let level1;
 let coins = [];
@@ -6,25 +7,25 @@ let bottles = [];
 let enemies = [];
 let endBoss = [];
 
-const SECTIONCOUNT = GAME_CONFIG.SECTION_COUNT;
-const SECTIONSTART = GAME_CONFIG.SECTION_START;
-const SECTIONEND = GAME_CONFIG.SECTION_END;
+const SECTIONCOUNT = Config.SECTION_COUNT;
+const SECTIONSTART = Config.SECTION_START;
+const SECTIONEND = Config.SECTION_END;
 
-const PARALLAX_SKY = GAME_CONFIG.PARALLAX.SKY;
-const PARALLAX_FAR_CLOUDS = GAME_CONFIG.PARALLAX.FAR_CLOUDS;
-const PARALLAX_MID_CLOUDS = GAME_CONFIG.PARALLAX.MID_CLOUDS;
-const PARALLAX_DISTANT_ROCKS = GAME_CONFIG.PARALLAX.DISTANT_ROCKS;
-const PARALLAX_MID_GROUND = GAME_CONFIG.PARALLAX.MID_GROUND;
-const PARALLAX_FOREGROUND = GAME_CONFIG.PARALLAX.FOREGROUND;
-const PARALLAX_MID_CLOUDS4 = GAME_CONFIG.PARALLAX.MID_CLOUDS4;
+const PARALLAX_SKY = Config.PARALLAX.SKY;
+const PARALLAX_FAR_CLOUDS = Config.PARALLAX.FAR_CLOUDS;
+const PARALLAX_MID_CLOUDS = Config.PARALLAX.MID_CLOUDS;
+const PARALLAX_DISTANT_ROCKS = Config.PARALLAX.DISTANT_ROCKS;
+const PARALLAX_MID_GROUND = Config.PARALLAX.MID_GROUND;
+const PARALLAX_FOREGROUND = Config.PARALLAX.FOREGROUND;
+const PARALLAX_MID_CLOUDS4 = Config.PARALLAX.MID_CLOUDS4;
 
-const Y_OFFSET_SKY = GAME_CONFIG.Y_OFFSET.SKY;
-const Y_OFFSET_CLOUDS_HIGH = GAME_CONFIG.Y_OFFSET.CLOUDS_HIGH;
-const Y_OFFSET_CLOUDS_MID = GAME_CONFIG.Y_OFFSET.CLOUDS_MID;
-const Y_OFFSET_ROCKS_HIGH = GAME_CONFIG.Y_OFFSET.ROCKS_HIGH;
-const Y_OFFSET_ROCKS_MID = GAME_CONFIG.Y_OFFSET.ROCKS_MID;
-const Y_OFFSET_ROCKS_LOW = GAME_CONFIG.Y_OFFSET.ROCKS_LOW;
-const Y_OFFSET_CLOUDS4_MID = GAME_CONFIG.Y_OFFSET.CLOUDS4_MID;
+const Y_OFFSET_SKY = Config.Y_OFFSET.SKY;
+const Y_OFFSET_CLOUDS_HIGH = Config.Y_OFFSET.CLOUDS_HIGH;
+const Y_OFFSET_CLOUDS_MID = Config.Y_OFFSET.CLOUDS_MID;
+const Y_OFFSET_ROCKS_HIGH = Config.Y_OFFSET.ROCKS_HIGH;
+const Y_OFFSET_ROCKS_MID = Config.Y_OFFSET.ROCKS_MID;
+const Y_OFFSET_ROCKS_LOW = Config.Y_OFFSET.ROCKS_LOW;
+const Y_OFFSET_CLOUDS4_MID = Config.Y_OFFSET.CLOUDS4_MID;
 
 function spawnEnemies() {
   // Erstelle 1-2 Gegner pro Sektion
@@ -64,7 +65,7 @@ function getXPosition(index) {
   let x = Math.floor(Math.random() * (maxWidth - minWidth + 1)) + minWidth;
   let coinsAndBottles = [...coins, ...bottles];
   let elementOnPosition = coinsAndBottles.find(
-    (item) => item.x < x + GAME_CONFIG.ITEM_MIN_DISTANCE && item.x > x - GAME_CONFIG.ITEM_MIN_DISTANCE
+    (item) => item.x < x + Config.ITEM_MIN_DISTANCE && item.x > x - Config.ITEM_MIN_DISTANCE
   );
 
   if (elementOnPosition) {
@@ -88,11 +89,11 @@ function initLevel1() {
   endBoss = [];
   coins = [];
   bottles = [];
-  
+
   // Re-spawn everything
   spawnItem();
   spawnEnemies();
-  
+
   level1 = new Level(enemies, endBoss, backgroundObjects, coins, bottles);
 }
 

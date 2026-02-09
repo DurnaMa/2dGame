@@ -147,8 +147,8 @@ class Rogue extends Character {
   constructor() {
     super();
 
-    this.height = GAME_CONFIG.CHARACTER.HEIGHT;
-    this.width = GAME_CONFIG.CHARACTER.WIDTH;
+    this.height = Config.CHARACTER.HEIGHT;
+    this.width = Config.CHARACTER.WIDTH;
 
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_JUMPING);
@@ -166,9 +166,9 @@ class Rogue extends Character {
     this.loadImages(this.IMAGE_IMAGES_STANDING);
 
     this.soundManager = new SoundManagerClass();
-    this.soundManager.addSound('shout', 'assets/sound/rogue/fireball.wav', GAME_CONFIG.SOUNDS.VOLUME);
-    this.soundManager.addSound('jump', 'assets/sound/rogue/jump.wav', GAME_CONFIG.SOUNDS.VOLUME);
-    this.soundManager.addSound('walking', 'assets/sound/rogue/walking.wav', GAME_CONFIG.SOUNDS.VOLUME);
+    this.soundManager.addSound('shout', 'assets/sound/rogue/fireball.wav', Config.SOUNDS.VOLUME);
+    this.soundManager.addSound('jump', 'assets/sound/rogue/jump.wav', Config.SOUNDS.VOLUME);
+    this.soundManager.addSound('walking', 'assets/sound/rogue/walking.wav', Config.SOUNDS.VOLUME);
   }
 
   shout() {
@@ -182,6 +182,6 @@ class Rogue extends Character {
   walkingSound() {
     setTimeout(() => {
       this.soundManager.playSound('walking');
-    }, GAME_CONFIG.SOUNDS.DELAY);
+    }, Config.SOUNDS.DELAY);
   }
 }

@@ -1,6 +1,6 @@
 class BackgroundObject extends MovableObject {
-  width = GAME_CONFIG.CANVAS_WIDTH;
-  height = GAME_CONFIG.CANVAS_HEIGHT;
+  width = Config.CANVAS_WIDTH;
+  height = Config.CANVAS_HEIGHT;
   x = 0;
   parallax = 1; // Standard-Parallax-Faktor
 

@@ -57,7 +57,7 @@ class BigKnight extends MovableObject {
           this.moveLeft();
         }
       },
-      1000 / GAME_CONFIG.FRAME_RATE,
+      1000 / Config.FRAME_RATE,
       'BigKnight Movement'
     );
 

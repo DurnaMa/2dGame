@@ -2,7 +2,7 @@ class Level {
   enemies;
   endBoss;
   backgroundObjectRocks;
-  level_end_x = GAME_CONFIG.LEVEL_END;
+  level_end_x = Config.LEVEL_END;
   coins;
   bottles;
   throwableObject;

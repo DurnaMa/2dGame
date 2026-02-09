@@ -241,7 +241,7 @@ class Config {
 }
 
 
-// const GAME_CONFIG = {
+// const Config = {
 //   HALF: 2,
 //   // ===== CANVAS =====
 //   CANVAS_WIDTH: 960,

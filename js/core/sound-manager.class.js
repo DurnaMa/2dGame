@@ -3,7 +3,7 @@ class SoundManagerClass {
     this.sounds = {};
   }
 
-  addSound(name, src, volume = GAME_CONFIG.SOUNDS.VOLUME, loop = GAME_CONFIG.SOUNDS.LOOP) {
+  addSound(name, src, volume = Config.SOUNDS.VOLUME, loop = Config.SOUNDS.LOOP) {
     let audio = new Audio(src);
     audio.volume = volume;
     audio.loop = loop;
@@ -70,6 +70,6 @@ class SoundManagerClass {
   walkingSound() {
     setTimeout(() => {
       this.soundManager.playSound('walking');
-    }, GAME_CONFIG.SOUNDS.DELAY);
+    }, Config.SOUNDS.DELAY);
   }
 }

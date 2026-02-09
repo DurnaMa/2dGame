@@ -54,9 +54,9 @@ function init() {
   soundManager = new SoundManagerClass();
   soundManager.addSound(
     'fantasy-space-atmosphere',
-    GAME_CONFIG.SOUNDS.ATMOSPHERE.SRC,
-    GAME_CONFIG.SOUNDS.ATMOSPHERE.VOLUME,
-    GAME_CONFIG.SOUNDS.ATMOSPHERE.LOOP
+    Config.SOUNDS.ATMOSPHERE.SRC,
+    Config.SOUNDS.ATMOSPHERE.VOLUME,
+    Config.SOUNDS.ATMOSPHERE.LOOP
   );
 
   window.soundManager = soundManager; // Make globally accessible for debugging
@@ -236,53 +236,53 @@ function initButtonPressEvents() {
 }
 
 window.addEventListener('keydown', (e) => {
-  if (e.keyCode == GAME_CONFIG.KEYS.ARROW_UP) {
+  if (e.keyCode == Config.KEYS.ARROW_UP) {
     keyboard.UP = true;
   }
 
-  if (e.keyCode == GAME_CONFIG.KEYS.ARROW_RIGHT) {
+  if (e.keyCode == Config.KEYS.ARROW_RIGHT) {
     keyboard.RIGHT = true;
   }
 
-  if (e.keyCode == GAME_CONFIG.KEYS.ARROW_DOWN) {
+  if (e.keyCode == Config.KEYS.ARROW_DOWN) {
     keyboard.DOWN = true;
   }
 
-  if (e.keyCode == GAME_CONFIG.KEYS.ARROW_LEFT) {
+  if (e.keyCode == Config.KEYS.ARROW_LEFT) {
     keyboard.LEFT = true;
   }
 
-  if (e.keyCode == GAME_CONFIG.KEYS.SPACE) {
+  if (e.keyCode == Config.KEYS.SPACE) {
     keyboard.SPACE = true;
   }
 
-  if (e.keyCode == GAME_CONFIG.KEYS.X) {
+  if (e.keyCode == Config.KEYS.X) {
     keyboard.X = true;
   }
 });
 
 window.addEventListener('keyup', (e) => {
-  if (e.keyCode == GAME_CONFIG.KEYS.ARROW_UP) {
+  if (e.keyCode == Config.KEYS.ARROW_UP) {
     keyboard.UP = false;
   }
 
-  if (e.keyCode == GAME_CONFIG.KEYS.ARROW_RIGHT) {
+  if (e.keyCode == Config.KEYS.ARROW_RIGHT) {
     keyboard.RIGHT = false;
   }
 
-  if (e.keyCode == GAME_CONFIG.KEYS.ARROW_DOWN) {
+  if (e.keyCode == Config.KEYS.ARROW_DOWN) {
     keyboard.DOWN = false;
   }
 
-  if (e.keyCode == GAME_CONFIG.KEYS.ARROW_LEFT) {
+  if (e.keyCode == Config.KEYS.ARROW_LEFT) {
     keyboard.LEFT = false;
   }
 
-  if (e.keyCode == GAME_CONFIG.KEYS.SPACE) {
+  if (e.keyCode == Config.KEYS.SPACE) {
     keyboard.SPACE = false;
   }
 
-  if (e.keyCode == GAME_CONFIG.KEYS.X) {
+  if (e.keyCode == Config.KEYS.X) {
     keyboard.X = false;
   }
 });

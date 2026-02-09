@@ -2,10 +2,10 @@ class DrawableObject {
   img;
   imageCache = {};
   currentImage = 0;
-  x = GAME_CONFIG.DRAWABLE.X;
-  y = GAME_CONFIG.DRAWABLE.Y;
-  height = GAME_CONFIG.DRAWABLE.HEIGHT;
-  width = GAME_CONFIG.DRAWABLE.WIDTH;
+  x = Config.DRAWABLE.X;
+  y = Config.DRAWABLE.Y;
+  height = Config.DRAWABLE.HEIGHT;
+  width = Config.DRAWABLE.WIDTH;
   otherDirection;
   offset;
 
@@ -44,7 +44,7 @@ class DrawableObject {
       this instanceof Dragon
     ) {
       ctx.beginPath();
-      ctx.lineWidth = GAME_CONFIG.DRAWABLE.BORDER_WIDTH;
+      ctx.lineWidth = Config.DRAWABLE.BORDER_WIDTH;
       ctx.strokeStyle = 'blue';
 
       if (this.otherDirection) {
@@ -66,7 +66,7 @@ class DrawableObject {
       //this instanceof Coins
     ) {
       ctx.beginPath();
-      ctx.lineWidth = GAME_CONFIG.DRAWABLE.BORDER_WIDTH;
+      ctx.lineWidth = Config.DRAWABLE.BORDER_WIDTH;
       ctx.strokeStyle = 'red';
 
       if (this.otherDirection) {
@@ -91,7 +91,7 @@ class DrawableObject {
   drawCollisionMagic(ctx) {
     if (this instanceof ThrowableObject) {
       ctx.beginPath();
-      ctx.lineWidth = GAME_CONFIG.DRAWABLE.BORDER_WIDTH;
+      ctx.lineWidth = Config.DRAWABLE.BORDER_WIDTH;
       ctx.strokeStyle = 'yellow';
 
       if (this.otherDirection) {
@@ -107,7 +107,7 @@ class DrawableObject {
           this.y + this.offset.top,
           this.width - this.offset.right - this.offset.left,
           this.height - this.offset.bottom - this.offset.top
-        ); 
+        );
       }
       ctx.stroke();
     }

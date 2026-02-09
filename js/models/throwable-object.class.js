@@ -32,14 +32,14 @@ class ThrowableObject extends MovableObject {
 
   trow() {
     if (this.world.character.otherDirection) {
-    this.speedX = -GAME_CONFIG.THROWABLE.SPEED_X;
+    this.speedX = -Config.THROWABLE.SPEED_X;
     } else {
-      this.speedX = GAME_CONFIG.THROWABLE.SPEED_X;
+      this.speedX = Config.THROWABLE.SPEED_X;
     }
 
     setInterval(() => {
       this.x += this.speedX;
-    }, 1000 / GAME_CONFIG.THROWABLE.UPDATE_RATE);
+    }, 1000 / Config.THROWABLE.UPDATE_RATE);
   }
 
 

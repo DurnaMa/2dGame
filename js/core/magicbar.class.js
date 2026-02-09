@@ -1,5 +1,5 @@
 class Magicbar extends DrawableObject {
-  percentage = GAME_CONFIG.UI.MAGICBAR.PERCENTAGE_START;
+  percentage = Config.UI.MAGICBAR.PERCENTAGE_START;
   shots = 0
 
   CHARACTER_MAGIC_BAR = [
@@ -21,15 +21,15 @@ class Magicbar extends DrawableObject {
   constructor() {
     super();
     this.loadImages(this.CHARACTER_MAGIC_BAR);
-    this.y = GAME_CONFIG.UI.MAGICBAR.Y;
-    this.x = GAME_CONFIG.UI.MAGICBAR.X;
-    this.width = GAME_CONFIG.UI.MAGICBAR.WIDTH;
-    this.height = GAME_CONFIG.UI.MAGICBAR.HEIGHT;
+    this.y = Config.UI.MAGICBAR.Y;
+    this.x = Config.UI.MAGICBAR.X;
+    this.width = Config.UI.MAGICBAR.WIDTH;
+    this.height = Config.UI.MAGICBAR.HEIGHT;
     this.visible = true;
-    this.setPercentage(GAME_CONFIG.UI.MAGICBAR.PERCENTAGE_START);
+    this.setPercentage(Config.UI.MAGICBAR.PERCENTAGE_START);
   }
 
-  addMagic(amount = GAME_CONFIG.UI.MAGICBAR.MAGIC_ADD_AMOUNT) {
+  addMagic(amount = Config.UI.MAGICBAR.MAGIC_ADD_AMOUNT) {
     if (this.shots <= 12) {
       this.shots++;
       const percentage = 100 / 12; // 8.34
@@ -37,7 +37,7 @@ class Magicbar extends DrawableObject {
     }
   }
 
-  useMagic(amount = GAME_CONFIG.UI.MAGICBAR.MAGIC_USE_AMOUNT) {
+  useMagic(amount = Config.UI.MAGICBAR.MAGIC_USE_AMOUNT) {
     this.shots--;
     const percentage = 100 / 12; // 8.34
     this.setPercentage(percentage * this.shots);

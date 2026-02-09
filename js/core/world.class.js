@@ -61,7 +61,7 @@ class World {
         this.collisionManager.checkAllCollisions();
         this.checkThrowableObject();
       },
-      1000 / GAME_CONFIG.FRAME_RATE,
+      1000 / Config.FRAME_RATE,
       'World Core Loop'
     );
   }
@@ -69,10 +69,10 @@ class World {
   checkThrowableObject() {
     if (this.keyboard.X && !this.firePressed && this.magicBar.shots > 0) {
       this.character.shout();
-      let fire = new ThrowableObject(this.character.x + GAME_CONFIG.WORLD.FIRE_OFFSET_X, this.character.y, this);
+      let fire = new ThrowableObject(this.character.x + Config.WORLD.FIRE_OFFSET_X, this.character.y, this);
       this.throwableObject.push(fire);
       this.firePressed = true;
-      this.magicBar.useMagic(GAME_CONFIG.WORLD.MAGIC_USE_PER_FIRE); // Verringert die Magie langsamer
+      this.magicBar.useMagic(Config.WORLD.MAGIC_USE_PER_FIRE); // Verringert die Magie langsamer
     }
 
     if (!this.keyboard.X) {

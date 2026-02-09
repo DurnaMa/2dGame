@@ -73,14 +73,14 @@ class Endboss extends MovableObject {
 
       this.checkActivation();
       this.patrol();
-    }, 100 / GAME_CONFIG.FRAME_RATE);
+    }, 100 / Config.FRAME_RATE);
   }
 
   patrol() {
     if (!this.isActive || this.energy <= 0) return;
 
-    const patrolStart = GAME_CONFIG.SECTION_START_ENDBOSS * (GAME_CONFIG.LEVEL_END / GAME_CONFIG.SECTION_COUNT);
-    const patrolEnd = GAME_CONFIG.SECTION_END_ENDBOSS * (GAME_CONFIG.LEVEL_END / GAME_CONFIG.SECTION_COUNT);
+    const patrolStart = Config.SECTION_START_ENDBOSS * (Config.LEVEL_END / Config.SECTION_COUNT);
+    const patrolEnd = Config.SECTION_END_ENDBOSS * (Config.LEVEL_END / Config.SECTION_COUNT);
 
     if (this.movingRight) {
       this.moveRight();

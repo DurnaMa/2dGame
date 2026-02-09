@@ -1,7 +1,7 @@
 class Character extends MovableObject {
-  y = GAME_CONFIG.CHARACTER.START_Y;
-  x = GAME_CONFIG.CHARACTER.START_X;
-  speed = GAME_CONFIG.CHARACTER.SPEED;
+  y = Config.CHARACTER.START_Y;
+  x = Config.CHARACTER.START_X;
+  speed = Config.CHARACTER.SPEED;
 
   moveInterval;
 
@@ -11,18 +11,18 @@ class Character extends MovableObject {
     //this.loadImage('assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Mage/mage.png');
 
     this.offset = {
-      top: GAME_CONFIG.CHARACTER.OFFSET.TOP,
-      left: GAME_CONFIG.CHARACTER.OFFSET.LEFT,
-      right: GAME_CONFIG.CHARACTER.OFFSET.RIGHT,
-      bottom: GAME_CONFIG.CHARACTER.OFFSET.BOTTOM,
+      top: Config.CHARACTER.OFFSET.TOP,
+      left: Config.CHARACTER.OFFSET.LEFT,
+      right: Config.CHARACTER.OFFSET.RIGHT,
+      bottom: Config.CHARACTER.OFFSET.BOTTOM,
     };
 
-    this.x = GAME_CONFIG.CHARACTER.START_X;
+    this.x = Config.CHARACTER.START_X;
     this.applyGravity();
 
     this.lastMoveTime = new Date().getTime();
     this.hit = false;
-    
+
   }
 
   isDeath() {
@@ -32,12 +32,12 @@ class Character extends MovableObject {
   animate() {
     this.moveInterval = setTrackedInterval(
       () => this.handleMovement(),
-      1000 / GAME_CONFIG.FRAME_RATE,
+      1000 / Config.FRAME_RATE,
       'Character Movement'
     );
     this.animationInterval = setTrackedInterval(
       () => this.handleAnimation(),
-      GAME_CONFIG.ANIMATION_SPEED,
+      Config.ANIMATION_SPEED,
       'Character Animation'
     );
   }
@@ -54,7 +54,7 @@ class Character extends MovableObject {
       this.lastMoveTime = new Date().getTime();
     }
 
-    if (this.world.keyboard.LEFT && this.x > GAME_CONFIG.CHARACTER.START_X) {
+    if (this.world.keyboard.LEFT && this.x > Config.CHARACTER.START_X) {
       if (this.walkingSound) {
         this.walkingSound();
       }
@@ -70,7 +70,7 @@ class Character extends MovableObject {
       this.jumpStarted = new Date().getTime();
     }
 
-    this.world.camera_x = -this.x + GAME_CONFIG.CAMERA_OFFSET;
+    this.world.camera_x = -this.x + Config.CAMERA_OFFSET;
   }
 
   handleAnimation() {
@@ -103,7 +103,7 @@ class Character extends MovableObject {
         () => {
           this.playAnimation(this.IMAGES_JUMPING);
         },
-        GAME_CONFIG.JUMP_ANIMATION_SPEED,
+        Config.JUMP_ANIMATION_SPEED,
         'Character Jump Animation'
       );
 
@@ -112,7 +112,7 @@ class Character extends MovableObject {
           this.checkAlreadyRunning = false;
           clearInterval(spacePressed);
         },
-        GAME_CONFIG.JUMP_ANIMATION_DURATION,
+        Config.JUMP_ANIMATION_DURATION,
         'Character Jump Reset'
       );
     }
