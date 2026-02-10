@@ -25,6 +25,18 @@ class Dragon extends MovableObject {
     'assets/2d-pixel-art-evil-monster-sprites/PNG/Dragon/dragon18_death4.png',
   ];
 
+  IMAGES_ATTACK = [
+    'assets/2d-pixel-art-evil-monster-sprites/PNG/Dragon/dragon09_attack1.png',
+    'assets/2d-pixel-art-evil-monster-sprites/PNG/Dragon/dragon10_attack2.png',
+    'assets/2d-pixel-art-evil-monster-sprites/PNG/Dragon/dragon11_attack3.png',
+    'assets/2d-pixel-art-evil-monster-sprites/PNG/Dragon/dragon12_attack4.png',
+  ];
+
+  IMAGES_HURT = [
+    'assets/2d-pixel-art-evil-monster-sprites/PNG/Dragon/dragon13_hurt1.png',
+    'assets/2d-pixel-art-evil-monster-sprites/PNG/Dragon/dragon14_hurt2.png',
+  ]
+
   constructor() {
     super().loadImage('assets/2d-pixel-art-evil-monster-sprites/PNG/Dragon/dragon01_idle1.png');
 
@@ -32,6 +44,8 @@ class Dragon extends MovableObject {
     this.speed = this.min_speed + Math.random() * this.max_speed_range;
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_DEATH); // Lade auch die Todesanimation
+    this.loadImages(this.IMAGES_ATTACK);
+    this.loadImages(this.IMAGES_HURT);
     this.isDead = false; // Initialisiere isDead
     this.markedForRemoval = false; // Flag für vollständige Entfernung
     this.animate();

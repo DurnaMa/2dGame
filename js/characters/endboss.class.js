@@ -37,6 +37,24 @@ class Endboss extends MovableObject {
     'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Death4.png',
   ];
 
+  IMAGES_ANGER = [
+    'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Anger1.png',
+    'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Anger2.png',
+    'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Anger3.png',
+    'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Anger4.png',
+    'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Anger5.png',
+  ];
+
+  IMAGES_ATTACK = [
+    'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Attack1.png',
+    'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Attack2.png',
+    'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Attack3.png',
+    'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Attack4.png',
+    'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Attack5.png',
+    'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Attack6.png',
+    'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Attack7.png',
+  ];
+
   constructor() {
     super();
     this.loadImage(this.IMAGES_WALKING[0]);

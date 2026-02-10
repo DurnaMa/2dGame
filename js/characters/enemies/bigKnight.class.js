@@ -26,6 +26,18 @@ class BigKnight extends MovableObject {
     'assets/2d-pixel-art-evil-monster-sprites/PNG/Big_knight/big_knight19_death4.png',
   ];
 
+  IMAGES_ATTACK = [
+    'assets/2d-pixel-art-evil-monster-sprites/PNG/Big_knight/big_knight10_attack1.png',
+    'assets/2d-pixel-art-evil-monster-sprites/PNG/Big_knight/big_knight11_attack2.png',
+    'assets/2d-pixel-art-evil-monster-sprites/PNG/Big_knight/big_knight12_attack3.png',
+    'assets/2d-pixel-art-evil-monster-sprites/PNG/Big_knight/big_knight13_attack4.png',
+  ];
+
+  IMAGES_HURT = [
+    'assets/2d-pixel-art-evil-monster-sprites/PNG/Big_knight/big_knight14_hurt1.png',
+    'assets/2d-pixel-art-evil-monster-sprites/PNG/Big_knight/big_knight15_hurt2.png',
+  ];
+
   constructor() {
     super().loadImage('assets/2d-pixel-art-evil-monster-sprites/PNG/Big_knight/big_knight14_hurt1.png');
 
@@ -33,6 +45,8 @@ class BigKnight extends MovableObject {
     this.speed = this.min_speed + Math.random() * this.max_speed_range;
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_DEATH);
+    this.loadImages(this.IMAGES_ATTACK);
+    this.loadImages(this.IMAGES_HURT);
     this.isDead = false;
     this.markedForRemoval = false;
     this.animate();

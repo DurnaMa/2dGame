@@ -114,6 +114,7 @@ class Config {
         BOTTOM: 100,
       },
       DELAY: 2000,
+      ATTACK_DISTANCE: 150,
     },
     DRAGON: {
       Y: 352,
@@ -132,6 +133,7 @@ class Config {
         BOTTOM: 113,
       },
       DELAY: 2000,
+      ATTACK_DISTANCE: 150,
     },
     ENDBOSS: {
       Y: 220,
@@ -151,6 +153,7 @@ class Config {
         RIGHT: 75,
         BOTTOM: 75,
       },
+      ATTACK_DISTANCE: 150,
     },
   };
 
