@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="915bc3c1-ffb3-4df0-840e-1c842cc36a3c" name="Changes" comment="" />
+    <list default="true" id="915bc3c1-ffb3-4df0-840e-1c842cc36a3c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/characters/endboss.class.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/characters/endboss.class.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/characters/enemies/bigKnight.class.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/characters/enemies/bigKnight.class.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/characters/enemies/dragon.class.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/characters/enemies/dragon.class.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/core/config.class.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/core/config.class.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -21,16 +27,16 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "history": [
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;history&quot;: [
     {
-      "assignee": "DurnaMa"
+      &quot;assignee&quot;: &quot;DurnaMa&quot;
     }
   ],
-  "lastFilter": {
-    "assignee": "DurnaMa"
+  &quot;lastFilter&quot;: {
+    &quot;assignee&quot;: &quot;DurnaMa&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;git@github.com:DurnaMa/2dGame.git&quot;,
@@ -139,6 +145,7 @@
       <workItem from="1769253016581" duration="783000" />
       <workItem from="1769253809691" duration="2390000" />
       <workItem from="1769456297849" duration="637000" />
+      <workItem from="1770832001273" duration="1400000" />
     </task>
     <task id="LOCAL-00001" summary="fixed: ThrowableObject uses world to set direction; pass world from World">
       <option name="closed" value="true" />

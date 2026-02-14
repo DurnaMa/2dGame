@@ -35,7 +35,7 @@ class Dragon extends MovableObject {
   IMAGES_HURT = [
     'assets/2d-pixel-art-evil-monster-sprites/PNG/Dragon/dragon13_hurt1.png',
     'assets/2d-pixel-art-evil-monster-sprites/PNG/Dragon/dragon14_hurt2.png',
-  ]
+  ];
 
   constructor() {
     super().loadImage('assets/2d-pixel-art-evil-monster-sprites/PNG/Dragon/dragon01_idle1.png');
@@ -43,11 +43,13 @@ class Dragon extends MovableObject {
     this.x = this.start_x + Math.random() * this.max_x_random_range;
     this.speed = this.min_speed + Math.random() * this.max_speed_range;
     this.loadImages(this.IMAGES_WALKING);
-    this.loadImages(this.IMAGES_DEATH); // Lade auch die Todesanimation
+    this.loadImages(this.IMAGES_DEATH);
     this.loadImages(this.IMAGES_ATTACK);
     this.loadImages(this.IMAGES_HURT);
-    this.isDead = false; // Initialisiere isDead
-    this.markedForRemoval = false; // Flag für vollständige Entfernung
+    this.isDead = false;
+    this.markedForRemoval = false;
+    this.isAttacking = false;
+    this.attackCooldown = false;
     this.animate();
     this.offset = {
       top: Config.ENEMY.DRAGON.OFFSET.TOP,
@@ -60,11 +62,71 @@ class Dragon extends MovableObject {
     this.isActive = true;
     this.movingRight = false;
   }
+
+  getDistanceToCharacter() {
+    if (!this.world || !this.world.character) return Infinity;
+    return Math.abs(this.x - this.world.character.x);
+  }
+
+  isCharacterNear() {
+    return this.getDistanceToCharacter() < Config.ENEMY.DRAGON.CHASE_DISTANCE;
+  }
+
+  isInAttackRange() {
+    return this.getDistanceToCharacter() < Config.ENEMY.DRAGON.ATTACK_RANGE;
+  }
+
+  getDirectionToCharacter() {
+    if (!this.world || !this.world.character) return 0;
+    return this.world.character.x - this.x;
+  }
+
+  chaseCharacter() {
+    if (!this.world || !this.world.character) return;
+
+    const direction = this.getDirectionToCharacter();
+    const DEAD_ZONE = Config.ENEMY.DRAGON.DEAD_ZONE;
+
+    if (direction > DEAD_ZONE) {
+      this.moveRight();
+      this.otherDirection = false;
+    } else if (direction < -DEAD_ZONE) {
+      this.moveLeft();
+      this.otherDirection = true;
+    }
+  }
+
+  startAttack() {
+    if (this.attackCooldown || this.isAttacking) return;
+    this.isAttacking = true;
+    this.currentImage = 0;
+
+    const direction = this.getDirectionToCharacter();
+    this.otherDirection = direction < 0;
+  }
+
+  endAttack() {
+    this.isAttacking = false;
+    this.attackCooldown = true;
+    setTimeout(() => {
+      this.attackCooldown = false;
+    }, Config.ENEMY.DRAGON.ATTACK_COOLDOWN);
+  }
+
   animate() {
     this.moveInterval = setTrackedInterval(
       () => {
         if (!gameStarted) return;
-        if (!this.isDead) {
+        if (this.isDead) return;
+        if (this.isAttacking) return;
+
+        if (this.isInAttackRange() && !this.attackCooldown) {
+          return;
+        } else if (this.isCharacterNear()) {
+          if (!this.isAttacking) {
+            this.chaseCharacter();
+          }
+        } else {
           this.moveLeft();
         }
       },
@@ -78,6 +140,17 @@ class Dragon extends MovableObject {
 
         if (this.isDead) {
           this.handleDeathAnimation();
+        } else if (this.isInAttackRange() && !this.attackCooldown) {
+          this.startAttack();
+          this.playAnimation(this.IMAGES_ATTACK);
+          if (this.currentImage >= this.IMAGES_ATTACK.length) {
+            this.endAttack();
+          }
+        } else if (this.isAttacking) {
+          this.playAnimation(this.IMAGES_ATTACK);
+          if (this.currentImage >= this.IMAGES_ATTACK.length) {
+            this.endAttack();
+          }
         } else {
           this.playAnimation(this.IMAGES_WALKING);
         }
@@ -96,11 +169,9 @@ class Dragon extends MovableObject {
     if (this.currentImage < this.IMAGES_DEATH.length) {
       this.playAnimation(this.IMAGES_DEATH);
     } else {
-      // Hold the last frame
       const lastFramePath = this.IMAGES_DEATH[this.IMAGES_DEATH.length - 1];
       this.img = this.imageCache[lastFramePath];
 
-      // Delay removal for 2 seconds
       if (!this.removalScheduled) {
         this.removalScheduled = true;
         setTimeout(() => {
