@@ -118,8 +118,11 @@ class Dragon extends MovableObject {
       () => {
         if (!gameStarted) return;
         if (this.isDead) return;
+        if (this.isCharacterNear()) {
+          const direction = this.getDirectionToCharacter();
+          this.otherDirection = direction < 0;
+        }
         if (this.isAttacking) return;
-
         if (this.isInAttackRange() && !this.attackCooldown) {
           return;
         } else if (this.isCharacterNear()) {

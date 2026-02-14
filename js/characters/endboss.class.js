@@ -119,12 +119,14 @@ class Endboss extends MovableObject {
   }
 
   startAttack() {
-    if (this.attackCooldown || this.isAttacking || this.isAngry) return;
+    if (this.cannotAttAckt()) return;
     this.isAttacking = true;
     this.currentImage = 0;
+    this.otherDirection = this.getDirectionToCharacter() < 0;
+  }
 
-    const direction = this.getDirectionToCharacter();
-    this.otherDirection = direction < 0;
+  cannotAttAckt() {
+    return this.attackCooldown || this.isAttacking || this.isAngry;
   }
 
   endAttack() {
@@ -136,47 +138,56 @@ class Endboss extends MovableObject {
   }
 
   animate() {
-    this.animationInterval = setInterval(() => {
-      if (this.energy <= 0) {
-        this.playAnimation(this.IMAGES_DEATH);
-      } else if (this.isAngry) {
-        this.playAnimation(this.IMAGES_ANGER);
-      } else if (this.isHurt()) {
-        this.playAnimation(this.IMAGES_HURT);
-      } else if (this.isAttacking) {
-        this.playAnimation(this.IMAGES_ATTACK);
-        if (this.currentImage >= this.IMAGES_ATTACK.length) {
-          this.endAttack();
-        }
-      } else if (this.isInAttackRange() && !this.attackCooldown && this.isActive) {
-        this.startAttack();
-        this.playAnimation(this.IMAGES_ATTACK);
-      } else {
-        this.playAnimation(this.IMAGES_WALKING);
+    this.animationInterval = setInterval(() => this.updateAnimation(), this.animation_speed);
+    this.movementInterval = setInterval(() => this.updateMovement(), 1000 / Config.FRAME_RATE);
+  }
+
+  updateAnimation() {
+    if (this.energy <= 0) {
+      this.playAnimation(this.IMAGES_DEATH);
+    } else if (this.isAngry) {
+      this.playAnimation(this.IMAGES_ANGER);
+    } else if (this.isHurt()) {
+      this.playAnimation(this.IMAGES_HURT);
+    } else if (this.isAttacking) {
+      this.playAnimation(this.IMAGES_ATTACK);
+      if (this.currentImage >= this.IMAGES_ATTACK.length) {
+        this.endAttack();
       }
-    }, this.animation_speed);
+    } else if (this.isInAttackRange() && !this.attackCooldown && this.isActive) {
+      this.startAttack();
+      this.playAnimation(this.IMAGES_ATTACK);
+    } else {
+      this.playAnimation(this.IMAGES_WALKING);
+    }
+  }
 
-    this.movementInterval = setInterval(() => {
-      if (!gameStarted) return;
+  updateMovement() {
+    if (!this.world) return;
+    this.checkActivation();
+    if (this.shouldNotMove()) return;
+    if (this.isInAttackRange() && !this.attackCooldown) {
+      return;
+    } else if (this.isCharacterNear() && this.isActive) {
+      this.chaseCharacter();
+    } else {
+      this.patrol();
+    }
+  }
 
-      this.checkActivation();
+  shouldNotMove() {
+    return this.energy <= 0 || this.isAngry || this.isAttacking;
+  }
 
-      // WICHTIG: Nicht bewegen wenn...
-      if (this.energy <= 0) return;      // Tot
-      if (this.isAngry) return;          // Wütend
-      if (this.isAttacking) return;      // NEU: Nicht während Angriff!
+  canStartAttack() {
+    return this.isInAttackRange() && !this.attackCooldown && this.isActive;
+  }
 
-      if (this.isInAttackRange() && !this.attackCooldown) {
-        // Sehr nah -> Nicht bewegen (Angriff wird in Animation gestartet)
-        return;
-      } else if (this.isCharacterNear() && this.isActive) {
-        // In Sichtweite -> Verfolgen (mit Dead-Zone)
-        this.chaseCharacter();
-      } else {
-        // Weit weg -> Patrouillieren
-        this.patrol();
-      }
-    }, 1000 / Config.FRAME_RATE); // NEU: Nutze FRAME_RATE für smoothere Bewegung
+  playAttackAnimation() {
+    this.playAnimation(this.IMAGES_ATTACK);
+    if (this.currentImage >= this.IMAGES_ATTACK.length) {
+      this.endAttack();
+    }
   }
 
   patrol() {
