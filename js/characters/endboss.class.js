@@ -1,4 +1,4 @@
-class Endboss extends MovableObject {
+class Endboss extends Enemy {
   y = Config.ENEMY.ENDBOSS.Y;
   start_x = Config.ENEMY.ENDBOSS.START_X;
   height = Config.ENEMY.ENDBOSS.HEIGHT;
@@ -80,63 +80,6 @@ class Endboss extends MovableObject {
     this.isAngry = false;
   }
 
-  getDistanceToCharacter() {
-    if (!this.world || !this.world.character) return Infinity;
-    return Math.abs(this.x - this.world.character.x);
-  }
-
-  // NEU: Gibt die Richtung zum Character zurück (für Dead-Zone)
-  getDirectionToCharacter() {
-    if (!this.world || !this.world.character) return 0;
-    return this.world.character.x - this.x; // Positiv = rechts, Negativ = links
-  }
-
-  isCharacterNear() {
-    return this.getDistanceToCharacter() < Config.ENEMY.ENDBOSS.CHASE_DISTANCE;
-  }
-
-  isInAttackRange() {
-    return this.getDistanceToCharacter() < Config.ENEMY.ENDBOSS.ATTACK_RANGE;
-  }
-
-  // VERBESSERT: Mit Dead-Zone gegen Jitter
-  chaseCharacter() {
-    if (!this.world || !this.world.character) return;
-
-    const direction = this.getDirectionToCharacter();
-    const DEAD_ZONE = Config.ENEMY.ENDBOSS.DEAD_ZONE; // Aus Config
-
-    if (direction > DEAD_ZONE) {
-      // Character ist rechts UND weit genug weg
-      this.moveRight();
-      this.otherDirection = false;
-    } else if (direction < -DEAD_ZONE) {
-      // Character ist links UND weit genug weg
-      this.moveLeft();
-      this.otherDirection = true;
-    }
-    // Wenn direction zwischen -DEAD_ZONE und +DEAD_ZONE: NICHT bewegen (kein Jitter!)
-  }
-
-  startAttack() {
-    if (this.cannotAttAckt()) return;
-    this.isAttacking = true;
-    this.currentImage = 0;
-    this.otherDirection = this.getDirectionToCharacter() < 0;
-  }
-
-  cannotAttAckt() {
-    return this.attackCooldown || this.isAttacking || this.isAngry;
-  }
-
-  endAttack() {
-    this.isAttacking = false;
-    this.attackCooldown = true;
-    setTimeout(() => {
-      this.attackCooldown = false;
-    }, Config.ENEMY.ENDBOSS.ATTACK_COOLDOWN);
-  }
-
   animate() {
     this.animationInterval = setInterval(() => this.updateAnimation(), this.animation_speed);
     this.movementInterval = setInterval(() => this.updateMovement(), 1000 / Config.FRAME_RATE);
@@ -177,17 +120,6 @@ class Endboss extends MovableObject {
 
   shouldNotMove() {
     return this.energy <= 0 || this.isAngry || this.isAttacking;
-  }
-
-  canStartAttack() {
-    return this.isInAttackRange() && !this.attackCooldown && this.isActive;
-  }
-
-  playAttackAnimation() {
-    this.playAnimation(this.IMAGES_ATTACK);
-    if (this.currentImage >= this.IMAGES_ATTACK.length) {
-      this.endAttack();
-    }
   }
 
   patrol() {
@@ -232,7 +164,6 @@ class Endboss extends MovableObject {
     this.hitsTaken++;
     console.log('Boss Hit! Hits:', this.hitsTaken, 'Energy before:', this.energy);
 
-    // Trigger anger animation
     this.isAngry = true;
     this.isAttacking = false;
     this.currentImage = 0;

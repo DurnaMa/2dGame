@@ -1,4 +1,4 @@
-class BigKnight extends MovableObject {
+class BigKnight extends Enemy {
   y = Config.ENEMY.BIGKNIGHT.Y;
   start_x = Config.ENEMY.BIGKNIGHT.START_X;
   height = Config.ENEMY.BIGKNIGHT.HEIGHT;
@@ -64,66 +64,16 @@ class BigKnight extends MovableObject {
     this.movingRight = false;
   }
 
-  getDistanceToCharacter() {
-    if (!this.world || !this.world.character) return Infinity;
-    return Math.abs(this.x - this.world.character.x);
-  }
-
-  isCharacterNear() {
-    return this.getDistanceToCharacter() < Config.ENEMY.BIGKNIGHT.CHASE_DISTANCE;
-  }
-
-  isInAttackRange() {
-    return this.getDistanceToCharacter() < Config.ENEMY.BIGKNIGHT.ATTACK_RANGE;
-  }
-
-  getDirectionToCharacter() {
-    if (!this.world || !this.world.character) return 0;
-    return this.world.character.x - this.x;
-  }
-
-  chaseCharacter() {
-    if (!this.world || !this.world.character) return;
-
-    const direction = this.getDirectionToCharacter();
-    const DEAD_ZONE = Config.ENEMY.BIGKNIGHT.DEAD_ZONE;
-
-    if (direction > DEAD_ZONE) {
-      this.moveRight();
-      this.otherDirection = false;
-    } else if (direction < -DEAD_ZONE) {
-      this.moveLeft();
-      this.otherDirection = true;
-    }
-  }
-
-  startAttack() {
-    if (this.attackCooldown || this.isAttacking) return;
-    this.isAttacking = true;
-    this.currentImage = 0;
-
-    const direction = this.getDirectionToCharacter();
-    this.otherDirection = direction < 0;
-  }
-
-  endAttack() {
-    this.isAttacking = false;
-    this.attackCooldown = true;
-    setTimeout(() => {
-      this.attackCooldown = false;
-    }, Config.ENEMY.BIGKNIGHT.ATTACK_COOLDOWN);
-  }
-
   animate() {
     this.moveInterval = setTrackedInterval(
       () => {
         if (!gameStarted) return;
         if (this.isDead) return;
+        if (this.isAttacking) return;
         if (this.isCharacterNear()) {
           const direction = this.getDirectionToCharacter();
           this.otherDirection = direction < 0;
         }
-        if (this.isAttacking) return;
         if (this.isInAttackRange() && !this.attackCooldown) {
           return;
         } else if (this.isCharacterNear()) {
@@ -132,6 +82,7 @@ class BigKnight extends MovableObject {
           }
         } else {
           this.moveLeft();
+          this.otherDirection = true;
         }
       },
       1000 / Config.FRAME_RATE,
@@ -162,34 +113,5 @@ class BigKnight extends MovableObject {
       this.animation_speed,
       'BigKnight Animation'
     );
-  }
-
-  handleDeathAnimation() {
-    if (!this.deathAnimationStarted) {
-      this.currentImage = 0;
-      this.deathAnimationStarted = true;
-    }
-
-    if (this.currentImage < this.IMAGES_DEATH.length) {
-      this.playAnimation(this.IMAGES_DEATH);
-    } else {
-      const lastFramePath = this.IMAGES_DEATH[this.IMAGES_DEATH.length - 1];
-      this.img = this.imageCache[lastFramePath];
-
-      if (!this.removalScheduled) {
-        this.removalScheduled = true;
-        setTimeout(() => {
-          this.remove();
-        }, this.delay);
-      }
-    }
-  }
-
-  remove() {
-    clearInterval(this.moveInterval);
-    clearInterval(this.animationInterval);
-    this.width = 0;
-    this.height = 0;
-    this.markedForRemoval = true;
   }
 }
