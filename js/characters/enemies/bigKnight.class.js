@@ -41,7 +41,7 @@ class BigKnight extends Enemy {
   constructor() {
     super().loadImage('assets/2d-pixel-art-evil-monster-sprites/PNG/Big_knight/big_knight14_hurt1.png');
 
-    this.x = this.start_x + Math.random() * this.max_x_random_range;
+    this.x = this.start_x + this.min_x_random + Math.random() * this.max_x_random_range;
     this.speed = this.min_speed + Math.random() * this.max_speed_range;
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_DEATH);

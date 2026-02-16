@@ -3,11 +3,11 @@ class Endboss extends Enemy {
   start_x = Config.ENEMY.ENDBOSS.START_X;
   height = Config.ENEMY.ENDBOSS.HEIGHT;
   width = Config.ENEMY.ENDBOSS.WIDTH;
-  min_x_random = Config.ENEMY.ENDBOSS.MIN_X_RANDOM;
+  // min_x_random = Config.ENEMY.ENDBOSS.MIN_X_RANDOM;
   max_x_random_range = Config.ENEMY.ENDBOSS.MAX_X_RANDOM_RANGE;
   min_speed = Config.ENEMY.ENDBOSS.MIN_SPEED;
   animation_speed = Config.ENEMY.ENDBOSS.ANIMATION_SPEED;
-  patrol_range = Config.ENEMY.ENDBOSS.PATROL_RANGE;
+  // patrol_range = Config.ENEMY.ENDBOSS.PATROL_RANGE;
   activation_distance = Config.ENEMY.ENDBOSS.ACTIVATION_DISTANCE;
   speed = Config.ENEMY.ENDBOSS.SPEED;
 
@@ -70,6 +70,7 @@ class Endboss extends Enemy {
       bottom: Config.ENEMY.ENDBOSS.OFFSET.BOTTOM,
     };
     this.x = this.start_x + Math.random() * this.max_x_random_range;
+    this.speed = this.min_speed + Math.random() * this.max_speed_range;
     this.animate();
     this.energy = 100;
     this.lastHit = 0;
