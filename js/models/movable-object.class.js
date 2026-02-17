@@ -102,10 +102,4 @@ class MovableObject extends DrawableObject {
     let now = new Date().getTime();
     return now - this.lastMoveTime > 3000;
   }
-
-  stopAllIntervals() {
-    if (this.moveInterval) clearInterval(this.moveInterval);
-    if (this.animationInterval) clearInterval(this.animationInterval);
-    if (this.gravityInterval) clearInterval(this.gravityInterval);
-  }
 }

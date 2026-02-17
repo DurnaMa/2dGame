@@ -3,17 +3,12 @@ class Endboss extends Enemy {
   start_x = Config.ENEMY.ENDBOSS.START_X;
   height = Config.ENEMY.ENDBOSS.HEIGHT;
   width = Config.ENEMY.ENDBOSS.WIDTH;
-  // min_x_random = Config.ENEMY.ENDBOSS.MIN_X_RANDOM;
-  max_x_random_range = Config.ENEMY.ENDBOSS.MAX_X_RANDOM_RANGE;
-  min_speed = Config.ENEMY.ENDBOSS.MIN_SPEED;
+  speed = Config.ENEMY.ENDBOSS.MIN_SPEED;
   animation_speed = Config.ENEMY.ENDBOSS.ANIMATION_SPEED;
-  // patrol_range = Config.ENEMY.ENDBOSS.PATROL_RANGE;
   activation_distance = Config.ENEMY.ENDBOSS.ACTIVATION_DISTANCE;
-  speed = Config.ENEMY.ENDBOSS.SPEED;
 
   otherDirection = true;
   isActive = false;
-  movingRight = false;
 
   IMAGES_WALKING = [
     'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Walk1.png',
@@ -69,8 +64,7 @@ class Endboss extends Enemy {
       right: Config.ENEMY.ENDBOSS.OFFSET.RIGHT,
       bottom: Config.ENEMY.ENDBOSS.OFFSET.BOTTOM,
     };
-    this.x = this.start_x + Math.random() * this.max_x_random_range;
-    this.speed = this.min_speed + Math.random() * this.max_speed_range;
+    this.x = this.start_x;
     this.animate();
     this.energy = 100;
     this.lastHit = 0;
@@ -79,6 +73,7 @@ class Endboss extends Enemy {
     this.isAttacking = false;
     this.attackCooldown = false;
     this.isAngry = false;
+    this.moveRight();
   }
 
   animate() {
@@ -111,7 +106,7 @@ class Endboss extends Enemy {
     this.checkActivation();
     if (this.shouldNotMove()) return;
     if (this.isInAttackRange() && !this.attackCooldown) {
-      return;
+
     } else if (this.isCharacterNear() && this.isActive) {
       this.chaseCharacter();
     } else {
@@ -124,7 +119,8 @@ class Endboss extends Enemy {
   }
 
   patrol() {
-    if (this.energy <= 0) return;
+
+    if(!this.isActive) return;
 
     const patrolStart = Config.SECTION_START_ENDBOSS * (Config.LEVEL_END / Config.SECTION_COUNT);
     const patrolEnd = Config.SECTION_END_ENDBOSS * (Config.LEVEL_END / Config.SECTION_COUNT);
