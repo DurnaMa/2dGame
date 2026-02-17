@@ -51,6 +51,12 @@ function init() {
   initLevel1();
   canvas = document.getElementById('canvas');
 
+  // Restore persisted mute state (localStorage)
+  const savedMuted = localStorage.getItem('fp.soundMuted') === 'true';
+  if (typeof SoundManagerClass !== 'undefined') {
+    SoundManagerClass.setMuted(savedMuted);
+  }
+
   soundManager = new SoundManagerClass();
   soundManager.addSound(
     'fantasy-space-atmosphere',
@@ -69,6 +75,14 @@ function init() {
   startScreen = new StartScreen(canvas);
   gameOverScreen = new GameOverScreen(canvas);
   winScreen = new WinScreen(canvas);
+
+  // Initialize canvas mute button UI inside SoundManager
+  if (soundManager && typeof soundManager.initButton === 'function') {
+    soundManager.initButton(canvas);
+    if (typeof soundManager.setButtonMuted === 'function') {
+      soundManager.setButtonMuted(SoundManagerClass.isMuted());
+    }
+  }
 
   canvas.addEventListener('mousemove', handleMouseMove);
   canvas.addEventListener('click', handleClick);
@@ -104,6 +118,11 @@ function animateUI() {
     }
   }
 
+  // Draw canvas UI elements on top
+  if (soundManager && typeof soundManager.drawButton === 'function') {
+    soundManager.drawButton();
+  }
+
   requestAnimationFrame(animateUI);
 }
 
@@ -127,6 +146,9 @@ function handleMouseMove(event) {
   const mouseX = ((event.clientX - rect.left) / rect.width) * canvas.width;
   const mouseY = ((event.clientY - rect.top) / rect.height) * canvas.height;
 
+  // Update sound button hover first (sichtbar auf allen Screens)
+  if (soundManager && typeof soundManager.checkButtonHover === 'function') soundManager.checkButtonHover(mouseX, mouseY);
+
   if (!gameStarted && startScreen && startScreen.isVisible) {
     startScreen.checkHover(mouseX, mouseY);
     canvas.style.cursor = startScreen.isHovered ? 'pointer' : 'default';
@@ -139,6 +161,11 @@ function handleMouseMove(event) {
       canvas.style.cursor = winScreen.isHovered ? 'pointer' : 'default';
     }
   }
+
+  // sound button hat Vorrang für den Cursor
+  if (soundManager && typeof soundManager.isButtonHovered === 'function' && soundManager.isButtonHovered()) {
+    canvas.style.cursor = 'pointer';
+  }
 }
 
 function handleClick(event) {
@@ -146,6 +173,16 @@ function handleClick(event) {
   // Scale to internal canvas coordinates (960x540)
   const clickX = ((event.clientX - rect.left) / rect.width) * canvas.width;
   const clickY = ((event.clientY - rect.top) / rect.height) * canvas.height;
+
+  // Check Mute button click (immer sichtbar)
+  if (soundManager && typeof soundManager.isButtonClicked === 'function' && soundManager.isButtonClicked(clickX, clickY)) {
+    SoundManagerClass.toggleMuted();
+    if (typeof soundManager.setButtonMuted === 'function') {
+      soundManager.setButtonMuted(SoundManagerClass.isMuted());
+    }
+    localStorage.setItem('fp.soundMuted', SoundManagerClass.isMuted());
+    return;
+  }
 
   if (!gameStarted && startScreen && startScreen.isVisible) {
     if (startScreen.isButtonClicked(clickX, clickY)) {
@@ -236,6 +273,15 @@ function initButtonPressEvents() {
 }
 
 window.addEventListener('keydown', (e) => {
+  // Mute toggle (M)
+  if (e.keyCode == Config.KEYS.MUTE) {
+    SoundManagerClass.toggleMuted();
+    if (soundManager && typeof soundManager.setButtonMuted === 'function') {
+      soundManager.setButtonMuted(SoundManagerClass.isMuted());
+    }
+    localStorage.setItem('fp.soundMuted', SoundManagerClass.isMuted());
+  }
+
   if (e.keyCode == Config.KEYS.ARROW_UP) {
     keyboard.UP = true;
   }

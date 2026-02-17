@@ -77,8 +77,12 @@ class Endboss extends Enemy {
   }
 
   animate() {
-    this.animationInterval = setInterval(() => this.updateAnimation(), this.animation_speed);
-    this.movementInterval = setInterval(() => this.updateMovement(), 1000 / Config.FRAME_RATE);
+    this.animationInterval = setTrackedInterval(
+      () => this.updateAnimation(),
+      this.animation_speed,
+      'Endboss Animation'
+    );
+    setTrackedInterval(() => this.updateMovement(), 1000 / Config.FRAME_RATE, 'Endboss Movement');
   }
 
   updateAnimation() {
@@ -106,7 +110,6 @@ class Endboss extends Enemy {
     this.checkActivation();
     if (this.shouldNotMove()) return;
     if (this.isInAttackRange() && !this.attackCooldown) {
-
     } else if (this.isCharacterNear() && this.isActive) {
       this.chaseCharacter();
     } else {
@@ -119,8 +122,7 @@ class Endboss extends Enemy {
   }
 
   patrol() {
-
-    if(!this.isActive) return;
+    if (!this.isActive) return;
 
     const patrolStart = Config.SECTION_START_ENDBOSS * (Config.LEVEL_END / Config.SECTION_COUNT);
     const patrolEnd = Config.SECTION_END_ENDBOSS * (Config.LEVEL_END / Config.SECTION_COUNT);

@@ -245,6 +245,7 @@ class Config {
     ARROW_LEFT: 37,
     SPACE: 32,
     X: 88,
+    MUTE: 77,
   };
 
   // ===== SOUNDS =====
