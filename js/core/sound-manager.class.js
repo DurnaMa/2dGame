@@ -117,64 +117,51 @@ class SoundManagerClass {
   }
 
   drawButton() {
-    if (!this.ui || !this.ui.ctx) return;
+    if (!this.ui?.ctx) return;
     this._updateButtonPosition();
-    const ctx = this.ui.ctx;
-    const x = this.ui.x;
-    const y = this.ui.y;
-    const s = this.ui.size;
+    const { ctx, x, y, size: s, isHovered, muted, iconsLoaded, imgOn, imgOff } = this.ui;
+    const cx = x + s / 2, cy = y + s / 2;
 
     ctx.save();
 
-    // background circle
-    const cx = x + s / 2;
-    const cy = y + s / 2;
-    const radius = s / 2;
-
-    ctx.globalAlpha = 1;
-    ctx.fillStyle = this.ui.isHovered ? '#ffd700' : '#ffa500';
+    // Background circle
+    ctx.fillStyle = isHovered ? '#ffd700' : '#ffa500';
     ctx.beginPath();
-    ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+    ctx.arc(cx, cy, s / 2, 0, Math.PI * 2);
     ctx.fill();
 
-    // draw icon (image if loaded, fallback to drawn speaker)
-    if (this.ui.iconsLoaded && this.ui.imgOn && this.ui.imgOff) {
-      const img = this.ui.muted ? this.ui.imgOff : this.ui.imgOn;
-      ctx.drawImage(img, x + 4, y + 4, s - 8, s - 8);
+    // Icon
+    if (iconsLoaded && imgOn && imgOff) {
+      ctx.drawImage(muted ? imgOff : imgOn, x + 4, y + 4, s - 8, s - 8);
     } else {
-      // fallback: simple speaker + waves or slash (icon color matches Play‑Button — black)
-      ctx.fillStyle = '#000';
-      const bodyW = s * 0.18;
-      const bodyH = s * 0.26;
+      const bodyW = s * 0.18, bodyH = s * 0.26;
       const bodyX = x + s * 0.30 - bodyW / 2;
-      const bodyY = y + s * 0.5 - bodyH / 2;
+      const bodyY = cy - bodyH / 2;
+
+      ctx.fillStyle = ctx.strokeStyle = '#000';
       ctx.fillRect(bodyX, bodyY, bodyW, bodyH);
 
-      // cone (triangle)
+      // Cone
       ctx.beginPath();
       ctx.moveTo(bodyX + bodyW, bodyY);
-      ctx.lineTo(bodyX + bodyW + s * 0.22, bodyY + bodyH / 2);
+      ctx.lineTo(bodyX + bodyW + s * 0.22, cy);
       ctx.lineTo(bodyX + bodyW, bodyY + bodyH);
       ctx.closePath();
       ctx.fill();
 
-      if (!this.ui.muted) {
-        ctx.strokeStyle = '#000';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.arc(bodyX + bodyW + s * 0.08, y + s * 0.5, s * 0.18, -0.6, 0.6);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.arc(bodyX + bodyW + s * 0.18, y + s * 0.5, s * 0.28, -0.6, 0.6);
-        ctx.stroke();
-      } else {
-        // muted state indicated by a black cross (consistent with Play button colors)
-        ctx.strokeStyle = '#000';
+      if (muted) {
         ctx.lineWidth = 3;
         ctx.beginPath();
         ctx.moveTo(x + s * 0.22, y + s * 0.78);
         ctx.lineTo(x + s * 0.78, y + s * 0.22);
         ctx.stroke();
+      } else {
+        ctx.lineWidth = 2;
+        [[s * 0.08, s * 0.18], [s * 0.18, s * 0.28]].forEach(([ox, r]) => {
+          ctx.beginPath();
+          ctx.arc(bodyX + bodyW + ox, cy, r, -0.6, 0.6);
+          ctx.stroke();
+        });
       }
     }
 

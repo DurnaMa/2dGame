@@ -1,5 +1,5 @@
 function toggleFullscreen() {
-  let container = document.getElementById('fullscreen');
+  let container = document.getElementById('canvas');
   if (!document.fullscreenElement) {
     openFullscreen(container);
   } else {

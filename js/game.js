@@ -85,8 +85,7 @@ function init() {
   }
 
   canvas.addEventListener('mousemove', handleMouseMove);
-  canvas.addEventListener('click', handleClick);
-  canvas.addEventListener('pointerdown', handleClick); // Support touch/modern pointer input
+  canvas.addEventListener('pointerdown', handleClick);
 
   // Start animation loop for UI
   animateUI();
