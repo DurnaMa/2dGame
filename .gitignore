@@ -1,5 +1,13 @@
+.gitignore
+.gitattributes
 up.sh
 untitled:plan-endbossHurtProjectileCollision.prompt.md
+# WebStorm - nutzerspezifische Dateien
+.idea/workspace.xml
+.idea/shelf/
+.idea/*.iml
+# Projektdatei (oft auch nutzerabhängig)
+.idea/Project.xml
 node_modules/
 package.json
 package-lock.json
