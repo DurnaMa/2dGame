@@ -13,6 +13,7 @@ class Config {
   static GRAVITY = 1;
   static ACCELERATION = 1;
   static JUMP_POWER = 25;
+  static STEP = 20;
 
   // ===== CHARACTER =====
   static CHARACTER = {
@@ -156,10 +157,10 @@ class Config {
       PATROL_RANGE: 2000,
       ACTIVATION_DISTANCE: 600,
       OFFSET: {
-        TOP: 125,
-        LEFT: 165,
-        RIGHT: 75,
-        BOTTOM: 75,
+        TOP: 141,
+        LEFT: 79,
+        RIGHT: 200,
+        BOTTOM: 76,
       },
       ATTACK_DISTANCE: 200,
       ATTACK_COOLDOWN: 1500,

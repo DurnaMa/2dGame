@@ -23,9 +23,10 @@ class CollisionManager {
 
   isJumpingOnEnemy(character, enemy) {
     const falling = this.isPlayerFalling(character);
-    const above = this.isFeetHitEnemyHead(character, enemy);
+    const aboveMiddle = this.isPlayerAboveFalling(character, enemy);
+    const feetHitHead = this.isFeetHitEnemyHead(character, enemy);
 
-    return falling && above;
+    return falling && aboveMiddle && feetHitHead;
   }
 
   checkAllCollisions() {
@@ -75,27 +76,26 @@ class CollisionManager {
     if (enemy.isDead) return;
     const character = this.world.character;
 
-    if (character.speedY > 0) {
-      return;
-    }
-    if (this.isJumpingOnEnemy(this.world.character, enemy)) {
+    if (this.isJumpingOnEnemy(character, enemy)) {
+      // Player stomped the enemy — kill it and bounce the player
       enemy.isDead = true;
-      this.world.character.speedY += Config.COLLISION.JUMP_BOUNCE_POWER;
-      this.world.character.hit = true;
+      character.speedY += Config.COLLISION.JUMP_BOUNCE_POWER;
+      character.hit = true;
       setTimeout(() => {
-        this.world.character.hit = false;
+        character.hit = false;
       }, Config.COLLISION.INVULNERABILITY_SHORT);
       return;
     }
-    if (!this.world.character.hit && !this.world.character.isDeath()) {
-      this.world.character.hit = true;
-      this.world.character.energy -= Config.COLLISION.DAMAGE_NORMAL;
-      if (this.world.character.energy <= 0) {
-        this.world.character.energy = 0;
-      }
-      this.world.statusBar.setPercentage(this.world.character.energy);
+
+    if (!character.hit && !character.isDeath()) {
+      character.hit = true;
+
+      // Genau eine Stufe abziehen – respektiert resolveImageIndex aus Statusbar
+      this.world.statusBar.reduceHealth(character);
+      character.lastHit = new Date().getTime();
+
       setTimeout(() => {
-        this.world.character.hit = false;
+        character.hit = false;
       }, Config.COLLISION.INVULNERABILITY_LONG);
     }
   }
@@ -110,18 +110,17 @@ class CollisionManager {
   }
 
   handleEndbossCollision(endBoss) {
-    if (!this.world.character.hit && !this.world.character.isDeath()) {
-      this.world.character.energy -= Config.COLLISION.DAMAGE_BOSS;
-      if (this.world.character.energy < 0) {
-        this.world.character.energy = 0;
-      }
+    const character = this.world.character;
 
-      this.world.character.hit = true;
+    if (!character.hit && !character.isDeath()) {
+      // Boss zieht einen halben Schritt ab (10%) — weniger als normale Gegner
+      this.world.statusBar.reduceHealthBy(character, Config.COLLISION.DAMAGE_BOSS);
+      character.lastHit = new Date().getTime();
+
+      character.hit = true;
       setTimeout(() => {
-        this.world.character.hit = false;
+        character.hit = false;
       }, Config.COLLISION.INVULNERABILITY_LONG);
-
-      this.world.statusBar.setPercentage(this.world.character.energy);
     }
   }
 
@@ -129,11 +128,11 @@ class CollisionManager {
     for (let shotsFire = this.world.throwableObject.length - 1; shotsFire >= 0; shotsFire--) {
       const projectile = this.world.throwableObject[shotsFire];
       let projectileHasHit = false;
+
       for (const enemy of this.world.level.enemies) {
         if (enemy.isDead) continue;
 
         if (projectile.isColliding(enemy)) {
-          console.log('Collision TRUE with:', enemy.constructor.name);
           enemy.isDead = true;
           projectileHasHit = true;
           break;
@@ -147,7 +146,6 @@ class CollisionManager {
 
       for (const enemy of this.world.level.endBoss) {
         if (projectile.isColliding(enemy)) {
-          console.log('--- ENDBOSS HIT TRIGGERED ---');
           enemy.hit();
           projectileHasHit = true;
           break;

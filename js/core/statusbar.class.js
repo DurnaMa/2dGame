@@ -22,6 +22,41 @@ class Statusbar extends DrawableObject {
     this.setPercentage(Config.UI.STATUSBAR.PERCENTAGE_START);
   }
 
+  /**
+   * EN:
+   * Subtract exactly one level (20%) from the status bar and
+   * synchronizes character.energy accordingly.
+   * DE:
+   * Zieht genau eine Stufe (20%) von der Statusbar ab und
+   * synchronisiert character.energy entsprechend.
+   * @param {Character} character
+   */
+  reduceHealth(character) {
+    const newPercentage = Math.max(0, this.percentage - Config.STEP);
+    this.setPercentage(newPercentage);
+    if (character) {
+      character.energy = newPercentage;
+    }
+  }
+
+  /**
+   * EM:
+   * Subtracts a smaller amount (e.g., for boss damage),
+   * but at least half a step.
+   * DE:
+   * Zieht einen kleineren Betrag ab (z.B. für Boss-Schaden),
+   * jedoch mindestens eine halbe Stufe.
+   * @param {Character} character
+   * @param {number} amount – Prozentwert der abgezogen wird
+   */
+  reduceHealthBy(character, amount) {
+    const newPercentage = Math.max(0, this.percentage - amount);
+    this.setPercentage(newPercentage);
+    if (character) {
+      character.energy = newPercentage;
+    }
+  }
+
   setPercentage(percentage) {
     this.percentage = Math.round(percentage);
     if (this.percentage <= 0) {
