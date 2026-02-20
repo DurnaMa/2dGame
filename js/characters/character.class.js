@@ -22,7 +22,6 @@ class Character extends MovableObject {
 
     this.lastMoveTime = new Date().getTime();
     this.hit = false;
-
   }
 
   isDeath() {
@@ -30,11 +29,7 @@ class Character extends MovableObject {
   }
 
   animate() {
-    this.moveInterval = setTrackedInterval(
-      () => this.handleMovement(),
-      1000 / Config.FRAME_RATE,
-      'Character Movement'
-    );
+    this.moveInterval = setTrackedInterval(() => this.handleMovement(), 1000 / Config.FRAME_RATE, 'Character Movement');
     this.animationInterval = setTrackedInterval(
       () => this.handleAnimation(),
       Config.ANIMATION_SPEED,
@@ -43,7 +38,7 @@ class Character extends MovableObject {
   }
 
   handleMovement() {
-    if (!gameStarted) return
+    if (!gameStarted) return;
     if (!this.world.level) return;
 
     if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
