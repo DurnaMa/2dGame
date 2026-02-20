@@ -10,7 +10,7 @@ class Endboss extends Enemy {
   otherDirection = true;
   isActive = false;
 
-  hadFirstContact = true
+  hadFirstContact = false
   isIntroAngry = false;
 
   IMAGES_WALKING = [
@@ -76,7 +76,6 @@ class Endboss extends Enemy {
     this.isAttacking = false;
     this.attackCooldown = false;
     this.isAngry = false;
-    this.moveRight();
   }
 
   animate() {
