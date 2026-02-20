@@ -1,5 +1,6 @@
 class Config {
   static HALF = 2;
+  static DEBUG = false;
 
   // ===== CANVAS =====
   static CANVAS_WIDTH = 960;
