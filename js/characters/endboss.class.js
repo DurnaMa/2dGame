@@ -10,6 +10,9 @@ class Endboss extends Enemy {
   otherDirection = true;
   isActive = false;
 
+  hadFirstContact = true
+  isIntroAngry = false;
+
   IMAGES_WALKING = [
     'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Walk1.png',
     'assets/bosses-pixel-art-game-assets-pack/PNG/Boss2/Walk2.png',
@@ -88,8 +91,10 @@ class Endboss extends Enemy {
   updateAnimation() {
     if (this.energy <= 0) {
       this.playAnimation(this.IMAGES_DEATH);
-    } else if (this.isAngry) {
+
+    } else if (this.isIntroAngry) {
       this.playAnimation(this.IMAGES_ANGER);
+
     } else if (this.isHurt()) {
       this.playAnimation(this.IMAGES_HURT);
     } else if (this.isAttacking) {
@@ -118,7 +123,19 @@ class Endboss extends Enemy {
   }
 
   shouldNotMove() {
-    return this.energy <= 0 || this.isAngry || this.isAttacking;
+    return this.energy <= 0 || this.isAngry || this.isAttacking || this.isIntroAngry;
+  }
+
+  triggerIntroAnger(){
+    this.hadFirstContact = true;
+    this.isIntroAngry = true;
+    this.currentImage = 0;
+
+    const introDuration = this.IMAGES_ANGER.length * this.animation_speed;
+
+    setTimeout(() => {
+      this.isIntroAngry = false;
+    }, introDuration);
   }
 
   patrol() {
@@ -147,8 +164,12 @@ class Endboss extends Enemy {
   checkActivation() {
     if (!this.world || !this.world.character || this.energy <= 0) return;
 
-    let distance = Math.abs(this.x - this.world.character.x);
+    const distance = Math.abs(this.x - this.world.character.x);
+
     if (distance < this.activation_distance) {
+      if (!this.hadFirstContact) {
+        this.triggerIntroAnger()
+      }
       this.isActive = true;
     }
   }

@@ -77,16 +77,22 @@ class CollisionManager {
     const character = this.world.character;
 
     if (this.isJumpingOnEnemy(character, enemy)) {
-      // Player stomped the enemy — kill it and bounce the player
-      enemy.isDead = true;
-      character.speedY += Config.COLLISION.JUMP_BOUNCE_POWER;
-      character.hit = true;
-      setTimeout(() => {
-        character.hit = false;
-      }, Config.COLLISION.INVULNERABILITY_SHORT);
+      this.stompEnemy(enemy, character);
       return;
     }
+    this.applyEnemyDamage(character);
+  }
 
+  stompEnemy(enemy, character) {
+    enemy.isDead = true;
+    character.speedY += Config.COLLISION.JUMP_BOUNCE_POWER;
+    character.hit = true;
+    setTimeout(() => {
+      character.hit = false;
+    }, Config.COLLISION.INVULNERABILITY_SHORT);
+  }
+
+  applyEnemyDamage(character) {
     if (!character.hit && !character.isDeath()) {
       character.hit = true;
 
@@ -128,22 +134,18 @@ class CollisionManager {
     for (let shotsFire = this.world.throwableObject.length - 1; shotsFire >= 0; shotsFire--) {
       const projectile = this.world.throwableObject[shotsFire];
       let projectileHasHit = false;
-
       for (const enemy of this.world.level.enemies) {
         if (enemy.isDead) continue;
-
         if (projectile.isColliding(enemy)) {
           enemy.isDead = true;
           projectileHasHit = true;
           break;
         }
       }
-
       if (projectileHasHit) {
         this.world.throwableObject.splice(shotsFire, 1);
         continue;
       }
-
       for (const enemy of this.world.level.endBoss) {
         if (projectile.isColliding(enemy)) {
           enemy.hit();
@@ -151,7 +153,6 @@ class CollisionManager {
           break;
         }
       }
-
       if (projectileHasHit || Math.abs(projectile.x - projectile.startX) > Config.CANVAS_WIDTH) {
         this.world.throwableObject.splice(shotsFire, 1);
       }
