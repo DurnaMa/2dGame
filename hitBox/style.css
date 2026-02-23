@@ -1,0 +1,144 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+body {
+    background: #1a1a2e;
+    color: #eee;
+    font-family: monospace;
+    padding: 20px;
+}
+h1 {
+    color: #ffd700;
+    margin-bottom: 6px;
+    font-size: 20px;
+}
+p.sub {
+    color: #aaa;
+    font-size: 12px;
+    margin-bottom: 20px;
+}
+
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    align-items: flex-start;
+}
+
+.card {
+    background: #16213e;
+    border: 1px solid #0f3460;
+    border-radius: 10px;
+    padding: 16px;
+    width: 360px;
+}
+
+.card h2 {
+    color: #ffa500;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+canvas {
+    display: block;
+    background: repeating-linear-gradient(45deg, #0d0d0d, #0d0d0d 8px, #111 8px, #111 16px);
+    border: 1px solid #333;
+    width: 100%;
+}
+
+.upload-btn {
+    margin-top: 8px;
+    background: #0f3460;
+    border: 1px dashed #4dabf7;
+    color: #4dabf7;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 11px;
+    width: 100%;
+    text-align: center;
+    display: block;
+}
+.upload-btn:hover {
+    background: #1864ab;
+}
+input[type='file'] {
+    display: none;
+}
+
+.sliders {
+    margin-top: 10px;
+}
+.slider-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+    font-size: 11px;
+}
+.slider-row label {
+    width: 55px;
+    color: #ccc;
+}
+.slider-row input[type='range'] {
+    flex: 1;
+    accent-color: #ffd700;
+}
+.slider-row input[type='number'] {
+    width: 48px;
+    background: #0d0d0d;
+    color: #eee;
+    border: 1px solid #333;
+    border-radius: 4px;
+    padding: 1px 4px;
+    font-size: 11px;
+}
+
+.info {
+    margin-top: 8px;
+    font-size: 11px;
+    color: #aaa;
+    line-height: 1.7;
+}
+.ok {
+    color: #51cf66;
+    font-weight: bold;
+}
+.warn {
+    color: #ff6b6b;
+    font-weight: bold;
+}
+
+.copy-btn {
+    margin-top: 8px;
+    background: #2b8a3e;
+    border: none;
+    color: #fff;
+    padding: 5px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 11px;
+    width: 100%;
+}
+.copy-btn:hover {
+    background: #37b24d;
+}
+
+.legend {
+    display: flex;
+    gap: 12px;
+    margin-top: 6px;
+    font-size: 10px;
+}
+.legend span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    flex-shrink: 0;
+}
