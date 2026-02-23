@@ -9,11 +9,19 @@ class DrawableObject {
   otherDirection;
   offset;
 
+  /**
+   * Loads a single image.
+   * @param path
+   */
   loadImage(path) {
     this.img = new Image();
     this.img.src = path;
   }
 
+  /**
+   * Draws the object on the canvas.
+   * @param ctx
+   */
   draw(ctx) {
     try {
       if (this.otherDirection) {
@@ -26,6 +34,10 @@ class DrawableObject {
     }
   }
 
+  /**
+   * Loads multiple images into the cache.
+   * @param arr
+   */
   loadImages(arr) {
     arr.forEach((path) => {
       let img = new Image();
@@ -34,6 +46,10 @@ class DrawableObject {
     });
   }
 
+  /**
+   * Draws the outer frame (debug only).
+   * @param ctx
+   */
   drawBorder(ctx) {
     if (!Config.DEBUG) return;
     if (
@@ -57,6 +73,10 @@ class DrawableObject {
     }
   }
 
+  /**
+   * Draws the collision box (debug only):
+   * @param ctx
+   */
   drawCollisionBorder(ctx) {
     if (!Config.DEBUG) return;
     if (
@@ -90,6 +110,10 @@ class DrawableObject {
     }
   }
 
+  /**
+   * Draws the collision box for magic objects (debug only).
+   * @param ctx
+   */
   drawCollisionMagic(ctx) {
     if (!Config.DEBUG) return;
     if (this instanceof ThrowableObject) {

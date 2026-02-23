@@ -14,6 +14,9 @@ class MovableObject extends DrawableObject {
     bottom: 0,
   };
 
+  /**
+   *Applies gravity over an interval.
+   */
   applyGravity() {
     this.gravityInterval = setTrackedInterval(
       () => {
@@ -31,6 +34,9 @@ class MovableObject extends DrawableObject {
     );
   }
 
+  /**
+   * Resets the jump state upon landing.
+   */
   checkJumpReset() {
     this.jumpEnded = new Date().getTime();
     this.lastMoveTime = new Date().getTime();
@@ -39,10 +45,19 @@ class MovableObject extends DrawableObject {
     this.jumpStarted = null;
   }
 
+  /**
+   * Checks whether the object is above the ground.
+   * @returns {boolean}
+   */
   isAboveGround() {
     return this.y < this.ground;
   }
 
+  /**
+   * Checks for collision with another object.
+   * @param movableObject
+   * @returns {boolean}
+   */
   isColliding(movableObject) {
     return (
       this.x + this.width - this.offset.right > movableObject.x + movableObject.offset.left &&
@@ -52,20 +67,33 @@ class MovableObject extends DrawableObject {
     );
   }
 
+  /**
+   * Move the object to the left.
+   */
   moveLeft() {
     this.x -= this.speed;
     this.otherDirection = true;
   }
 
+  /**
+   * Move the object to the right.
+   */
   moveRight() {
     this.x += this.speed;
     this.otherDirection = false;
   }
 
+  /**
+   * Makes the object jump.
+   */
   jump() {
     this.speedY = Config.JUMP_POWER;
   }
 
+  /**
+   * Play an animation.
+   * @param images
+   */
   playAnimation(images) {
     try {
       let index = this.currentImage % images.length;
@@ -77,6 +105,10 @@ class MovableObject extends DrawableObject {
     }
   }
 
+  /**
+   * Play an Item animation.
+   * @param images
+   */
   playItems(images) {
     let index = this.currentImage % images.length;
     let path = images[index];
@@ -84,6 +116,9 @@ class MovableObject extends DrawableObject {
     this.currentImage++;
   }
 
+  /**
+   * Reduces energy when hit.
+   */
   hit() {
     this.energy -= Config.COLLISION.DAMAGE_BOSS;
     if (this.energy < 0) {
@@ -92,12 +127,20 @@ class MovableObject extends DrawableObject {
     this.lastHit = new Date().getTime();
   }
 
+  /**
+   * Checks whether the object has been hit recently.
+   * @returns {boolean}
+   */
   isHurt() {
     let timestamped = new Date().getTime() - this.lastHit;
     timestamped = timestamped / 1000;
     return timestamped < Config.MOVABLE.HURT_DURATION;
   }
 
+  /**
+   * Checks whether the object has been inactive for 3 seconds.
+   * @returns {boolean}
+   */
   isIdle() {
     let now = new Date().getTime();
     return now - this.lastMoveTime > 3000;
