@@ -66,7 +66,7 @@ class World {
 
   checkThrowableObject() {
     if (this.keyboard.X && !this.firePressed && this.magicBar.shots > 0) {
-      this.character.shout();
+      this.character.shooting();
       let fire = new ThrowableObject(this.character.x + Config.WORLD.FIRE_OFFSET_X, this.character.y, this);
       this.throwableObject.push(fire);
       this.firePressed = true;

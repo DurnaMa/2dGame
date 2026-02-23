@@ -141,7 +141,7 @@ class CollisionManager {
   }
 
   hitEnemy(projectile) {
-    const enemy = this.world.level.enemies.find((enemy) => !enemy.isDead && projectile.isColliding(e));
+    const enemy = this.world.level.enemies.find((enemy) => !enemy.isDead && projectile.isColliding(enemy));
     if (enemy) {
       enemy.isDead = true;
       return true;

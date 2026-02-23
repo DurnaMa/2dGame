@@ -166,13 +166,16 @@ class Rogue extends Character {
     this.loadImages(this.IMAGE_IMAGES_STANDING);
 
     this.soundManager = new SoundManagerClass();
-    this.soundManager.addSound('shout', 'assets/sound/rogue/fireball.wav', Config.SOUNDS.VOLUME);
+    this.soundManager.addSound('shooting', 'assets/sound/rogue/fireball.wav', Config.SOUNDS.VOLUME);
     this.soundManager.addSound('jump', 'assets/sound/rogue/jump.wav', Config.SOUNDS.VOLUME);
     this.soundManager.addSound('walking', 'assets/sound/rogue/walking.wav', Config.SOUNDS.VOLUME);
   }
 
-  shout() {
-    this.soundManager.playSound('shout');
+  /**
+   *Plays the
+   */
+  shooting() {
+    this.soundManager.playSound('shooting');
   }
 
   jumpSound() {
