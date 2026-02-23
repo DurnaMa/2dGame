@@ -51,7 +51,6 @@ function init() {
   initLevel1();
   canvas = document.getElementById('canvas');
 
-  // Restore persisted mute state (localStorage)
   const savedMuted = localStorage.getItem('fp.soundMuted') === 'true';
   if (typeof SoundManagerClass !== 'undefined') {
     SoundManagerClass.setMuted(savedMuted);
@@ -65,18 +64,15 @@ function init() {
     Config.SOUNDS.ATMOSPHERE.LOOP
   );
 
-  window.soundManager = soundManager; // Make globally accessible for debugging
+  window.soundManager = soundManager;
 
-  // Initialize World first (so it's visible in background)
   window.world = new World(canvas, keyboard);
   world = window.world;
 
-  // Then show start screen on top
   startScreen = new StartScreen(canvas);
   gameOverScreen = new GameOverScreen(canvas);
   winScreen = new WinScreen(canvas);
 
-  // Initialize canvas mute button UI inside SoundManager
   if (soundManager && typeof soundManager.initButton === 'function') {
     soundManager.initButton(canvas);
     if (typeof soundManager.setButtonMuted === 'function') {
@@ -87,10 +83,8 @@ function init() {
   canvas.addEventListener('mousemove', handleMouseMove);
   canvas.addEventListener('pointerdown', handleClick);
 
-  // Start animation loop for UI
   animateUI();
 
-  // Initialize mobile touch controls
   initButtonPressEvents();
 }
 
@@ -99,14 +93,13 @@ function init() {
  */
 function animateUI() {
   if (world) {
-    world.draw(); // Draws game world (clears canvas first)
+    world.draw();
   }
 
   if (gameStarted && !gameEnded) {
     checkGameState();
   }
 
-  // Draw UI layers if visible (on top of world)
   if (!gameStarted && startScreen && startScreen.isVisible) {
     startScreen.draw();
   } else if (gameEnded) {
@@ -117,7 +110,6 @@ function animateUI() {
     }
   }
 
-  // Draw canvas UI elements on top
   if (soundManager && typeof soundManager.drawButton === 'function') {
     soundManager.drawButton();
   }
@@ -141,12 +133,11 @@ function endGame(screen) {
 
 function handleMouseMove(event) {
   const rect = canvas.getBoundingClientRect();
-  // Scale to internal canvas coordinates (960x540)
   const mouseX = ((event.clientX - rect.left) / rect.width) * canvas.width;
   const mouseY = ((event.clientY - rect.top) / rect.height) * canvas.height;
 
-  // Update sound button hover first (sichtbar auf allen Screens)
-  if (soundManager && typeof soundManager.checkButtonHover === 'function') soundManager.checkButtonHover(mouseX, mouseY);
+  if (soundManager && typeof soundManager.checkButtonHover === 'function')
+    soundManager.checkButtonHover(mouseX, mouseY);
 
   if (!gameStarted && startScreen && startScreen.isVisible) {
     startScreen.checkHover(mouseX, mouseY);
@@ -161,7 +152,6 @@ function handleMouseMove(event) {
     }
   }
 
-  // sound button hat Vorrang für den Cursor
   if (soundManager && typeof soundManager.isButtonHovered === 'function' && soundManager.isButtonHovered()) {
     canvas.style.cursor = 'pointer';
   }
@@ -169,12 +159,14 @@ function handleMouseMove(event) {
 
 function handleClick(event) {
   const rect = canvas.getBoundingClientRect();
-  // Scale to internal canvas coordinates (960x540)
   const clickX = ((event.clientX - rect.left) / rect.width) * canvas.width;
   const clickY = ((event.clientY - rect.top) / rect.height) * canvas.height;
 
-  // Check Mute button click (immer sichtbar)
-  if (soundManager && typeof soundManager.isButtonClicked === 'function' && soundManager.isButtonClicked(clickX, clickY)) {
+  if (
+    soundManager &&
+    typeof soundManager.isButtonClicked === 'function' &&
+    soundManager.isButtonClicked(clickX, clickY)
+  ) {
     SoundManagerClass.toggleMuted();
     if (typeof soundManager.setButtonMuted === 'function') {
       soundManager.setButtonMuted(SoundManagerClass.isMuted());
@@ -214,19 +206,16 @@ function restartGame() {
   winScreen.hide();
   startScreen.show();
 
-  // Re-initialize level and world
   initLevel1();
   window.world = new World(canvas, keyboard);
   world = window.world;
 }
 
-// mobile touch controls
 function initButtonPressEvents() {
   const setupControl = (id, key) => {
     const btn = document.getElementById(id);
     if (!btn) return;
 
-    // Use Pointer Events for universal support (Touch + Mouse)
     btn.addEventListener('pointerdown', (e) => {
       if (e.pointerType !== 'touch') return; // Only process touch input
       e.preventDefault();
@@ -245,7 +234,6 @@ function initButtonPressEvents() {
       keyboard[key] = false;
     });
 
-    // Fallback for older touch devices
     btn.addEventListener(
       'touchstart',
       (e) => {
@@ -272,7 +260,6 @@ function initButtonPressEvents() {
 }
 
 window.addEventListener('keydown', (e) => {
-  // Mute toggle (M)
   if (e.keyCode == Config.KEYS.MUTE) {
     SoundManagerClass.toggleMuted();
     if (soundManager && typeof soundManager.setButtonMuted === 'function') {

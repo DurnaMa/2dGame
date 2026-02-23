@@ -17,7 +17,6 @@ class CollisionManager {
     const enemyTop = enemy.y + enemy.offset.top;
     const characterFeet = character.y + character.height - character.offset.bottom;
     const distanceFeetToHead = characterFeet - enemyTop;
-
     return distanceFeetToHead >= 0 && distanceFeetToHead <= Config.COLLISION.JUMP_KILL_HEIGHT_MAX;
   }
 
@@ -96,7 +95,6 @@ class CollisionManager {
     if (!character.hit && !character.isDeath()) {
       character.hit = true;
 
-      // Genau eine Stufe abziehen – respektiert resolveImageIndex aus Statusbar
       this.world.statusBar.reduceHealth(character);
       character.lastHit = new Date().getTime();
 
@@ -119,7 +117,6 @@ class CollisionManager {
     const character = this.world.character;
 
     if (!character.hit && !character.isDeath()) {
-      // Boss zieht einen halben Schritt ab (10%) — weniger als normale Gegner
       this.world.statusBar.reduceHealthBy(character, Config.COLLISION.DAMAGE_BOSS);
       character.lastHit = new Date().getTime();
 
@@ -131,31 +128,37 @@ class CollisionManager {
   }
 
   checkProjectileEnemyCollisions() {
-    for (let shotsFire = this.world.throwableObject.length - 1; shotsFire >= 0; shotsFire--) {
-      const projectile = this.world.throwableObject[shotsFire];
-      let projectileHasHit = false;
-      for (const enemy of this.world.level.enemies) {
-        if (enemy.isDead) continue;
-        if (projectile.isColliding(enemy)) {
-          enemy.isDead = true;
-          projectileHasHit = true;
-          break;
-        }
-      }
-      if (projectileHasHit) {
-        this.world.throwableObject.splice(shotsFire, 1);
-        continue;
-      }
-      for (const enemy of this.world.level.endBoss) {
-        if (projectile.isColliding(enemy)) {
-          enemy.hit();
-          projectileHasHit = true;
-          break;
-        }
-      }
-      if (projectileHasHit || Math.abs(projectile.x - projectile.startX) > Config.CANVAS_WIDTH) {
-        this.world.throwableObject.splice(shotsFire, 1);
-      }
+    this.world.throwableObject = this.world.throwableObject.filter((projectile) => {
+      return !this.handleProjectileCollision(projectile);
+    });
+  }
+
+  handleProjectileCollision(projectile) {
+    if (this.hitEnemy(projectile)) return true;
+    if (this.hitEndBoss(projectile)) return true;
+    if (this.isOutOfBounds(projectile)) return true;
+    return false;
+  }
+
+  hitEnemy(projectile) {
+    const enemy = this.world.level.enemies.find((enemy) => !enemy.isDead && projectile.isColliding(e));
+    if (enemy) {
+      enemy.isDead = true;
+      return true;
     }
+    return false;
+  }
+
+  hitEndBoss(projectile) {
+    const boss = this.world.level.endBoss.find((boss) => projectile.isColliding(boss));
+    if (boss) {
+      boss.hit();
+      return true;
+    }
+    return false;
+  }
+
+  isOutOfBounds(projectile) {
+    return Math.abs(projectile.x - projectile.startX) > Config.CANVAS_WIDTH;
   }
 }

@@ -10,7 +10,7 @@ class Endboss extends Enemy {
   otherDirection = true;
   isActive = false;
 
-  hadFirstContact = false
+  hadFirstContact = false;
   isIntroAngry = false;
 
   IMAGES_WALKING = [
@@ -90,10 +90,8 @@ class Endboss extends Enemy {
   updateAnimation() {
     if (this.energy <= 0) {
       this.playAnimation(this.IMAGES_DEATH);
-
     } else if (this.isIntroAngry) {
       this.playAnimation(this.IMAGES_ANGER);
-
     } else if (this.isHurt()) {
       this.playAnimation(this.IMAGES_HURT);
     } else if (this.isAttacking) {
@@ -125,7 +123,7 @@ class Endboss extends Enemy {
     return this.energy <= 0 || this.isAngry || this.isAttacking || this.isIntroAngry;
   }
 
-  triggerIntroAnger(){
+  triggerIntroAnger() {
     this.hadFirstContact = true;
     this.isIntroAngry = true;
     this.currentImage = 0;
@@ -139,21 +137,17 @@ class Endboss extends Enemy {
 
   patrol() {
     if (!this.isActive) return;
-
     const patrolStart = Config.SECTION_START_ENDBOSS * (Config.LEVEL_END / Config.SECTION_COUNT);
     const patrolEnd = Config.SECTION_END_ENDBOSS * (Config.LEVEL_END / Config.SECTION_COUNT);
-
     if (this.movingRight) {
       this.moveRight();
       this.otherDirection = false;
-
       if (this.x >= patrolEnd) {
         this.movingRight = false;
       }
     } else {
       this.moveLeft();
       this.otherDirection = true;
-
       if (this.x <= patrolStart) {
         this.movingRight = true;
       }
@@ -167,7 +161,7 @@ class Endboss extends Enemy {
 
     if (distance < this.activation_distance) {
       if (!this.hadFirstContact) {
-        this.triggerIntroAnger()
+        this.triggerIntroAnger();
       }
       this.isActive = true;
     }

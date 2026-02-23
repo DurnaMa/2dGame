@@ -13,7 +13,6 @@ class Bottle extends Item {
     this.loadImage('assets/potion-icons-pixel-art/PNG/Transperent/1_0027_Bottle28.png');
     this.x = xPosition;
 
-    //this.findBottlePosition();
     this.y = Config.BOTTLE.Y_BASE + Math.random() * Config.BOTTLE.Y_RANGE;
   }
 

@@ -120,7 +120,7 @@ class Config {
       ATTACK_COOLDOWN: 2000,
       ATTACK_RANGE: 80,
       CHASE_DISTANCE: 300,
-      DEAD_ZONE: 30
+      DEAD_ZONE: 30,
     },
     DRAGON: {
       Y: 352,
@@ -143,7 +143,7 @@ class Config {
       ATTACK_COOLDOWN: 2000,
       ATTACK_RANGE: 80,
       CHASE_DISTANCE: 300,
-      DEAD_ZONE: 30
+      DEAD_ZONE: 30,
     },
     ENDBOSS: {
       Y: 220,
@@ -172,7 +172,7 @@ class Config {
       DAMAGE_PER_HIT: 20,
       MIN_ENERGY: 10,
       ANGER_ANIMATION_DELAY: 100,
-      DEAD_ZONE: 30
+      DEAD_ZONE: 30,
     },
   };
 

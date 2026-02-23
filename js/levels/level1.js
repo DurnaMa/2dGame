@@ -28,9 +28,7 @@ const Y_OFFSET_ROCKS_LOW = Config.Y_OFFSET.ROCKS_LOW;
 const Y_OFFSET_CLOUDS4_MID = Config.Y_OFFSET.CLOUDS4_MID;
 
 function spawnEnemies() {
-  // Erstelle 1-2 Gegner pro Sektion
   for (let section = SECTIONSTART; section <= SECTIONEND; section++) {
-    // Anzahl der Gegner pro Sektion (1 oder 2 zufällig)
     const enemyCount = Math.random() > 0.5 ? 1 : 2;
 
     for (let i = 0; i < enemyCount; i++) {
@@ -84,13 +82,11 @@ function createBackgroundLayer(imagePath, SECTIONCOUNT, width, yOffset = 1, para
 }
 
 function initLevel1() {
-  // Clear arrays for fresh start
   enemies = [];
   endBoss = [];
   coins = [];
   bottles = [];
 
-  // Re-spawn everything
   spawnItem();
   spawnEnemies();
 

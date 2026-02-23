@@ -82,4 +82,55 @@ class Enemy extends MovableObject {
     this.height = 0;
     this.markedForRemoval = true;
   }
+
+  animate() {
+    setTrackedInterval(() => this.updateMovement(), 1000 / Config.FRAME_RATE, 'BigKnight Movement');
+    setTrackedInterval(() => this.updateAnimation(), this.animation_speed, 'BigKnight Animation');
+  }
+
+  updateMovement() {
+    if (!gameStarted || this.isDead || this.isAttacking) return;
+    this.updateFacingDirection();
+
+    if (this.isInAttackRange() && !this.attackCooldown) return;
+    if (this.isCharacterNear()) {
+      this.chaseCharacter();
+    } else {
+      this.moveLeft();
+      this.otherDirection = true;
+    }
+  }
+
+  updateFacingDirection() {
+    if (this.isCharacterNear()) {
+      const direction = this.getDirectionToCharacter();
+      this.otherDirection = direction < 0;
+    }
+  }
+
+  updateAnimation() {
+    if (!gameStarted) return;
+
+    if (this.isDead) {
+      this.handleDeathAnimation();
+    } else if (this.isReadyToAttack()) {
+      this.startAttack();
+      this.playAttackAnimation();
+    } else if (this.isAttacking) {
+      this.playAttackAnimation();
+    } else {
+      this.playAnimation(this.IMAGES_WALKING);
+    }
+  }
+
+  isReadyToAttack() {
+    return this.isInAttackRange() && !this.attackCooldown;
+  }
+
+  playAttackAnimation() {
+    this.playAnimation(this.IMAGES_ATTACK);
+    if (this.currentImage >= this.IMAGES_ATTACK.length) {
+      this.endAttack();
+    }
+  }
 }

@@ -29,8 +29,6 @@ class World {
 
   setWorld() {
     this.character.world = this;
-
-    // Helper to assign world to every object in an array
     const setWorldOnArray = (arr) => {
       if (Array.isArray(arr)) {
         arr.forEach((obj) => {
@@ -38,8 +36,13 @@ class World {
         });
       }
     };
+    this.drawObjectLvel(setWorldOnArray);
+    setWorldOnArray(this.throwableObject);
+    if (this.statusBar) this.statusBar.world = this;
+    if (this.magicBar) this.magicBar.world = this;
+  }
 
-    // Assign world to all relevant level objects so they can access world via this.world
+  drawObjectLvel(setWorldOnArray) {
     if (this.level) {
       setWorldOnArray(this.level.enemies);
       setWorldOnArray(this.level.endBoss);
@@ -48,11 +51,6 @@ class World {
       setWorldOnArray(this.level.bottles);
       setWorldOnArray(this.level.throwableObject);
     }
-
-    // Also set world for any runtime arrays / UI elements
-    setWorldOnArray(this.throwableObject);
-    if (this.statusBar) this.statusBar.world = this;
-    if (this.magicBar) this.magicBar.world = this;
   }
 
   run() {
@@ -74,7 +72,6 @@ class World {
       this.firePressed = true;
       this.magicBar.useMagic(Config.WORLD.MAGIC_USE_PER_FIRE); // Verringert die Magie langsamer
     }
-
     if (!this.keyboard.X) {
       this.firePressed = false;
     }
@@ -82,16 +79,13 @@ class World {
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
     this.addObjectsToMap(this.backgroundObjects);
 
-    // Statusbar zeichnen
     this.ctx.translate(-this.camera_x, 0);
     this.addToMap(this.statusBar);
     this.addToMap(this.magicBar);
     this.ctx.translate(this.camera_x, 0);
 
-    // Spielobjekte zeichnen
     this.addToMap(this.character);
     this.addObjectsToMap(this.throwableObject);
 
@@ -104,21 +98,20 @@ class World {
   }
 
   addToMap(movableObject) {
-    // Nicht zeichnen wenn Objekt nicht sichtbar ist
     if (movableObject.visible === false || (movableObject.isVisible && movableObject.isVisible() === false)) {
       return;
     }
-
     this.ctx.save();
-
-    // Parallax-Effekt für BackgroundObjects
     if (movableObject instanceof BackgroundObject) {
       this.ctx.translate(this.camera_x * movableObject.parallax, 0);
     } else {
-      // Normale Kamera-Bewegung für andere Objekte
       this.ctx.translate(this.camera_x, 0);
     }
+    this.updateMovableObjectOtherDirection(movableObject);
+    this.ctx.restore();
+  }
 
+  updateMovableObjectOtherDirection(movableObject) {
     if (movableObject.otherDirection) {
       this.ctx.translate(movableObject.x + movableObject.width, movableObject.y);
       this.ctx.scale(-1, 1);
@@ -132,7 +125,6 @@ class World {
       movableObject.drawCollisionBorder(this.ctx);
       movableObject.drawCollisionMagic(this.ctx);
     }
-    this.ctx.restore();
   }
 
   addObjectsToMap(objects) {

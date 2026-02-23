@@ -22,28 +22,20 @@ class Coin extends Item {
     super();
     this.loadImages(this.ITEMS);
 
-    // Bessere Positionierung innerhalb des sichtbaren Bereichs
-    //this.x = 400 + Math.random() * 2500;
     this.x = xPosition;
     this.y = Config.COIN.Y_BASE + Math.random() * Config.COIN.Y_RANGE;
 
-    // Sicherstellen, dass das erste Bild geladen ist
     this.img = this.imageCache[this.ITEMS[0]];
 
-    // Debug: Überprüfen der Bildladung
     setTimeout(() => {
       if (this.imageCache[this.ITEMS[0]]) {
-
       } else {
-        //console.warn('Münze konnte nicht geladen werden an Position:', this.x, this.y);
+        console.warn('Münze konnte nicht geladen werden an Position:', this.x, this.y);
       }
     }, 100);
-
-
   }
 
   animate() {
-    // Animation nur starten, wenn Bilder geladen sind
     if (this.imageCache[this.ITEMS[0]]) {
       setInterval(() => {
         this.playItems(this.ITEMS);
@@ -51,10 +43,8 @@ class Coin extends Item {
     }
   }
 
-  // Überschreiben der collect Methode, um Sichtbarkeit zu ändern
   collect() {
     super.collect();
     this.visible = false;
   }
-
 }

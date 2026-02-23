@@ -63,9 +63,9 @@ class DrawableObject {
       this instanceof Character ||
       this instanceof BigKnight ||
       this instanceof Endboss ||
-      this instanceof Dragon
-      //this instanceof Bottle ||
-      //this instanceof Coins
+      this instanceof Dragon ||
+      this instanceof Bottle ||
+      this instanceof Coin
     ) {
       ctx.beginPath();
       ctx.lineWidth = Config.DRAWABLE.BORDER_WIDTH;
@@ -76,14 +76,14 @@ class DrawableObject {
           this.offset.left,
           this.offset.top,
           this.width - this.offset.right - this.offset.left,
-          this.height - this.offset.bottom - this.offset.top,
+          this.height - this.offset.bottom - this.offset.top
         );
       } else {
         ctx.rect(
           this.x + this.offset.left,
           this.y + this.offset.top,
           this.width - this.offset.right - this.offset.left,
-          this.height - this.offset.bottom - this.offset.top,
+          this.height - this.offset.bottom - this.offset.top
         );
       }
       ctx.stroke();
@@ -114,6 +114,5 @@ class DrawableObject {
       }
       ctx.stroke();
     }
-
   }
 }

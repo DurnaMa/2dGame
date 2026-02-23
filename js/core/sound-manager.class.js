@@ -1,14 +1,12 @@
 class SoundManagerClass {
-  // Global mute flag shared by all instances
   static muted = false;
   static instances = new Set();
 
   constructor() {
     this.sounds = {};
-    // Register instance so global mute can update all audios
+
     SoundManagerClass.instances.add(this);
 
-    // Canvas UI state (optional until initButton is called)
     this.ui = {
       canvas: null,
       ctx: null,
@@ -28,7 +26,6 @@ class SoundManagerClass {
     let audio = new Audio(src);
     audio.volume = volume;
     audio.loop = loop;
-    // respect current global mute state
     audio.muted = SoundManagerClass.muted;
     this.sounds[name] = audio;
   }
@@ -38,24 +35,20 @@ class SoundManagerClass {
     if (!sound) return;
 
     try {
-      // Prüfen ob der Ton bereits spielt
       if (!sound.paused) {
-        return; // Ton spielt bereits, nichts tun
+        return;
       }
 
-      // Prüfen ob wir noch in der Verzögerungsphase sind
       const now = Date.now();
       const lastEndTime = this.soundEndTimes?.[name] || 0;
 
       if (now - lastEndTime < delay) {
-        return; // Noch in der Verzögerungsphase
+        return;
       }
 
-      // Ton abspielen (audio.muted wird bei Mute gesetzt)
       sound.currentTime = 0;
       sound.play();
 
-      // Event-Listener für das Ende des Tons (nur einmal)
       if (delay > 0) {
         if (!this.soundEndTimes) {
           this.soundEndTimes = {};
@@ -81,14 +74,12 @@ class SoundManagerClass {
     }
   }
 
-  // Canvas button initialization: use image assets if available
   initButton(canvas) {
     if (!canvas) return;
     this.ui.canvas = canvas;
     this.ui.ctx = canvas.getContext('2d');
     this._updateButtonPosition();
 
-    // Load icons from assets/icon/ if present
     const imgOn = new Image();
     const imgOff = new Image();
     let loaded = 0;
@@ -106,7 +97,6 @@ class SoundManagerClass {
     this.ui.imgOn = imgOn;
     this.ui.imgOff = imgOff;
 
-    // sync UI muted state
     this.ui.muted = SoundManagerClass.muted;
   }
 
@@ -120,28 +110,27 @@ class SoundManagerClass {
     if (!this.ui?.ctx) return;
     this._updateButtonPosition();
     const { ctx, x, y, size: s, isHovered, muted, iconsLoaded, imgOn, imgOff } = this.ui;
-    const cx = x + s / 2, cy = y + s / 2;
+    const cx = x + s / 2,
+      cy = y + s / 2;
 
     ctx.save();
 
-    // Background circle
     ctx.fillStyle = isHovered ? '#ffd700' : '#ffa500';
     ctx.beginPath();
     ctx.arc(cx, cy, s / 2, 0, Math.PI * 2);
     ctx.fill();
 
-    // Icon
     if (iconsLoaded && imgOn && imgOff) {
       ctx.drawImage(muted ? imgOff : imgOn, x + 4, y + 4, s - 8, s - 8);
     } else {
-      const bodyW = s * 0.18, bodyH = s * 0.26;
-      const bodyX = x + s * 0.30 - bodyW / 2;
+      const bodyW = s * 0.18,
+        bodyH = s * 0.26;
+      const bodyX = x + s * 0.3 - bodyW / 2;
       const bodyY = cy - bodyH / 2;
 
       ctx.fillStyle = ctx.strokeStyle = '#000';
       ctx.fillRect(bodyX, bodyY, bodyW, bodyH);
 
-      // Cone
       ctx.beginPath();
       ctx.moveTo(bodyX + bodyW, bodyY);
       ctx.lineTo(bodyX + bodyW + s * 0.22, cy);
@@ -157,7 +146,10 @@ class SoundManagerClass {
         ctx.stroke();
       } else {
         ctx.lineWidth = 2;
-        [[s * 0.08, s * 0.18], [s * 0.18, s * 0.28]].forEach(([ox, r]) => {
+        [
+          [s * 0.08, s * 0.18],
+          [s * 0.18, s * 0.28],
+        ].forEach(([ox, r]) => {
           ctx.beginPath();
           ctx.arc(bodyX + bodyW + ox, cy, r, -0.6, 0.6);
           ctx.stroke();
@@ -191,21 +183,6 @@ class SoundManagerClass {
     if (this.ui) this.ui.muted = SoundManagerClass.muted;
   }
 
-  // Remove instance from registry (call if you ever dispose an instance)
-  dispose() {
-    SoundManagerClass.instances.delete(this);
-  }
-
-  // Instance convenience methods that forward to static API
-  setMuted(value) {
-    SoundManagerClass.setMuted(value);
-  }
-
-  toggleMuted() {
-    SoundManagerClass.toggleMuted();
-  }
-
-  // Static/global API
   static setMuted(value) {
     SoundManagerClass.muted = !!value;
     for (const inst of SoundManagerClass.instances) {
@@ -213,7 +190,6 @@ class SoundManagerClass {
         const audio = inst.sounds[key];
         if (audio) audio.muted = SoundManagerClass.muted;
       }
-      // update UI state for instances that initialized button
       if (typeof inst._updateButtonState === 'function') inst._updateButtonState();
     }
   }

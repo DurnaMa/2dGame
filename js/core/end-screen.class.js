@@ -7,18 +7,15 @@ class EndScreen {
     this.ctx = canvas.getContext('2d');
     this.isVisible = false;
 
-    // Load screen image
     this.img = new Image();
     this.img.src = imagePath;
     this.imageLoaded = false;
 
-    // Screen properties
     this.width = 400;
     this.height = 300;
     this.x = (canvas.width - this.width) / 2;
     this.y = (canvas.height - this.height) / 2;
 
-    // Replay button properties
     this.buttonWidth = 200;
     this.buttonHeight = 60;
     this.buttonX = (canvas.width - this.buttonWidth) / 2;
@@ -28,7 +25,7 @@ class EndScreen {
 
     this.img.onload = () => {
       this.imageLoaded = true;
-      // Adjust size based on image aspect ratio if needed
+
       const scale = 0.8;
       this.width = this.img.width * scale;
       this.height = this.img.height * scale;
@@ -43,7 +40,6 @@ class EndScreen {
   draw() {
     if (!this.isVisible) return;
 
-    // Draw dark overlay
     this.ctx.fillStyle = 'rgba(0, 0, 0, 0.85)';
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -57,15 +53,12 @@ class EndScreen {
   drawButton() {
     this.ctx.save();
 
-    // Draw button background
     this.ctx.fillStyle = this.isHovered ? '#ffd700' : '#ffa500';
     this.ctx.strokeStyle = '#fff';
     this.ctx.lineWidth = 3;
 
-    // Rounded rect for button
     this.roundRect(this.ctx, this.buttonX, this.buttonY, this.buttonWidth, this.buttonHeight, 10, true, true);
 
-    // Draw button text
     this.ctx.fillStyle = '#000';
     this.ctx.font = 'bold 24px Arial';
     this.ctx.textAlign = 'center';

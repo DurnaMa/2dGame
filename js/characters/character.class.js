@@ -8,7 +8,6 @@ class Character extends MovableObject {
   constructor() {
     super();
     this.loadImage('assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Rogue/rogue.png');
-    //this.loadImage('assets/assassin-mage-viking-free-pixel-art-game-heroes/PNG/Mage/mage.png');
 
     this.offset = {
       top: Config.CHARACTER.OFFSET.TOP,
@@ -40,7 +39,20 @@ class Character extends MovableObject {
   handleMovement() {
     if (!gameStarted) return;
     if (!this.world.level) return;
+    this.updateArrowKeys();
 
+    if (this.world.keyboard.SPACE && !this.isAboveGround() && !this.jumpStarted) {
+      if (this.jumpSound) {
+        this.jumpSound();
+      }
+      this.jump();
+      this.jumpStarted = new Date().getTime();
+    }
+
+    this.world.camera_x = -this.x + Config.CAMERA_OFFSET;
+  }
+
+  updateArrowKeys() {
     if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
       if (this.walkingSound) {
         this.walkingSound();
@@ -56,16 +68,6 @@ class Character extends MovableObject {
       this.moveLeft();
       this.lastMoveTime = new Date().getTime();
     }
-
-    if (this.world.keyboard.SPACE && !this.isAboveGround() && !this.jumpStarted) {
-      if (this.jumpSound) {
-        this.jumpSound();
-      }
-      this.jump();
-      this.jumpStarted = new Date().getTime();
-    }
-
-    this.world.camera_x = -this.x + Config.CAMERA_OFFSET;
   }
 
   handleAnimation() {
@@ -102,14 +104,18 @@ class Character extends MovableObject {
         'Character Jump Animation'
       );
 
-      setTrackedTimeout(
-        () => {
-          this.checkAlreadyRunning = false;
-          clearInterval(spacePressed);
-        },
-        Config.JUMP_ANIMATION_DURATION,
-        'Character Jump Reset'
-      );
+      this.triggerTrackedTimeout(spacePressed);
     }
+  }
+
+  triggerTrackedTimeout(spacePressed) {
+    setTrackedTimeout(
+      () => {
+        this.checkAlreadyRunning = false;
+        clearInterval(spacePressed);
+      },
+      Config.JUMP_ANIMATION_DURATION,
+      'Character Jump Reset'
+    );
   }
 }
