@@ -1,0 +1,331 @@
+@font-face {
+  font-display: swap;
+  font-family: 'Uncial Antiqua';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/UncialAntiqua-Regular.ttf') format('truetype');
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --gold: #c9a227;
+  --gold-light: #f0d070;
+  --gold-dim: #7a5e10;
+  --parchment: #e8d8a0;
+  --ink: #1a0e05;
+  --bg-dark: #0a0705;
+  --panel-bg: rgba(10, 6, 2, 0.82);
+  --border: rgba(201, 162, 39, 0.45);
+}
+
+html,
+body {
+  min-height: 100vh;
+  font-family: 'Uncial Antiqua', 'Georgia', serif;
+  background-color: var(--bg-dark);
+  color: var(--parchment);
+  overflow-x: hidden;
+}
+
+body {
+  background-image: url('../assets/mountain-platformer-pixel-art-tileset/PNG/Background/bright/sky.png');
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+/* Dark overlay for readability */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(5, 2, 1, 0.88) 0%, rgba(15, 8, 2, 0.8) 50%, rgba(5, 3, 1, 0.92) 100%);
+  z-index: 0;
+}
+
+/* Subtle noise texture */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.page-wrapper {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem 1rem 4rem;
+}
+
+.back-link {
+  align-self: flex-start;
+  margin-bottom: 2.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--gold);
+  text-decoration: none;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  transition:
+    color 0.2s,
+    gap 0.2s;
+  opacity: 0;
+  animation: fadeSlideDown 0.6s 0.1s ease forwards;
+}
+
+.back-link:hover {
+  color: var(--gold-light);
+  gap: 0.85rem;
+}
+
+.back-link svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+.ornament {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0 auto 2rem;
+  opacity: 0;
+  animation: fadeSlideDown 0.7s 0.25s ease forwards;
+}
+
+.ornament-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-dim), var(--gold), var(--gold-dim), transparent);
+}
+
+.ornament-diamond {
+  width: 10px;
+  height: 10px;
+  background: var(--gold);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+  box-shadow: 0 0 8px var(--gold);
+}
+
+.scroll-card {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 3rem 2.8rem 2.8rem;
+  backdrop-filter: blur(12px);
+  box-shadow:
+    0 0 0 1px rgba(201, 162, 39, 0.12),
+    0 0 60px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(201, 162, 39, 0.15),
+    inset 0 -1px 0 rgba(201, 162, 39, 0.08);
+  opacity: 0;
+  animation: fadeSlideUp 0.75s 0.3s ease forwards;
+}
+
+/* Corner decorations */
+.scroll-card::before,
+.scroll-card::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-color: var(--gold);
+  border-style: solid;
+  opacity: 0.6;
+}
+
+.scroll-card::before {
+  top: 10px;
+  left: 10px;
+  border-width: 1px 0 0 1px;
+}
+
+.scroll-card::after {
+  bottom: 10px;
+  right: 10px;
+  border-width: 0 1px 1px 0;
+}
+
+/* Inner corners (extra decorative layer) */
+.corner-tr,
+.corner-bl {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-color: var(--gold);
+  border-style: solid;
+  opacity: 0.6;
+}
+
+.corner-tr {
+  top: 10px;
+  right: 10px;
+  border-width: 1px 1px 0 0;
+}
+.corner-bl {
+  bottom: 10px;
+  left: 10px;
+  border-width: 0 0 1px 1px;
+}
+
+h1 {
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
+  color: var(--gold-light);
+  text-align: center;
+  letter-spacing: 0.12em;
+  line-height: 1.1;
+  margin-bottom: 0.4rem;
+  text-shadow:
+    0 0 20px rgba(201, 162, 39, 0.5),
+    0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 0.7rem;
+  color: var(--gold-dim);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+
+/* Divider inside card */
+.card-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1.6rem 0;
+}
+
+.card-divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+}
+
+.card-divider-glyph {
+  color: var(--gold-dim);
+  font-size: 0.8rem;
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+
+/* Section headings */
+h2 {
+  font-size: 1rem;
+  color: var(--gold);
+  letter-spacing: 0.15em;
+  margin-bottom: 0.8rem;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+
+/* Body text */
+p {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-size: 0.92rem;
+  line-height: 1.85;
+  color: rgba(232, 216, 160, 0.85);
+}
+
+/* Link */
+a {
+  color: var(--gold);
+  text-decoration: none;
+  border-bottom: 1px solid var(--gold-dim);
+  transition:
+    color 0.2s,
+    border-color 0.2s;
+}
+
+a:hover {
+  color: var(--gold-light);
+  border-color: var(--gold-light);
+}
+
+/* Source line */
+.source-line {
+  margin-top: 2rem;
+  font-family: 'Georgia', serif;
+  font-size: 0.75rem;
+  color: rgba(232, 216, 160, 0.4);
+  text-align: center;
+  letter-spacing: 0.05em;
+}
+
+.source-line a {
+  color: rgba(201, 162, 39, 0.6);
+  border-bottom-color: transparent;
+  font-size: 0.75rem;
+}
+
+.source-line a:hover {
+  color: var(--gold);
+  border-color: var(--gold-dim);
+}
+
+footer {
+  position: relative;
+  z-index: 1;
+  margin-top: 2.5rem;
+  color: rgba(201, 162, 39, 0.3);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-align: center;
+  opacity: 0;
+  animation: fadeSlideUp 0.6s 0.6s ease forwards;
+}
+
+@keyframes fadeSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 560px) {
+  .scroll-card {
+    padding: 2.2rem 1.6rem 2rem;
+  }
+  h1 {
+    font-size: 1.6rem;
+  }
+}
