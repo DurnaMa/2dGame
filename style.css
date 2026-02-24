@@ -1,3 +1,13 @@
+/* Font Face - korrekte TTF Integration */
+@font-face {
+  font-display: swap;
+  font-family: 'Uncial Antiqua';
+  font-style: normal;
+  font-weight: 400;
+  src: url('fonts/UncialAntiqua-Regular.ttf') format('truetype');
+}
+
+/* Global Styles */
 * {
   margin: 0;
   box-sizing: border-box;
@@ -9,34 +19,50 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 50px;
+  gap: 30px;
   min-height: 100vh;
   margin: 0;
   background-image: url('assets/fantasy-platformer-game-ui/PNG/01main/bg.png');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  background-attachment: fixed;
   font-family: 'Uncial Antiqua', serif;
   overflow-x: hidden;
 }
+
+/* Main Game Container - Content Begrenzung für große Bildschirme */
+.game-container {
+  position: relative;
+  width: 960px;
+  height: 540px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#canvas {
+  width: 960px;
+  height: 540px;
+  background-color: #000;
+  display: block;
+}
+
 canvas {
   background-color: #000;
   display: block;
 }
 
-@font-face {
-  font-display: swap;
-  font-family: 'Uncial Antiqua';
-  font-style: normal;
-  font-weight: 400;
-  src: url('fonts/UncialAntiqua-Regular.ttf') format('woff2');
-}
-
+/* Heading Styles */
 h1 {
   font-size: 64px;
   letter-spacing: 3px;
+  color: #ffd700;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
 }
 
+/* Icon Section */
 .icon {
   display: flex;
   justify-content: center;
@@ -46,8 +72,10 @@ h1 {
 
 .icon-text {
   font-size: 52px;
+  color: #ffd700;
 }
 
+/* Rotate Device Overlay */
 #rotate-device-overlay {
   display: none;
   position: fixed;
@@ -55,7 +83,7 @@ h1 {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: #000000;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(20, 20, 20, 0.95));
   z-index: 999999;
   color: white;
   text-align: center;
@@ -69,30 +97,31 @@ h1 {
   flex-direction: column;
   align-items: center;
   padding: 20px;
+  animation: fadeIn 0.5s ease-in;
 }
 
 .overlay-content img {
   width: 80px;
   height: auto;
   margin-bottom: 20px;
-  /* Hier keine Drehung einbauen, das Bild zeigt die Aktion */
+  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
 }
 
 .overlay-content p {
   font-size: 24px;
   margin-top: 20px;
-  font-family:
-    Uncial Antiqua,
-    sans-serif;
-  max-width: 80%; /* Verhindert, dass der Text an den Rand klatscht */
+  font-family: 'Uncial Antiqua', serif;
+  max-width: 80%;
   line-height: 1.4;
-  transform: none !important;
+  color: #ffd700;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
 }
 
 #rotate-device-overlay img {
   width: 80px;
   margin-bottom: 20px;
   animation: rotateAnim 2s infinite ease-in-out;
+  filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6));
 }
 
 @keyframes rotateAnim {
@@ -107,13 +136,18 @@ h1 {
   }
 }
 
-#canvas {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin: 0 auto;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
+/* Start Screen */
 .start-screen {
   position: absolute;
   top: 0;
@@ -128,19 +162,28 @@ h1 {
   z-index: 10;
 }
 
+/* Controls Info */
 .controls {
-  background: rgba(0, 0, 0, 0.6);
-  padding: 5px 25px;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 15px 30px;
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(5px);
-  color: white;
+  border: 2px solid rgba(255, 215, 0, 0.4);
+  backdrop-filter: blur(10px);
+  color: #ffd700;
   text-align: center;
   font-family: 'Uncial Antiqua', serif;
   display: flex;
   flex-direction: column;
   gap: 8px;
   pointer-events: auto;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.controls:hover {
+  background: rgba(0, 0, 0, 0.85);
+  border-color: rgba(255, 215, 0, 0.7);
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
 }
 
 .controls div {
@@ -148,6 +191,7 @@ h1 {
   letter-spacing: 1px;
 }
 
+/* Mobile Controls Container */
 #mobileControls {
   display: none;
   position: absolute;
@@ -157,27 +201,42 @@ h1 {
   height: auto;
   pointer-events: none;
   z-index: 50;
+  padding: 20px 40px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
 }
 
+/* Mobile Button Base Styles */
 .mobile-btn {
-  width: 40px;
-  height: 40px;
-  background-size: contain;
+  width: 50px;
+  height: 50px;
+  background-size: 85%;
   background-repeat: no-repeat;
   background-position: center;
-  background-color: transparent;
-  border: none;
+  background-color: rgba(255, 215, 0, 0.1);
+  border: 2px solid rgba(255, 215, 0, 0.5);
   pointer-events: auto;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   touch-action: none;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.mobile-btn:hover {
+  background-color: rgba(255, 215, 0, 0.2);
+  border-color: rgba(255, 215, 0, 0.8);
+  box-shadow: 0 6px 12px rgba(255, 215, 0, 0.3);
+  transform: translateY(-2px);
 }
 
 .mobile-btn:active {
-  transform: scale(0.9);
-  opacity: 0.8;
+  transform: scale(0.9) translateY(0);
+  opacity: 0.9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
+/* Individual Button Styles */
 #btnLeft {
   background-image: url('assets/fantasy-platformer-game-ui/PNG/03potions/backward_button.png');
 }
@@ -191,6 +250,11 @@ h1 {
   transform: rotate(90deg);
 }
 
+#btnJump:hover {
+  background-color: rgba(255, 215, 0, 0.2);
+  transform: rotate(90deg) translateY(-2px);
+}
+
 #btnJump:active {
   transform: rotate(90deg) scale(0.9);
 }
@@ -199,10 +263,138 @@ h1 {
   background-image:
     url('assets/fantasy-platformer-game-ui/PNG/16Inner_Interface/sword_button.png'),
     url('assets/fantasy-platformer-game-ui/PNG/05ogin&pass/big-ball-button.png');
-  background-size: 60%, contain;
-  background-repeat: no-repeat;
-  background-position: center;
+  background-size: 70%;
+  background-color: rgba(255, 100, 0, 0.15);
+  border: 2px solid rgba(255, 100, 0, 0.6);
   border-radius: 50%;
-  border: none;
-  background-color: transparent;
+  width: 60px;
+  height: 60px;
+}
+
+#btnAttack:hover {
+  background-color: rgba(255, 100, 0, 0.25);
+  border-color: rgba(255, 100, 0, 0.9);
+  box-shadow: 0 0 15px rgba(255, 100, 0, 0.5);
+}
+
+#btnAttack:active {
+  transform: scale(0.85);
+}
+
+/* Responsive Design für Mobile */
+@media only screen and (max-height: 480px) {
+  body {
+    gap: 0;
+    padding: 0;
+  }
+
+  h1 {
+    display: none;
+  }
+
+  .game-container {
+    width: 100vw;
+    height: auto;
+    max-width: 100vw;
+    aspect-ratio: 960 / 540;
+  }
+
+  #canvas {
+    width: 100vw;
+    height: auto;
+    max-width: 100vw;
+  }
+
+  .start-screen {
+    padding-bottom: 20px;
+  }
+
+  .controls {
+    display: none !important;
+  }
+
+  #mobileControls {
+    display: flex !important;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 20px 40px;
+    pointer-events: none;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+    gap: 15px;
+  }
+
+  .movement-controls,
+  .action-controls {
+    display: flex;
+    gap: 15px;
+    pointer-events: none;
+  }
+
+  .mobile-btn {
+    pointer-events: auto;
+    width: 45px;
+    height: 45px;
+  }
+
+  #btnAttack {
+    width: 55px;
+    height: 55px;
+  }
+}
+
+/* Portrait Orientation */
+@media only screen and (orientation: portrait) {
+  #rotate-device-overlay {
+    display: flex !important;
+  }
+}
+
+/* Small Portrait Devices */
+@media only screen and (max-width: 480px) and (min-height: 481px) {
+  #rotate-device-overlay {
+    display: flex !important;
+  }
+}
+
+/* Very Short Screens */
+@media only screen and (max-height: 320px) {
+  #mobileControls {
+    padding: 15px 30px;
+  }
+
+  .mobile-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  #btnAttack {
+    width: 50px;
+    height: 50px;
+  }
+
+  .movement-controls,
+  .action-controls {
+    gap: 12px;
+  }
+}
+
+/* Large Screens */
+@media only screen and (min-width: 1900px) {
+  .game-container {
+    width: 960px;
+    height: 540px;
+  }
+
+  h1 {
+    font-size: 80px;
+  }
+
+  .controls {
+    font-size: 20px;
+    padding: 20px 40px;
+  }
 }
