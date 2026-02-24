@@ -1,9 +1,9 @@
 /**
- * ThrowableObject - Feuerball, der in die Blickrichtung des Charakters fliegt
- * WICHTIG: Constructor braucht 3 Parameter; x, y, und world
- * - world wird benötigt, um character.otherDirection zu prüfen
- * - WENN otherDirection = true -> Feurball fliegt nach LINKS (negativer speedX)
- * - WENN otherDirection = false ist fliegt nach RECHTS (positiver speedX)
+ * ThrowableObject - Fireball that flies in the direction of the character.
+ * IMPORTANT: Constructor requires 3 parameters; x, y, and world
+ * - world is needed to check character.otherDirection
+ * - IF otherDirection = true -> Fireball flies LEFT (negative speedX)
+ * - IF otherDirection = false -> Fireball flies RIGHT (positive speedX)
  */
 
 class ThrowableObject extends MovableObject {
@@ -30,6 +30,9 @@ class ThrowableObject extends MovableObject {
     this.trow();
   }
 
+  /**
+   * Throws the fireball in the direction of the character.
+   */
   trow() {
     if (this.world.character.otherDirection) {
       this.speedX = -Config.THROWABLE.SPEED_X;

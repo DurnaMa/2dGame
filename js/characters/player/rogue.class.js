@@ -172,16 +172,22 @@ class Rogue extends Character {
   }
 
   /**
-   *Plays the
+   *Plays the shooting sound.
    */
   shooting() {
     this.soundManager.playSound('shooting');
   }
 
+  /**
+   * Plays the jump sound.
+   */
   jumpSound() {
     this.soundManager.playSound('jump');
   }
 
+  /**
+   * Plays the walking sound.
+   */
   walkingSound() {
     setTimeout(() => {
       this.soundManager.playSound('walking');

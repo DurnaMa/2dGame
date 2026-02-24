@@ -15,7 +15,7 @@ class MovableObject extends DrawableObject {
   };
 
   /**
-   *Applies gravity over an interval.
+   * Applies gravity over an interval.
    */
   applyGravity() {
     this.gravityInterval = setTrackedInterval(
@@ -47,7 +47,7 @@ class MovableObject extends DrawableObject {
 
   /**
    * Checks whether the object is above the ground.
-   * @returns {boolean}
+   * @returns {boolean} True if the object is above the ground level
    */
   isAboveGround() {
     return this.y < this.ground;
@@ -55,8 +55,8 @@ class MovableObject extends DrawableObject {
 
   /**
    * Checks for collision with another object.
-   * @param movableObject
-   * @returns {boolean}
+   * @param {MovableObject} movableObject - The object to check collision with
+   * @returns {boolean} True if objects are colliding
    */
   isColliding(movableObject) {
     return (
@@ -92,7 +92,7 @@ class MovableObject extends DrawableObject {
 
   /**
    * Play an animation.
-   * @param images
+   * @param {string[]} images - Array of image paths for the animation
    */
   playAnimation(images) {
     try {
@@ -107,7 +107,7 @@ class MovableObject extends DrawableObject {
 
   /**
    * Play an Item animation.
-   * @param images
+   * @param {string[]} images - Array of image paths for the animation
    */
   playItems(images) {
     let index = this.currentImage % images.length;
@@ -129,7 +129,7 @@ class MovableObject extends DrawableObject {
 
   /**
    * Checks whether the object has been hit recently.
-   * @returns {boolean}
+   * @returns {boolean} True if the object was hit within the hurt duration
    */
   isHurt() {
     let timestamped = new Date().getTime() - this.lastHit;
@@ -139,7 +139,7 @@ class MovableObject extends DrawableObject {
 
   /**
    * Checks whether the object has been inactive for 3 seconds.
-   * @returns {boolean}
+   * @returns {boolean} True if the object has been idle for more than 3 seconds
    */
   isIdle() {
     let now = new Date().getTime();

@@ -16,6 +16,9 @@ class Bottle extends Item {
     this.y = Config.BOTTLE.Y_BASE + Math.random() * Config.BOTTLE.Y_RANGE;
   }
 
+  /**
+   * Starts the bottle animation.
+   */
   animate() {
     setInterval(() => {
       this.playItems(this.ITEMS);

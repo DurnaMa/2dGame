@@ -27,6 +27,9 @@ class World {
     this.statusBar.setPercentage(this.character.energy);
   }
 
+  /**
+   * Sets the world reference on all game objects.
+   */
   setWorld() {
     this.character.world = this;
     const setWorldOnArray = (arr) => {
@@ -42,6 +45,10 @@ class World {
     if (this.magicBar) this.magicBar.world = this;
   }
 
+  /**
+   * Sets the world reference on all level objects.
+   * @param {Function} setWorldOnArray - Function to set world on array elements
+   */
   drawObjectLvel(setWorldOnArray) {
     if (this.level) {
       setWorldOnArray(this.level.enemies);
@@ -53,6 +60,9 @@ class World {
     }
   }
 
+  /**
+   * Starts the main game loop.
+   */
   run() {
     this.gameInterval = setTrackedInterval(
       () => {
@@ -64,6 +74,9 @@ class World {
     );
   }
 
+  /**
+   * Checks if the player is firing a projectile.
+   */
   checkThrowableObject() {
     if (this.keyboard.X && !this.firePressed && this.magicBar.shots > 0) {
       this.character.shooting();
@@ -77,6 +90,9 @@ class World {
     }
   }
 
+  /**
+   * Draws all game objects on the canvas.
+   */
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.addObjectsToMap(this.backgroundObjects);
@@ -97,6 +113,10 @@ class World {
     }
   }
 
+  /**
+   * Adds an object to the canvas map.
+   * @param {MovableObject} movableObject - The object to add to the map
+   */
   addToMap(movableObject) {
     if (movableObject.visible === false || (movableObject.isVisible && movableObject.isVisible() === false)) {
       return;
@@ -111,6 +131,10 @@ class World {
     this.ctx.restore();
   }
 
+  /**
+   * Draws the object mirrored if necessary.
+   * @param {MovableObject} movableObject - The object to draw
+   */
   updateMovableObjectOtherDirection(movableObject) {
     if (movableObject.otherDirection) {
       this.ctx.translate(movableObject.x + movableObject.width, movableObject.y);
@@ -127,21 +151,36 @@ class World {
     }
   }
 
+  /**
+   * Adds an array of objects to the map.
+   * @param {MovableObject[]} objects - Array of objects to add to the map
+   */
   addObjectsToMap(objects) {
     objects.forEach((gameObject) => {
       this.addToMap(gameObject);
     });
   }
 
+  /**
+   * Stops the game loop and all intervals.
+   */
   stopGame() {
     this.drawLoopRunning = false;
     stopAllIntervals();
   }
 
+  /**
+   * Checks if the game is over.
+   * @returns {boolean} True if the game is over
+   */
   isGameOver() {
     return this.character.energy <= 0;
   }
 
+  /**
+   * Checks if the player has won.
+   * @returns {boolean} True if the player has won
+   */
   isWin() {
     return this.level && this.level.endBoss && this.level.endBoss.every((boss) => boss.isDead && boss.isDead());
   }

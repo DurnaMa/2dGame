@@ -11,7 +11,7 @@ class DrawableObject {
 
   /**
    * Loads a single image.
-   * @param path
+   * @param {string} path - Path to the image file
    */
   loadImage(path) {
     this.img = new Image();
@@ -20,7 +20,7 @@ class DrawableObject {
 
   /**
    * Draws the object on the canvas.
-   * @param ctx
+   * @param {CanvasRenderingContext2D} ctx - The canvas rendering context
    */
   draw(ctx) {
     try {
@@ -36,7 +36,7 @@ class DrawableObject {
 
   /**
    * Loads multiple images into the cache.
-   * @param arr
+   * @param {string[]} arr - Array of image file paths
    */
   loadImages(arr) {
     arr.forEach((path) => {
@@ -48,7 +48,7 @@ class DrawableObject {
 
   /**
    * Draws the outer frame (debug only).
-   * @param ctx
+   * @param {CanvasRenderingContext2D} ctx - The canvas rendering context
    */
   drawBorder(ctx) {
     if (!Config.DEBUG) return;
@@ -74,8 +74,8 @@ class DrawableObject {
   }
 
   /**
-   * Draws the collision box (debug only):
-   * @param ctx
+   * Draws the collision box (debug only).
+   * @param {CanvasRenderingContext2D} ctx - The canvas rendering context
    */
   drawCollisionBorder(ctx) {
     if (!Config.DEBUG) return;
@@ -112,7 +112,7 @@ class DrawableObject {
 
   /**
    * Draws the collision box for magic objects (debug only).
-   * @param ctx
+   * @param {CanvasRenderingContext2D} ctx - The canvas rendering context
    */
   drawCollisionMagic(ctx) {
     if (!Config.DEBUG) return;

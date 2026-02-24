@@ -23,13 +23,8 @@ class Statusbar extends DrawableObject {
   }
 
   /**
-   * EN:
-   * Subtract exactly one level (20%) from the status bar and
-   * synchronizes character.energy accordingly.
-   * DE:
-   * Zieht genau eine Stufe (20%) von der Statusbar ab und
-   * synchronisiert character.energy entsprechend.
-   * @param {Character} character
+   * Subtracts exactly one level (20%) from the status bar and synchronizes character.energy accordingly.
+   * @param {Character} character - The character to reduce health for
    */
   reduceHealth(character) {
     const newPercentage = Math.max(0, this.percentage - Config.STEP);
@@ -40,14 +35,9 @@ class Statusbar extends DrawableObject {
   }
 
   /**
-   * EM:
-   * Subtracts a smaller amount (e.g., for boss damage),
-   * but at least half a step.
-   * DE:
-   * Zieht einen kleineren Betrag ab (z.B. für Boss-Schaden),
-   * jedoch mindestens eine halbe Stufe.
-   * @param {Character} character
-   * @param {number} amount – Prozentwert der abgezogen wird
+   * Subtracts a smaller amount (e.g., for boss damage), but at least half a step.
+   * @param {Character} character - The character to reduce health for
+   * @param {number} amount - The percentage value to subtract
    */
   reduceHealthBy(character, amount) {
     const newPercentage = Math.max(0, this.percentage - amount);
@@ -57,6 +47,10 @@ class Statusbar extends DrawableObject {
     }
   }
 
+  /**
+   * Sets the percentage value and updates the image.
+   * @param {number} percentage - The percentage value to set
+   */
   setPercentage(percentage) {
     this.percentage = Math.round(percentage);
     if (this.percentage <= 0) {
@@ -69,6 +63,10 @@ class Statusbar extends DrawableObject {
     this.img = this.imageCache[path];
   }
 
+  /**
+   * Resolves the image index based on the percentage.
+   * @returns {number} The index of the image to display
+   */
   resolveImageIndex() {
     if (this.percentage === 0) return 0;
 

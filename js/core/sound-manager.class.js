@@ -22,6 +22,13 @@ class SoundManagerClass {
     };
   }
 
+  /**
+   * Adds a new sound.
+   * @param {string} name - The name identifier for the sound
+   * @param {string} src - The source path of the sound file
+   * @param {number} [volume=Config.SOUNDS.VOLUME] - The volume level (0-1)
+   * @param {boolean} [loop=Config.SOUNDS.LOOP] - Whether the sound should loop
+   */
   addSound(name, src, volume = Config.SOUNDS.VOLUME, loop = Config.SOUNDS.LOOP) {
     let audio = new Audio(src);
     audio.volume = volume;
@@ -30,6 +37,11 @@ class SoundManagerClass {
     this.sounds[name] = audio;
   }
 
+  /**
+   * Plays a sound.
+   * @param {string} name - The name identifier of the sound to play
+   * @param {number} [delay=0] - Delay before playing the sound in milliseconds
+   */
   playSound(name, delay = 0) {
     let sound = this.sounds[name];
     if (!sound) return;
@@ -66,6 +78,10 @@ class SoundManagerClass {
     }
   }
 
+  /**
+   * Stops a sound.
+   * @param {string} name - The name identifier of the sound to stop
+   */
   stop(name) {
     let sound = this.sounds[name];
     if (sound) {
@@ -74,6 +90,10 @@ class SoundManagerClass {
     }
   }
 
+  /**
+   * Initializes the mute button on the canvas.
+   * @param {HTMLCanvasElement} canvas - The canvas element for the button
+   */
   initButton(canvas) {
     if (!canvas) return;
     this.ui.canvas = canvas;
@@ -100,12 +120,19 @@ class SoundManagerClass {
     this.ui.muted = SoundManagerClass.muted;
   }
 
+  /**
+   * Updates the button position on the canvas.
+   * @private
+   */
   _updateButtonPosition() {
     if (!this.ui.canvas) return;
     this.ui.x = this.ui.canvas.width - this.ui.size - this.ui.margin;
     this.ui.y = this.ui.margin;
   }
 
+  /**
+   * Draws the mute/unmute button.
+   */
   drawButton() {
     if (!this.ui?.ctx) return;
     this._updateButtonPosition();
@@ -160,29 +187,57 @@ class SoundManagerClass {
     ctx.restore();
   }
 
+  /**
+   * Checks if the mouse is hovering over the button.
+   * @param {number} px - The x coordinate of the mouse
+   * @param {number} py - The y coordinate of the mouse
+   */
   checkButtonHover(px, py) {
     if (!this.ui || !this.ui.canvas) return;
     this.ui.isHovered = this.isButtonClicked(px, py);
   }
 
+  /**
+   * Checks if the button was clicked.
+   * @param {number} px - The x coordinate of the click
+   * @param {number} py - The y coordinate of the click
+   * @returns {boolean} True if the button was clicked
+   */
   isButtonClicked(px, py) {
     if (!this.ui || !this.ui.canvas) return false;
     return px >= this.ui.x && px <= this.ui.x + this.ui.size && py >= this.ui.y && py <= this.ui.y + this.ui.size;
   }
 
+  /**
+   * Checks if the button is hovered.
+   * @returns {boolean} True if the button is currently hovered
+   */
   isButtonHovered() {
     return !!(this.ui && this.ui.isHovered);
   }
 
+  /**
+   * Sets the visual mute state.
+   * @param {boolean} muted - The mute state to display
+   */
   setButtonMuted(muted) {
     if (!this.ui) return;
     this.ui.muted = !!muted;
   }
 
+  /**
+   * Updates the button state.
+   * @private
+   */
   _updateButtonState() {
     if (this.ui) this.ui.muted = SoundManagerClass.muted;
   }
 
+  /**
+   * Sets the global mute state for all instances.
+   * @static
+   * @param {boolean} value - The mute state
+   */
   static setMuted(value) {
     SoundManagerClass.muted = !!value;
     for (const inst of SoundManagerClass.instances) {
@@ -194,10 +249,19 @@ class SoundManagerClass {
     }
   }
 
+  /**
+   * Toggles the global mute state.
+   * @static
+   */
   static toggleMuted() {
     SoundManagerClass.setMuted(!SoundManagerClass.muted);
   }
 
+  /**
+   * Gets the current mute state.
+   * @static
+   * @returns {boolean} The current mute state
+   */
   static isMuted() {
     return !!SoundManagerClass.muted;
   }

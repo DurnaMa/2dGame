@@ -37,6 +37,9 @@ class EndScreen {
     };
   }
 
+  /**
+   * Draws the end screen with overlay and button.
+   */
   draw() {
     if (!this.isVisible) return;
 
@@ -50,6 +53,9 @@ class EndScreen {
     this.drawButton();
   }
 
+  /**
+   * Draws the restart button.
+   */
   drawButton() {
     this.ctx.save();
 
@@ -68,6 +74,17 @@ class EndScreen {
     this.ctx.restore();
   }
 
+  /**
+   * Draws a rounded rectangle.
+   * @param {CanvasRenderingContext2D} ctx - The canvas rendering context
+   * @param {number} x - The x coordinate
+   * @param {number} y - The y coordinate
+   * @param {number} width - The width of the rectangle
+   * @param {number} height - The height of the rectangle
+   * @param {number} radius - The radius of the corners
+   * @param {boolean} fill - Whether to fill the rectangle
+   * @param {boolean} stroke - Whether to stroke the rectangle
+   */
   roundRect(ctx, x, y, width, height, radius, fill, stroke) {
     if (typeof radius === 'undefined') radius = 5;
     ctx.beginPath();
@@ -85,6 +102,12 @@ class EndScreen {
     if (stroke) ctx.stroke();
   }
 
+  /**
+   * Checks if the button was clicked.
+   * @param {number} x - The x coordinate of the click
+   * @param {number} y - The y coordinate of the click
+   * @returns {boolean} True if the button was clicked
+   */
   isButtonClicked(x, y) {
     return (
       x >= this.buttonX &&
@@ -94,14 +117,25 @@ class EndScreen {
     );
   }
 
+  /**
+   * Updates the hover state.
+   * @param {number} x - The x coordinate of the mouse
+   * @param {number} y - The y coordinate of the mouse
+   */
   checkHover(x, y) {
     this.isHovered = this.isButtonClicked(x, y);
   }
 
+  /**
+   * Hides the screen.
+   */
   hide() {
     this.isVisible = false;
   }
 
+  /**
+   * Shows the screen.
+   */
   show() {
     this.isVisible = true;
   }

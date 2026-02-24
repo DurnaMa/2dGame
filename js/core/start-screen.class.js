@@ -27,6 +27,9 @@ class StartScreen {
     };
   }
 
+  /**
+   * Draws the start screen with overlay and play button.
+   */
   draw() {
     if (!this.isVisible) return;
 
@@ -36,6 +39,9 @@ class StartScreen {
     this.drawButton();
   }
 
+  /**
+   * Draws the play button.
+   */
   drawButton() {
     if (!this.imageLoaded) {
       this.ctx.fillStyle = '#fff';
@@ -64,6 +70,12 @@ class StartScreen {
     this.ctx.restore();
   }
 
+  /**
+   * Checks if the button was clicked.
+   * @param {number} x - The x coordinate of the click
+   * @param {number} y - The y coordinate of the click
+   * @returns {boolean} True if the button was clicked
+   */
   isButtonClicked(x, y) {
     return (
       x >= this.buttonX &&
@@ -73,14 +85,25 @@ class StartScreen {
     );
   }
 
+  /**
+   * Updates the hover state.
+   * @param {number} x - The x coordinate of the mouse
+   * @param {number} y - The y coordinate of the mouse
+   */
   checkHover(x, y) {
     this.isHovered = this.isButtonClicked(x, y);
   }
 
+  /**
+   * Hides the screen.
+   */
   hide() {
     this.isVisible = false;
   }
 
+  /**
+   * Shows the screen.
+   */
   show() {
     this.isVisible = true;
   }

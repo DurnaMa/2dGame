@@ -18,11 +18,17 @@ class Level {
     this.initializeBottles();
   }
 
+  /**
+   * Starts the animation for all coins.
+   */
   initializeCoins() {
-    this.coins.forEach(coin => coin.animate());
+    this.coins.forEach((coin) => coin.animate());
   }
 
+  /**
+   * Starts the animation for all bottles.
+   */
   initializeBottles() {
-    this.bottles.forEach(bottle => bottle.animate());
+    this.bottles.forEach((bottle) => bottle.animate());
   }
 }

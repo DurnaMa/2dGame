@@ -5,7 +5,7 @@
 ## DrawableObject
 
 | Methode                    | Parameter                               | Rückgabe | Beschreibung                                                 |
-| -------------------------- | --------------------------------------- | -------- | ------------------------------------------------------------ |
+|----------------------------|-----------------------------------------|----------|--------------------------------------------------------------|
 | `loadImage(path)`          | `{string} path` – Pfad zur Bilddatei    | –        | Lädt ein einzelnes Bild.                                     |
 | `draw(ctx)`                | `{CanvasRenderingContext2D} ctx`        | –        | Zeichnet das Objekt auf das Canvas.                          |
 | `loadImages(arr)`          | `{string[]} arr` – Array von Bildpfaden | –        | Lädt mehrere Bilder in den Cache.                            |
@@ -18,7 +18,7 @@
 ## MovableObject _extends DrawableObject_
 
 | Methode                      | Parameter                       | Rückgabe    | Beschreibung                                     |
-| ---------------------------- | ------------------------------- | ----------- | ------------------------------------------------ |
+|------------------------------|---------------------------------|-------------|--------------------------------------------------|
 | `applyGravity()`             | –                               | –           | Wendet Gravitation über ein Intervall an.        |
 | `checkJumpReset()`           | –                               | –           | Setzt den Sprungzustand beim Landen zurück.      |
 | `isAboveGround()`            | –                               | `{boolean}` | Prüft ob das Objekt über dem Boden ist.          |
@@ -37,7 +37,7 @@
 ## Character _extends MovableObject_
 
 | Methode                               | Parameter                              | Rückgabe    | Beschreibung                                                       |
-| ------------------------------------- | -------------------------------------- | ----------- | ------------------------------------------------------------------ |
+|---------------------------------------|----------------------------------------|-------------|--------------------------------------------------------------------|
 | `isDeath()`                           | –                                      | `{boolean}` | Prüft ob der Charakter tot ist.                                    |
 | `animate()`                           | –                                      | –           | Startet Bewegungs- und Animations-Intervalle.                      |
 | `handleMovement()`                    | –                                      | –           | Verarbeitet die Bewegung pro Frame.                                |
@@ -52,7 +52,7 @@
 ## Rogue _extends Character_
 
 | Methode          | Parameter | Rückgabe | Beschreibung                              |
-| ---------------- | --------- | -------- | ----------------------------------------- |
+|------------------|-----------|----------|-------------------------------------------|
 | `shooting()`     | –         | –        | Spielt den Schuss-Sound ab.               |
 | `jumpSound()`    | –         | –        | Spielt den Sprung-Sound ab.               |
 | `walkingSound()` | –         | –        | Spielt den Lauf-Sound mit Verzögerung ab. |
@@ -62,7 +62,7 @@
 ## Enemy _extends MovableObject_
 
 | Methode                     | Parameter | Rückgabe    | Beschreibung                                          |
-| --------------------------- | --------- | ----------- | ----------------------------------------------------- |
+|-----------------------------|-----------|-------------|-------------------------------------------------------|
 | `getDistanceToCharacter()`  | –         | `{number}`  | Gibt die Distanz zum Charakter zurück.                |
 | `getDirectionToCharacter()` | –         | `{number}`  | Gibt die Richtung zum Charakter zurück.               |
 | `isCharacterNear()`         | –         | `{boolean}` | Prüft ob der Charakter in der Nähe ist.               |
@@ -84,7 +84,7 @@
 ## Endboss _extends Enemy_
 
 | Methode               | Parameter                                               | Rückgabe    | Beschreibung                                          |
-| --------------------- | ------------------------------------------------------- | ----------- | ----------------------------------------------------- |
+|-----------------------|---------------------------------------------------------|-------------|-------------------------------------------------------|
 | `animate()`           | –                                                       | –           | Startet Animations- und Bewegungs-Intervalle.         |
 | `updateAnimation()`   | –                                                       | –           | Aktualisiert die Animation basierend auf dem Zustand. |
 | `updateMovement()`    | –                                                       | –           | Aktualisiert die Bewegung pro Frame.                  |
@@ -100,7 +100,7 @@
 ## CollisionManager
 
 | Methode                                  | Parameter                                | Rückgabe    | Beschreibung                                         |
-| ---------------------------------------- | ---------------------------------------- | ----------- | ---------------------------------------------------- |
+|------------------------------------------|------------------------------------------|-------------|------------------------------------------------------|
 | `isPlayerFalling(character)`             | `{Character} character`                  | `{boolean}` | Prüft ob der Spieler fällt.                          |
 | `isPlayerAboveFalling(character, enemy)` | `{Character} character`, `{Enemy} enemy` | `{boolean}` | Prüft ob der Spieler über der Mitte des Gegners ist. |
 | `isFeetHitEnemyHead(character, enemy)`   | `{Character} character`, `{Enemy} enemy` | `{boolean}` | Prüft ob die Füße den Kopf des Gegners treffen.      |
@@ -127,7 +127,7 @@
 ## World
 
 | Methode                                            | Parameter                       | Rückgabe    | Beschreibung                                    |
-| -------------------------------------------------- | ------------------------------- | ----------- | ----------------------------------------------- |
+|----------------------------------------------------|---------------------------------|-------------|-------------------------------------------------|
 | `setWorld()`                                       | –                               | –           | Setzt die Welt-Referenz auf alle Spielobjekte.  |
 | `drawObjectLvel(setWorldOnArray)`                  | `{Function} setWorldOnArray`    | –           | Setzt die Welt-Referenz auf alle Level-Objekte. |
 | `run()`                                            | –                               | –           | Startet die Haupt-Spielschleife.                |
@@ -145,7 +145,7 @@
 ## EndScreen
 
 | Methode                                                     | Parameter                                                                                          | Rückgabe    | Beschreibung                                    |
-| ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | ----------- | ----------------------------------------------- |
+|-------------------------------------------------------------|----------------------------------------------------------------------------------------------------|-------------|-------------------------------------------------|
 | `draw()`                                                    | –                                                                                                  | –           | Zeichnet den End-Screen mit Overlay und Button. |
 | `drawButton()`                                              | –                                                                                                  | –           | Zeichnet den Restart-Button.                    |
 | `roundRect(ctx, x, y, width, height, radius, fill, stroke)` | `{CanvasRenderingContext2D} ctx`, `{number} x, y, width, height, radius`, `{boolean} fill, stroke` | –           | Zeichnet ein abgerundetes Rechteck.             |
@@ -159,7 +159,7 @@
 ## StartScreen
 
 | Methode                 | Parameter       | Rückgabe    | Beschreibung                                           |
-| ----------------------- | --------------- | ----------- | ------------------------------------------------------ |
+|-------------------------|-----------------|-------------|--------------------------------------------------------|
 | `draw()`                | –               | –           | Zeichnet den Start-Screen mit Overlay und Play-Button. |
 | `drawButton()`          | –               | –           | Zeichnet den Play-Button.                              |
 | `isButtonClicked(x, y)` | `{number} x, y` | `{boolean}` | Prüft ob der Button geklickt wurde.                    |
@@ -172,7 +172,7 @@
 ## SoundManagerClass
 
 | Methode                             | Parameter                                                                | Rückgabe    | Beschreibung                                        |
-| ----------------------------------- | ------------------------------------------------------------------------ | ----------- | --------------------------------------------------- |
+|-------------------------------------|--------------------------------------------------------------------------|-------------|-----------------------------------------------------|
 | `addSound(name, src, volume, loop)` | `{string} name`, `{string} src`, `{number} [volume]`, `{boolean} [loop]` | –           | Fügt einen neuen Sound hinzu.                       |
 | `playSound(name, delay)`            | `{string} name`, `{number} [delay=0]`                                    | –           | Spielt einen Sound ab.                              |
 | `stop(name)`                        | `{string} name`                                                          | –           | Stoppt einen Sound.                                 |
@@ -191,7 +191,7 @@
 ## Statusbar _extends DrawableObject_
 
 | Methode                             | Parameter                                  | Rückgabe   | Beschreibung                                         |
-| ----------------------------------- | ------------------------------------------ | ---------- | ---------------------------------------------------- |
+|-------------------------------------|--------------------------------------------|------------|------------------------------------------------------|
 | `reduceHealth(character)`           | `{Character} character`                    | –          | Zieht eine Stufe (20%) von der Statusbar ab.         |
 | `reduceHealthBy(character, amount)` | `{Character} character`, `{number} amount` | –          | Zieht einen kleineren Betrag ab (z.B. Boss-Schaden). |
 | `setPercentage(percentage)`         | `{number} percentage`                      | –          | Setzt den Prozentwert und aktualisiert das Bild.     |
@@ -202,7 +202,7 @@
 ## Magicbar _extends DrawableObject_
 
 | Methode                     | Parameter             | Rückgabe | Beschreibung                                     |
-| --------------------------- | --------------------- | -------- | ------------------------------------------------ |
+|-----------------------------|-----------------------|----------|--------------------------------------------------|
 | `addMagic(amount)`          | `{number} [amount]`   | –        | Fügt Magie hinzu beim Einsammeln einer Flasche.  |
 | `useMagic(amount)`          | `{number} [amount]`   | –        | Verbraucht Magie beim Abfeuern eines Projektils. |
 | `setPercentage(percentage)` | `{number} percentage` | –        | Setzt den Prozentwert und aktualisiert das Bild. |
@@ -212,7 +212,7 @@
 ## Level
 
 | Methode               | Parameter | Rückgabe | Beschreibung                          |
-| --------------------- | --------- | -------- | ------------------------------------- |
+|-----------------------|-----------|----------|---------------------------------------|
 | `initializeCoins()`   | –         | –        | Startet die Animation aller Münzen.   |
 | `initializeBottles()` | –         | –        | Startet die Animation aller Flaschen. |
 
@@ -221,7 +221,7 @@
 ## Item _extends MovableObject_
 
 | Methode         | Parameter | Rückgabe    | Beschreibung                          |
-| --------------- | --------- | ----------- | ------------------------------------- |
+|-----------------|-----------|-------------|---------------------------------------|
 | `collect()`     | –         | –           | Markiert das Item als eingesammelt.   |
 | `isCollected()` | –         | `{boolean}` | Prüft ob das Item eingesammelt wurde. |
 | `isVisible()`   | –         | `{boolean}` | Prüft ob das Item sichtbar ist.       |
@@ -231,7 +231,7 @@
 ## Coin _extends Item_
 
 | Methode     | Parameter | Rückgabe | Beschreibung                             |
-| ----------- | --------- | -------- | ---------------------------------------- |
+|-------------|-----------|----------|------------------------------------------|
 | `animate()` | –         | –        | Startet die Dreh-Animation der Münze.    |
 | `collect()` | –         | –        | Sammelt die Münze ein und versteckt sie. |
 
@@ -240,7 +240,7 @@
 ## Bottle _extends Item_
 
 | Methode     | Parameter | Rückgabe | Beschreibung                    |
-| ----------- | --------- | -------- | ------------------------------- |
+|-------------|-----------|----------|---------------------------------|
 | `animate()` | –         | –        | Startet die Flaschen-Animation. |
 
 ---
@@ -248,7 +248,7 @@
 ## BackgroundObject _extends MovableObject_
 
 | Methode     | Parameter                        | Rückgabe | Beschreibung                                   |
-| ----------- | -------------------------------- | -------- | ---------------------------------------------- |
+|-------------|----------------------------------|----------|------------------------------------------------|
 | `draw(ctx)` | `{CanvasRenderingContext2D} ctx` | –        | Zeichnet das Hintergrundobjekt auf das Canvas. |
 
 ---
@@ -256,7 +256,7 @@
 ## ThrowableObject _extends MovableObject_
 
 | Methode  | Parameter | Rückgabe | Beschreibung                                         |
-| -------- | --------- | -------- | ---------------------------------------------------- |
+|----------|-----------|----------|------------------------------------------------------|
 | `trow()` | –         | –        | Wirft den Feuerball in Blickrichtung des Charakters. |
 
 ---
@@ -264,7 +264,7 @@
 ## Globale Funktionen (game.js)
 
 | Funktion                                    | Parameter                                                  | Rückgabe   | Beschreibung                                         |
-| ------------------------------------------- | ---------------------------------------------------------- | ---------- | ---------------------------------------------------- |
+|---------------------------------------------|------------------------------------------------------------|------------|------------------------------------------------------|
 | `setTrackedInterval(fn, time, description)` | `{Function} fn`, `{number} time`, `{string} [description]` | `{number}` | Setzt ein Intervall und trackt es global.            |
 | `setTrackedTimeout(fn, time, description)`  | `{Function} fn`, `{number} time`, `{string} [description]` | `{number}` | Setzt ein Timeout und trackt es global.              |
 | `stopAllIntervals()`                        | –                                                          | –          | Stoppt alle getrackten Intervalle und Timeouts.      |
@@ -283,7 +283,7 @@
 ## Globale Funktionen (level1.js)
 
 | Funktion                                                                   | Parameter                                                                                             | Rückgabe               | Beschreibung                                                   |
-| -------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ---------------------- | -------------------------------------------------------------- |
+|----------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|------------------------|----------------------------------------------------------------|
 | `spawnEnemies()`                                                           | –                                                                                                     | –                      | Spawnt Gegner und den Endboss über die Level-Sektionen.        |
 | `spawnItem()`                                                              | –                                                                                                     | –                      | Spawnt Münzen und Flaschen über die Level-Sektionen.           |
 | `getXPosition(index)`                                                      | `{number} index`                                                                                      | `{number}`             | Gibt eine zufällige X-Position innerhalb einer Sektion zurück. |

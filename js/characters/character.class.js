@@ -23,10 +23,17 @@ class Character extends MovableObject {
     this.hit = false;
   }
 
+  /**
+   * Checks whether the character is dead.
+   * @returns {boolean}
+   */
   isDeath() {
     return this.energy === 0;
   }
 
+  /**
+   *Strats motion and animation intervals.
+   */
   animate() {
     this.moveInterval = setTrackedInterval(() => this.handleMovement(), 1000 / Config.FRAME_RATE, 'Character Movement');
     this.animationInterval = setTrackedInterval(
@@ -36,6 +43,9 @@ class Character extends MovableObject {
     );
   }
 
+  /**
+   *Processes the movement per frame.
+   */
   handleMovement() {
     if (!gameStarted) return;
     if (!this.world.level) return;
@@ -52,6 +62,9 @@ class Character extends MovableObject {
     this.world.camera_x = -this.x + Config.CAMERA_OFFSET;
   }
 
+  /**
+   *Update the positon using arrow keys.
+   */
   updateArrowKeys() {
     if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
       if (this.walkingSound) {
@@ -70,10 +83,16 @@ class Character extends MovableObject {
     }
   }
 
+  /**
+   *Processes animation update.
+   */
   handleAnimation() {
     this.animateSetInterval();
   }
 
+  /**
+   *Select and play the correct animation based on the state.
+   */
   animateSetInterval() {
     if (!gameStarted) return;
 
@@ -92,6 +111,9 @@ class Character extends MovableObject {
     }
   }
 
+  /**
+   * Processes the jump animation.
+   */
   handleJumpAnimation() {
     if (!this.checkAlreadyRunning) {
       this.checkAlreadyRunning = true;
@@ -108,6 +130,10 @@ class Character extends MovableObject {
     }
   }
 
+  /**
+   * Resets the jump animation after a timeout.
+   * @param spacePressed
+   */
   triggerTrackedTimeout(spacePressed) {
     setTrackedTimeout(
       () => {

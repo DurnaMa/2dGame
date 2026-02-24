@@ -78,6 +78,9 @@ class Endboss extends Enemy {
     this.isAngry = false;
   }
 
+  /**
+   * Starts animation and movement intervals.
+   */
   animate() {
     this.animationInterval = setTrackedInterval(
       () => this.updateAnimation(),
@@ -87,6 +90,9 @@ class Endboss extends Enemy {
     setTrackedInterval(() => this.updateMovement(), 1000 / Config.FRAME_RATE, 'Endboss Movement');
   }
 
+  /**
+   * Updates the animation based on the current state.
+   */
   updateAnimation() {
     if (this.energy <= 0) {
       this.playAnimation(this.IMAGES_DEATH);
@@ -107,6 +113,9 @@ class Endboss extends Enemy {
     }
   }
 
+  /**
+   * Updates the endboss movement per frame.
+   */
   updateMovement() {
     if (!this.world) return;
     this.checkActivation();
@@ -119,10 +128,17 @@ class Endboss extends Enemy {
     }
   }
 
+  /**
+   * Checks if the endboss should not move.
+   * @returns {boolean} True if the endboss should not move
+   */
   shouldNotMove() {
     return this.energy <= 0 || this.isAngry || this.isAttacking || this.isIntroAngry;
   }
 
+  /**
+   * Triggers the intro anger animation on first contact.
+   */
   triggerIntroAnger() {
     this.hadFirstContact = true;
     this.isIntroAngry = true;
@@ -135,6 +151,9 @@ class Endboss extends Enemy {
     }, introDuration);
   }
 
+  /**
+   * Moves the endboss back and forth in the patrol range.
+   */
   patrol() {
     if (!this.isActive) return;
     const patrolStart = Config.SECTION_START_ENDBOSS * (Config.LEVEL_END / Config.SECTION_COUNT);
@@ -154,6 +173,9 @@ class Endboss extends Enemy {
     }
   }
 
+  /**
+   * Checks if the character is close enough to activate the endboss.
+   */
   checkActivation() {
     if (!this.world || !this.world.character || this.energy <= 0) return;
 
@@ -167,10 +189,18 @@ class Endboss extends Enemy {
     }
   }
 
+  /**
+   * Checks if the endboss is dead.
+   * @returns {boolean} True if the endboss is dead
+   */
   isDead() {
     return this.energy <= 0;
   }
 
+  /**
+   * Applies damage to the endboss.
+   * @param {number} [damage=Config.ENEMY.ENDBOSS.DAMAGE_PER_HIT] - The amount of damage to apply
+   */
   hit(damage = Config.ENEMY.ENDBOSS.DAMAGE_PER_HIT) {
     if (this.isDead()) return;
     this.lastHit = new Date().getTime();

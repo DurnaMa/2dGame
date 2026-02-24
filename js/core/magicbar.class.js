@@ -1,6 +1,6 @@
 class Magicbar extends DrawableObject {
   percentage = Config.UI.MAGICBAR.PERCENTAGE_START;
-  shots = 0
+  shots = 0;
 
   CHARACTER_MAGIC_BAR = [
     'assets/fantasy-platformer-game-ui/PNG/16Inner_Interface/magic_bar/00energy-magic.png',
@@ -29,6 +29,10 @@ class Magicbar extends DrawableObject {
     this.setPercentage(Config.UI.MAGICBAR.PERCENTAGE_START);
   }
 
+  /**
+   * Adds magic when a bottle is collected.
+   * @param {number} [amount=Config.UI.MAGICBAR.MAGIC_ADD_AMOUNT] - The amount of magic to add
+   */
   addMagic(amount = Config.UI.MAGICBAR.MAGIC_ADD_AMOUNT) {
     if (this.shots <= 12) {
       this.shots++;
@@ -37,18 +41,26 @@ class Magicbar extends DrawableObject {
     }
   }
 
+  /**
+   * Uses magic when a projectile is fired.
+   * @param {number} [amount=Config.UI.MAGICBAR.MAGIC_USE_AMOUNT] - The amount of magic to consume
+   */
   useMagic(amount = Config.UI.MAGICBAR.MAGIC_USE_AMOUNT) {
     this.shots--;
     const percentage = 100 / 12; // 8.34
     this.setPercentage(percentage * this.shots);
   }
 
+  /**
+   * Sets the percentage value and updates the image.
+   * @param {number} percentage - The percentage value to set
+   */
   setPercentage(percentage) {
     this.percentage = Math.round(percentage);
     if (this.percentage <= 0) {
       this.percentage = 0;
     }
-    let path = this.CHARACTER_MAGIC_BAR[this.shots]
+    let path = this.CHARACTER_MAGIC_BAR[this.shots];
     this.img = this.imageCache[path];
   }
 }

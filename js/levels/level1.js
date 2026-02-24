@@ -27,6 +27,9 @@ const Y_OFFSET_ROCKS_MID = Config.Y_OFFSET.ROCKS_MID;
 const Y_OFFSET_ROCKS_LOW = Config.Y_OFFSET.ROCKS_LOW;
 const Y_OFFSET_CLOUDS4_MID = Config.Y_OFFSET.CLOUDS4_MID;
 
+/**
+ * Spawns enemies and the endboss across level sections.
+ */
 function spawnEnemies() {
   for (let section = SECTIONSTART; section <= SECTIONEND; section++) {
     const enemyCount = Math.random() > 0.5 ? 1 : 2;
@@ -43,6 +46,9 @@ function spawnEnemies() {
   endBoss.push(new Endboss());
 }
 
+/**
+ * Spawns coins and bottles across level sections.
+ */
 function spawnItem() {
   for (let section = SECTIONSTART; section <= SECTIONEND; section++) {
     for (let index = 0; index < 2; index++) {
@@ -57,6 +63,11 @@ function spawnItem() {
   }
 }
 
+/**
+ * Gets a random X position within a section.
+ * @param {number} index - The section index
+ * @returns {number} A random X position within the section
+ */
 function getXPosition(index) {
   const maxWidth = CANVAS_WIDTH * index;
   const minWidth = CANVAS_WIDTH * (index - 1);
@@ -73,6 +84,15 @@ function getXPosition(index) {
   }
 }
 
+/**
+ * Creates a background layer with tiled objects.
+ * @param {string} imagePath - The path to the background image
+ * @param {number} SECTIONCOUNT - The number of sections
+ * @param {number} width - The width of each tile
+ * @param {number} [yOffset=1] - The Y offset for positioning
+ * @param {number} [parallax=1] - The parallax factor
+ * @returns {BackgroundObject[]} An array of background objects
+ */
 function createBackgroundLayer(imagePath, SECTIONCOUNT, width, yOffset = 1, parallax = 1) {
   const layer = [];
   for (let i = 0; i < SECTIONCOUNT; i++) {
@@ -81,6 +101,9 @@ function createBackgroundLayer(imagePath, SECTIONCOUNT, width, yOffset = 1, para
   return layer;
 }
 
+/**
+ * Initializes Level 1 with all game objects.
+ */
 function initLevel1() {
   enemies = [];
   endBoss = [];

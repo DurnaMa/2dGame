@@ -35,6 +35,9 @@ class Coin extends Item {
     }, 100);
   }
 
+  /**
+   * Starts the rotation animation of the coin.
+   */
   animate() {
     if (this.imageCache[this.ITEMS[0]]) {
       setInterval(() => {
@@ -43,6 +46,9 @@ class Coin extends Item {
     }
   }
 
+  /**
+   * Collects the coin and hides it.
+   */
   collect() {
     super.collect();
     this.visible = false;
