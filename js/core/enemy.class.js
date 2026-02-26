@@ -143,17 +143,25 @@ class Enemy extends MovableObject {
    */
   updateMovement() {
     if (!gameStarted || this.isDead || this.isAttacking) return;
+
     const distanceToCharacter = this.getDistanceToCharacter();
     const AWARENESS_RANGE = Config.ENEMY.DRAGON.AWARENESS_RANGE;
+
+    // Immer facing direction updaten wenn Character nah ist
     this.updateFacingDirection();
 
+    // Bewegungslogik basierend auf Entfernung
     if (distanceToCharacter > AWARENESS_RANGE) {
+      // Character weit weg -> patrouillieren
       this.patrol();
     } else if (this.isInAttackRange() && !this.attackCooldown) {
+      // Im Angriffsbereich -> nicht bewegen, nur angreifen
       return;
     } else if (this.isCharacterNear()) {
+      // Character in der Nähe -> verfolgen (überschreibt patrol)
       this.chaseCharacter();
     } else {
+      // Fallback: patrouillieren
       this.patrol();
     }
   }
@@ -204,22 +212,30 @@ class Enemy extends MovableObject {
     }
   }
 
+  /**
+   * Patrouille im definierten Bereich um die Startposition.
+   * Verhindert Jittern durch stabile Richtungskontrolle.
+   */
   patrol() {
     const PATROL_RANGE = Config.ENEMY.DRAGON.PATROL_RANGE;
     const patrolStart = this.startX - PATROL_RANGE;
     const patrolEnd = this.startX + PATROL_RANGE;
 
+    // Wenn zu weit rechts -> nach links gehen
     if (this.x >= patrolEnd) {
+      this.patrolDirection = false; // Links gehen
       this.moveLeft();
       this.otherDirection = true;
-    } else if (this.x <= patrolStart) {
+    }
+
+    // Wenn zu weit links -> nach rechts gehen
+    else if (this.x <= patrolStart) {
+      this.patrolDirection = true; // Rechts gehen
       this.moveRight();
       this.otherDirection = false;
-    } else {
-      if (!this.patrolDirection) {
-        this.patrolDirection = Math.random() > 0.5;
-      }
-
+    }
+    // Im sicheren Bereich -> normale Patrouille
+    else {
       if (this.patrolDirection) {
         this.moveRight();
         this.otherDirection = false;

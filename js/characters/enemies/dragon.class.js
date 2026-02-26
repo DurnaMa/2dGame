@@ -59,6 +59,8 @@ class Dragon extends Enemy {
     };
 
     this.startX = this.x;
+    this.patrolDirection = Math.random() > 0.5;
+    this.movingRight = this.patrolDirection;
     this.isActive = true;
     this.moveRight();
   }
