@@ -379,7 +379,7 @@ function initButtonPressEvents() {
  * Handles keyboard down events.
  */
 function handleKeyDown(e) {
-  if (e.keyCode == Config.KEYS.MUTE) {
+  if (e.keyCode === Config.KEYS.MUTE) {
     SoundManagerClass.toggleMuted();
     if (soundManager && typeof soundManager.setButtonMuted === 'function') {
       soundManager.setButtonMuted(SoundManagerClass.isMuted());
@@ -387,24 +387,24 @@ function handleKeyDown(e) {
     localStorage.setItem('fp.soundMuted', SoundManagerClass.isMuted());
   }
 
-  if (e.keyCode == Config.KEYS.ARROW_UP) keyboard.UP = true;
-  if (e.keyCode == Config.KEYS.ARROW_RIGHT) keyboard.RIGHT = true;
-  if (e.keyCode == Config.KEYS.ARROW_DOWN) keyboard.DOWN = true;
-  if (e.keyCode == Config.KEYS.ARROW_LEFT) keyboard.LEFT = true;
-  if (e.keyCode == Config.KEYS.SPACE) keyboard.SPACE = true;
-  if (e.keyCode == Config.KEYS.X) keyboard.X = true;
+  if (e.keyCode === Config.KEYS.ARROW_UP) keyboard.UP = true;
+  if (e.keyCode === Config.KEYS.ARROW_RIGHT) keyboard.RIGHT = true;
+  if (e.keyCode === Config.KEYS.ARROW_DOWN) keyboard.DOWN = true;
+  if (e.keyCode === Config.KEYS.ARROW_LEFT) keyboard.LEFT = true;
+  if (e.keyCode === Config.KEYS.SPACE) keyboard.SPACE = true;
+  if (e.keyCode === Config.KEYS.X) keyboard.X = true;
 }
 
 /**
  * Handles keyboard up events.
  */
 function handleKeyUp(e) {
-  if (e.keyCode == Config.KEYS.ARROW_UP) keyboard.UP = false;
-  if (e.keyCode == Config.KEYS.ARROW_RIGHT) keyboard.RIGHT = false;
-  if (e.keyCode == Config.KEYS.ARROW_DOWN) keyboard.DOWN = false;
-  if (e.keyCode == Config.KEYS.ARROW_LEFT) keyboard.LEFT = false;
-  if (e.keyCode == Config.KEYS.SPACE) keyboard.SPACE = false;
-  if (e.keyCode == Config.KEYS.X) keyboard.X = false;
+  if (e.keyCode === Config.KEYS.ARROW_UP) keyboard.UP = false;
+  if (e.keyCode === Config.KEYS.ARROW_RIGHT) keyboard.RIGHT = false;
+  if (e.keyCode === Config.KEYS.ARROW_DOWN) keyboard.DOWN = false;
+  if (e.keyCode === Config.KEYS.ARROW_LEFT) keyboard.LEFT = false;
+  if (e.keyCode === Config.KEYS.SPACE) keyboard.SPACE = false;
+  if (e.keyCode === Config.KEYS.X) keyboard.X = false;
 }
 
 window.addEventListener('keydown', handleKeyDown);

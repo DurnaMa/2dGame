@@ -146,7 +146,7 @@ class CollisionManager {
     if (!character.hit && !character.isDeath()) {
       character.hit = true;
 
-      this.world.statusBar.reduceHealth(character);
+      this.world.statusBar.reduceHealthBy(character, Config.COLLISION.DAMAGE_NORMAL);
       character.lastHit = new Date().getTime();
 
       setTimeout(() => {

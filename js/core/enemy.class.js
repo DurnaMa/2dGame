@@ -74,9 +74,25 @@ class Enemy extends MovableObject {
   endAttack() {
     this.isAttacking = false;
     this.attackCooldown = true;
+
+    const healthPercentage = (this.energy / 100) * 100;
+    const THRESHOLD_PHASE_2 = Config.ENEMY.ENDBOSS.HEALTH_THRESHOLD_PHASE_2;
+    const THRESHOLD_PHASE_3 = Config.ENEMY.ENDBOSS.HEALTH_THRESHOLD_PHASE_3;
+    const COOLDOWN_PHASE_2 = Config.ENEMY.ENDBOSS.COOLDOWN_PHASE_2;
+    const COOLDOWN_PHASE_3 = Config.ENEMY.ENDBOSS.COOLDOWN_PHASE_3;
+    const COOLDOWN_NORMAL = Config.ENEMY.ENDBOSS.ATTACK_COOLDOWN;
+
+    let cooldownTime = COOLDOWN_NORMAL;
+
+    if (healthPercentage < THRESHOLD_PHASE_3) {
+      cooldownTime = COOLDOWN_PHASE_3;
+    } else if (healthPercentage < THRESHOLD_PHASE_2) {
+      cooldownTime = COOLDOWN_PHASE_2;
+    }
+
     setTimeout(() => {
       this.attackCooldown = false;
-    }, Config.ENEMY.DRAGON.ATTACK_COOLDOWN);
+    }, cooldownTime);
   }
 
   /**
@@ -127,14 +143,18 @@ class Enemy extends MovableObject {
    */
   updateMovement() {
     if (!gameStarted || this.isDead || this.isAttacking) return;
+    const distanceToCharacter = this.getDistanceToCharacter();
+    const AWARENESS_RANGE = Config.ENEMY.DRAGON.AWARENESS_RANGE;
     this.updateFacingDirection();
 
-    if (this.isInAttackRange() && !this.attackCooldown) return;
-    if (this.isCharacterNear()) {
+    if (distanceToCharacter > AWARENESS_RANGE) {
+      this.patrol();
+    } else if (this.isInAttackRange() && !this.attackCooldown) {
+      return;
+    } else if (this.isCharacterNear()) {
       this.chaseCharacter();
     } else {
-      this.moveLeft();
-      this.otherDirection = true;
+      this.patrol();
     }
   }
 
@@ -181,6 +201,32 @@ class Enemy extends MovableObject {
     this.playAnimation(this.IMAGES_ATTACK);
     if (this.currentImage >= this.IMAGES_ATTACK.length) {
       this.endAttack();
+    }
+  }
+
+  patrol() {
+    const PATROL_RANGE = Config.ENEMY.DRAGON.PATROL_RANGE;
+    const patrolStart = this.startX - PATROL_RANGE;
+    const patrolEnd = this.startX + PATROL_RANGE;
+
+    if (this.x >= patrolEnd) {
+      this.moveLeft();
+      this.otherDirection = true;
+    } else if (this.x <= patrolStart) {
+      this.moveRight();
+      this.otherDirection = false;
+    } else {
+      if (!this.patrolDirection) {
+        this.patrolDirection = Math.random() > 0.5;
+      }
+
+      if (this.patrolDirection) {
+        this.moveRight();
+        this.otherDirection = false;
+      } else {
+        this.moveLeft();
+        this.otherDirection = true;
+      }
     }
   }
 }

@@ -120,6 +120,21 @@ class Endboss extends Enemy {
     if (!this.world) return;
     this.checkActivation();
     if (this.shouldNotMove()) return;
+
+    const healthPercentage = (this.energy / 100) * 100;
+    const THRESHOLD_PHASE_2 = Config.ENEMY.ENDBOSS.HEALTH_THRESHOLD_PHASE_2;
+    const THRESHOLD_PHASE_3 = Config.ENEMY.ENDBOSS.HEALTH_THRESHOLD_PHASE_3;
+    const SPEED_PHASE_2 = Config.ENEMY.ENDBOSS.SPEED_PHASE_2;
+    const SPEED_PHASE_3 = Config.ENEMY.ENDBOSS.SPEED_PHASE_3;
+
+    if (healthPercentage < THRESHOLD_PHASE_3) {
+      this.speed = SPEED_PHASE_3;
+    } else if (healthPercentage < THRESHOLD_PHASE_2) {
+      this.speed = SPEED_PHASE_2;
+    } else {
+      this.speed = Config.ENEMY.ENDBOSS.SPEED;
+    }
+
     if (this.isInAttackRange() && !this.attackCooldown) {
     } else if (this.isCharacterNear() && this.isActive) {
       this.chaseCharacter();

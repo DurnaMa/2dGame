@@ -42,9 +42,9 @@ class Config {
   static COLLISION = {
     INVULNERABILITY_SHORT: 500,
     INVULNERABILITY_LONG: 1500,
-    DAMAGE_NORMAL: Math.floor(100 / 6),
+    DAMAGE_NORMAL: Math.floor(100 / 5),
     DAMAGE_BOSS: 5,
-    JUMP_KILL_HEIGHT_MAX: 120,
+    JUMP_KILL_HEIGHT_MAX: 80,
     JUMP_BOUNCE_POWER: 15,
   };
 
@@ -116,10 +116,12 @@ class Config {
         BOTTOM: 100,
       },
       DELAY: 2000,
-      ATTACK_DISTANCE: 150,
-      ATTACK_COOLDOWN: 2000,
-      ATTACK_RANGE: 80,
-      CHASE_DISTANCE: 300,
+      ATTACK_DISTANCE: 200,
+      ATTACK_COOLDOWN: 1500,
+      ATTACK_RANGE: 12,
+      CHASE_DISTANCE: 500,
+      PATROL_RANGE: 500,
+      AWARENESS_RANGE: 400,
       DEAD_ZONE: 30,
     },
     DRAGON: {
@@ -139,10 +141,12 @@ class Config {
         BOTTOM: 113,
       },
       DELAY: 2000,
-      ATTACK_DISTANCE: 150,
-      ATTACK_COOLDOWN: 2000,
-      ATTACK_RANGE: 80,
-      CHASE_DISTANCE: 300,
+      ATTACK_DISTANCE: 200,
+      ATTACK_COOLDOWN: 1500,
+      ATTACK_RANGE: 12,
+      CHASE_DISTANCE: 500,
+      PATROL_RANGE: 500,
+      AWARENESS_RANGE: 400,
       DEAD_ZONE: 30,
     },
     ENDBOSS: {
@@ -173,6 +177,12 @@ class Config {
       MIN_ENERGY: 10,
       ANGER_ANIMATION_DELAY: 100,
       DEAD_ZONE: 30,
+      SPEED_PHASE_2: 2.0,
+      SPEED_PHASE_3: 2.5,
+      COOLDOWN_PHASE_2: 1200,
+      COOLDOWN_PHASE_3: 800,
+      HEALTH_THRESHOLD_PHASE_2: 66,
+      HEALTH_THRESHOLD_PHASE_3: 33,
     },
   };
 
