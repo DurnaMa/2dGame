@@ -120,22 +120,46 @@ class Endboss extends Enemy {
     if (!this.world) return;
     this.checkActivation();
     if (this.shouldNotMove()) return;
+    this.updateSpeed();
+    this.updatePosition();
+  }
 
+  /**
+   * Updates the speed based on the current health phase.
+   */
+  updateSpeed() {
     const healthPercentage = (this.energy / 100) * 100;
     const THRESHOLD_PHASE_2 = Config.ENEMY.ENDBOSS.HEALTH_THRESHOLD_PHASE_2;
     const THRESHOLD_PHASE_3 = Config.ENEMY.ENDBOSS.HEALTH_THRESHOLD_PHASE_3;
-    const SPEED_PHASE_2 = Config.ENEMY.ENDBOSS.SPEED_PHASE_2;
-    const SPEED_PHASE_3 = Config.ENEMY.ENDBOSS.SPEED_PHASE_3;
-
     if (healthPercentage < THRESHOLD_PHASE_3) {
-      this.speed = SPEED_PHASE_3;
+      this.speed = Config.ENEMY.ENDBOSS.SPEED_PHASE_3;
+      this.triggerTeleport();
     } else if (healthPercentage < THRESHOLD_PHASE_2) {
-      this.speed = SPEED_PHASE_2;
+      this.speed = Config.ENEMY.ENDBOSS.SPEED_PHASE_2;
     } else {
       this.speed = Config.ENEMY.ENDBOSS.SPEED;
     }
+  }
 
+  /**
+   * Triggers a teleport if not on cooldown.
+   */
+  triggerTeleport() {
+    if (this.teleportCooldown) return;
+    this.teleportCooldown = true;
+    setTimeout(() => {
+      const direction = Math.random() > 0.5 ? 1 : -1;
+      this.x = this.world.character.x + direction * Config.ENEMY.ENDBOSS.TELEPORT_DISTANCE;
+      this.teleportCooldown = false;
+    }, Config.ENEMY.ENDBOSS.TELEPORT_INTERVAL);
+  }
+
+  /**
+   * Updates the position based on attack range and character proximity.
+   */
+  updatePosition() {
     if (this.isInAttackRange() && !this.attackCooldown) {
+      return;
     } else if (this.isCharacterNear() && this.isActive) {
       this.chaseCharacter();
     } else {
@@ -220,7 +244,6 @@ class Endboss extends Enemy {
     if (this.isDead()) return;
     this.lastHit = new Date().getTime();
     this.hitsTaken++;
-    console.log('Boss Hit! Hits:', this.hitsTaken, 'Energy before:', this.energy);
 
     this.isAngry = true;
     this.isAttacking = false;
@@ -234,6 +257,20 @@ class Endboss extends Enemy {
     } else {
       this.energy -= damage;
       if (this.energy < 0) this.energy = Config.ENEMY.ENDBOSS.MIN_ENERGY;
+    }
+  }
+
+  startAttack() {
+    this.isAttacking = true;
+    this.currentImage = 0;
+    const isPhase2OrLater = this.hitsTaken >= Config.ENEMY.ENDBOSS.PROJECTILE_UNLOCK_AT_HIT;
+    if (this.world && isPhase2OrLater) {
+      const projectileX = this.x;
+      const projectileY = this.y + Config.ENEMY.ENDBOSS.PROJECTILE_Y_OFFSET;
+      const projectile = new ThrowableObject(projectileX, projectileY, this.world);
+      const direction = this.world.character.x > this.x ? 1 : -1;
+      projectile.speedX = direction * Config.ENEMY.ENDBOSS.PROJECTILE_SPEED;
+      this.world.throwableObject.push(projectile);
     }
   }
 }

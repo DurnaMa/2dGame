@@ -232,9 +232,15 @@ class CollisionManager {
    * @returns {boolean} True if the projectile hit the endboss
    */
   hitEndBoss(projectile) {
-    const boss = this.world.level.endBoss.find((boss) => projectile.isColliding(boss));
+    const boss = this.world.level.endBoss.find(
+      (boss) => !boss.invulnerable && projectile.isColliding(boss)
+    );
     if (boss) {
       boss.hit();
+      boss.invulnerable = true;
+      setTimeout(() => {
+        boss.invulnerable = false;
+      }, Config.ENEMY.ENDBOSS.HIT_INVULNERABILITY_DURATION);
       return true;
     }
     return false;

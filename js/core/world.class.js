@@ -78,16 +78,24 @@ class World {
    * Checks if the player is firing a projectile.
    */
   checkThrowableObject() {
-    if (this.keyboard.X && !this.firePressed && this.magicBar.shots > 0) {
-      this.character.shooting();
-      let fire = new ThrowableObject(this.character.x + Config.WORLD.FIRE_OFFSET_X, this.character.y, this);
-      this.throwableObject.push(fire);
-      this.firePressed = true;
-      this.magicBar.useMagic(Config.WORLD.MAGIC_USE_PER_FIRE); // Verringert die Magie langsamer
+    const canShoot = this.keyboard.X && !this.shootCooldown && this.magicBar.shots > 0;
+    if (canShoot) {
+      this.fireShot();
     }
-    if (!this.keyboard.X) {
-      this.firePressed = false;
-    }
+  }
+
+  /**
+   * Fires a projectile and starts the shoot cooldown.
+   */
+  fireShot() {
+    this.character.shooting();
+    const fire = new ThrowableObject(this.character.x + Config.WORLD.FIRE_OFFSET_X, this.character.y, this);
+    this.throwableObject.push(fire);
+    this.magicBar.useMagic(Config.WORLD.MAGIC_USE_PER_FIRE);
+    this.shootCooldown = true;
+    setTimeout(() => {
+      this.shootCooldown = false;
+    }, Config.WORLD.SHOOT_COOLDOWN);
   }
 
   /**
