@@ -78,7 +78,7 @@ class StartScreen {
     this.ctx.shadowBlur = 20;
 
     this.ctx.fillStyle = '#FFD700';
-    this.ctx.font = `bold ${titleFontSize}px Arial`;
+    this.ctx.font = `bold ${titleFontSize}px Uncial Antiqua`;
     this.ctx.textAlign = 'center';
     this.ctx.textBaseline = 'middle';
     this.ctx.fillText('ADVENTURE', this.canvas.width / 2, this.canvas.height / 4);
@@ -87,7 +87,7 @@ class StartScreen {
     this.ctx.shadowColor = 'rgba(255, 100, 0, 0.6)';
     this.ctx.shadowBlur = 15;
     this.ctx.fillStyle = '#FF6400';
-    this.ctx.font = `bold ${titleFontSize * 0.5}px Arial`;
+    this.ctx.font = `bold ${titleFontSize * 0.5}px Uncial Antiqua`;
     this.ctx.fillText('QUEST', this.canvas.width / 2, this.canvas.height / 4 + titleFontSize * 0.6);
 
     this.ctx.restore();
@@ -102,7 +102,7 @@ class StartScreen {
       this.ctx.shadowColor = 'rgba(255, 215, 0, 0.5)';
       this.ctx.shadowBlur = 10;
       this.ctx.fillStyle = '#fff';
-      this.ctx.font = '24px Arial';
+      this.ctx.font = '24px Uncial Antiqua';
       this.ctx.textAlign = 'center';
       this.ctx.textBaseline = 'middle';
       this.ctx.fillText('Loading...', this.canvas.width / 2, this.canvas.height / 2);
@@ -149,7 +149,7 @@ class StartScreen {
     const fontSize = isMobile ? 18 : 24;
 
     this.ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-    this.ctx.font = `${fontSize}px Arial`;
+    this.ctx.font = `${fontSize}px Uncial Antiqua`;
     this.ctx.textAlign = 'center';
     this.ctx.textBaseline = 'top';
 

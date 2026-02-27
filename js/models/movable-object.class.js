@@ -60,9 +60,13 @@ class MovableObject extends DrawableObject {
    */
   isColliding(movableObject) {
     return (
-      this.x + this.width - this.offset.right > movableObject.x + movableObject.offset.left &&
+      this.x + this.width - (this.otherDirection ? this.offset.left : this.offset.right) >
+        movableObject.x + (movableObject.otherDirection ? movableObject.offset.right : movableObject.offset.left) &&
       this.y + this.height - this.offset.bottom > movableObject.y + movableObject.offset.top &&
-      this.x + this.offset.left < movableObject.x + movableObject.width - movableObject.offset.right &&
+      this.x + (this.otherDirection ? this.offset.right : this.offset.left) <
+        movableObject.x +
+          movableObject.width -
+          (movableObject.otherDirection ? movableObject.offset.left : movableObject.offset.right) &&
       this.y + this.offset.top < movableObject.y + movableObject.height - movableObject.offset.bottom
     );
   }

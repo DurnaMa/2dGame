@@ -4,10 +4,6 @@ let soundManager;
 
 /**
  * Sets a setInterval and tracks it globally.
- * @param {Function} fn - The function to execute
- * @param {number} time - The interval time in milliseconds
- * @param {string} [description=''] - Optional description for debugging
- * @returns {number} The interval ID
  */
 function setTrackedInterval(fn, time, description = '') {
   const id = setInterval(fn, time);
@@ -17,10 +13,6 @@ function setTrackedInterval(fn, time, description = '') {
 
 /**
  * Sets a setTimeout and tracks it globally.
- * @param {Function} fn - The function to execute
- * @param {number} time - The timeout time in milliseconds
- * @param {string} [description=''] - Optional description for debugging
- * @returns {number} The timeout ID
  */
 function setTrackedTimeout(fn, time, description = '') {
   const id = setTimeout(fn, time);
@@ -90,7 +82,7 @@ function initUI() {
 }
 
 /**
- * Initializes the world and canvas event listeners.
+ * Initializes the world.
  */
 function initWorld() {
   window.world = new World(canvas, keyboard);
@@ -173,7 +165,7 @@ function checkGameState() {
 
 /**
  * Ends the game and displays the specified end screen.
- * @param {EndScreen} screen - The screen to display (GameOverScreen or WinScreen)
+ * @param {EndScreen} screen - The screen to display
  */
 function endGame(screen) {
   gameEnded = true;
@@ -183,9 +175,6 @@ function endGame(screen) {
 
 /**
  * Converts client coordinates to canvas coordinates.
- * @param {number} clientX - The client X coordinate
- * @param {number} clientY - The client Y coordinate
- * @returns {Object} Object with canvasX and canvasY properties
  */
 function getCanvasCoordinates(clientX, clientY) {
   const rect = canvas.getBoundingClientRect();
@@ -197,27 +186,25 @@ function getCanvasCoordinates(clientX, clientY) {
 
 /**
  * Updates hover state for all screen buttons.
- * @param {number} x - The X coordinate
- * @param {number} y - The Y coordinate
+ * @param {number} x
+ * @param {number} y
  */
 function updateScreenHover(x, y) {
   if (!gameStarted && startScreen && startScreen.isVisible) {
     startScreen.checkHover(x, y);
     canvas.style.cursor = startScreen.isHovered ? 'pointer' : 'default';
   } else if (gameEnded) {
-    if (gameOverScreen && gameOverScreen.isVisible) {
-      gameOverScreen.checkHover(x, y);
-      canvas.style.cursor = gameOverScreen.isHovered ? 'pointer' : 'default';
-    } else if (winScreen && winScreen.isVisible) {
-      winScreen.checkHover(x, y);
-      canvas.style.cursor = winScreen.isHovered ? 'pointer' : 'default';
+    const activeScreen =
+      gameOverScreen && gameOverScreen.isVisible ? gameOverScreen : winScreen && winScreen.isVisible ? winScreen : null;
+    if (activeScreen) {
+      activeScreen.checkHover(x, y);
+      canvas.style.cursor = activeScreen.isAnyButtonHovered() ? 'pointer' : 'default';
     }
   }
 }
 
 /**
  * Handles mouse move events for hover effects.
- * @param {MouseEvent} event - The mouse move event
  */
 function handleMouseMove(event) {
   const { canvasX, canvasY } = getCanvasCoordinates(event.clientX, event.clientY);
@@ -235,8 +222,6 @@ function handleMouseMove(event) {
 
 /**
  * Handles sound button click.
- * @param {number} x - The X coordinate of the click
- * @param {number} y - The Y coordinate of the click
  */
 function handleSoundButtonClick(x, y) {
   if (soundManager && typeof soundManager.isButtonClicked === 'function' && soundManager.isButtonClicked(x, y)) {
@@ -252,27 +237,34 @@ function handleSoundButtonClick(x, y) {
 
 /**
  * Handles screen button clicks.
- * @param {number} x - The X coordinate of the click
- * @param {number} y - The Y coordinate of the click
+ * @param {number} x
+ * @param {number} y
  */
 function handleScreenButtonClick(x, y) {
+  // Start screen
   if (!gameStarted && startScreen && startScreen.isVisible) {
     if (startScreen.isButtonClicked(x, y)) {
       startGame();
     }
-  } else if (gameEnded) {
-    if (
-      (gameOverScreen && gameOverScreen.isVisible && gameOverScreen.isButtonClicked(x, y)) ||
-      (winScreen && winScreen.isVisible && winScreen.isButtonClicked(x, y))
-    ) {
-      restartGame();
+    return;
+  }
+
+  // End screens (Game Over or Win)
+  if (gameEnded) {
+    const activeScreen =
+      gameOverScreen && gameOverScreen.isVisible ? gameOverScreen : winScreen && winScreen.isVisible ? winScreen : null;
+    if (!activeScreen) return;
+
+    if (activeScreen.isMenuButtonClicked(x, y)) {
+      goToMenu(); // 🏠 → Zurück zum Startmenü
+    } else if (activeScreen.isRestartButtonClicked(x, y)) {
+      restartGame(); // 🔄 → Direkt neu starten
     }
   }
 }
 
 /**
  * Handles pointer/click events on the canvas.
- * @param {PointerEvent} event - The click event
  */
 function handleClick(event) {
   const { canvasX, canvasY } = getCanvasCoordinates(event.clientX, event.clientY);
@@ -298,24 +290,41 @@ function startGame() {
 }
 
 /**
- * Restarts the game after game over or win.
+ * Goes back to the start menu (Menu button).
  */
-function restartGame() {
+function goToMenu() {
   gameStarted = false;
   gameEnded = false;
   gameOverScreen.hide();
   winScreen.hide();
   startScreen.show();
 
+  stopAllIntervals();
   initLevel1();
   window.world = new World(canvas, keyboard);
   world = window.world;
 }
 
 /**
+ * Restarts the game directly without showing the menu (Restart button).
+ */
+function restartGame() {
+  gameStarted = true;
+  gameEnded = false;
+  gameOverScreen.hide();
+  winScreen.hide();
+
+  stopAllIntervals();
+  initLevel1();
+  window.world = new World(canvas, keyboard);
+  world = window.world;
+
+  canvas.style.cursor = 'default';
+  soundManager.playSound('fantasy-space-atmosphere');
+}
+
+/**
  * Sets up a single touch control button.
- * @param {string} id - The button element ID
- * @param {string} key - The keyboard property to control
  */
 function setupControl(id, key) {
   const btn = document.getElementById(id);
@@ -331,21 +340,18 @@ function setupControl(id, key) {
       setKey(true);
     }
   });
-
   btn.addEventListener('pointerup', (e) => {
     if (e.pointerType === 'touch') {
       e.preventDefault();
       setKey(false);
     }
   });
-
   btn.addEventListener('pointerleave', (e) => {
     if (e.pointerType === 'touch') {
       e.preventDefault();
       setKey(false);
     }
   });
-
   btn.addEventListener(
     'touchstart',
     (e) => {
@@ -354,7 +360,6 @@ function setupControl(id, key) {
     },
     { passive: false }
   );
-
   btn.addEventListener(
     'touchend',
     (e) => {

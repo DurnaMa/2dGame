@@ -40,8 +40,12 @@ class ThrowableObject extends MovableObject {
       this.speedX = Config.THROWABLE.SPEED_X;
     }
 
-    setInterval(() => {
-      this.x += this.speedX;
-    }, 1000 / Config.THROWABLE.UPDATE_RATE);
+    setInterval(
+      () => {
+        this.x += this.speedX;
+      },
+      1000 / Config.THROWABLE.UPDATE_RATE,
+      'Throwable Movement'
+    );
   }
 }

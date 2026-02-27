@@ -177,6 +177,7 @@ class CollisionManager {
    * @param {Endboss} endBoss - The endboss that collided with the player
    */
   handleEndbossCollision(endBoss) {
+    if (endBoss.isDead()) return;
     const character = this.world.character;
 
     if (!character.hit && !character.isDeath()) {
