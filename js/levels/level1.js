@@ -38,8 +38,10 @@ function spawnEnemies() {
       let enemyBigKnight = new BigKnight();
       let enemyDragon = new Dragon();
       enemyBigKnight.x = CANVAS_WIDTH * (section - 1) + Math.random() * (CANVAS_WIDTH - 400);
+      enemyBigKnight.startX = enemyBigKnight.x;
       enemyDragon.x = CANVAS_WIDTH * (section - 1) + Math.random() * (CANVAS_WIDTH - 350);
-      enemies.push(enemyBigKnight, enemyDragon);
+      enemyDragon.startX = enemyDragon.x;
+      enemies.push(enemyDragon, enemyBigKnight);
     }
   }
 
