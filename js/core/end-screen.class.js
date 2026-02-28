@@ -7,73 +7,81 @@ class EndScreen {
     this.ctx = canvas.getContext('2d');
     this.isVisible = false;
     this.isWinScreen = isWinScreen;
-
-    this.img = new Image();
-    this.img.src = imagePath;
     this.imageLoaded = false;
+    this.initDimensions();
+    this.initButtons();
+    this.initAnimation();
+    this.loadScreenImage(imagePath);
+  }
 
+  /** Initializes default image dimensions and position. */
+  initDimensions() {
     this.width = 400;
     this.height = 300;
-    this.x = (canvas.width - this.width) / 2;
-    this.y = (canvas.height - this.height) / 2;
+    this.x = (this.canvas.width - this.width) / 2;
+    this.y = (this.canvas.height - this.height) / 2;
+  }
 
+  /** Initializes button dimensions, gap, and hover states. */
+  initButtons() {
     this.buttonWidth = 180;
     this.buttonHeight = 60;
     this.buttonGap = 20;
-
-    this.menuButtonX = canvas.width / 2 - this.buttonWidth - this.buttonGap / 2;
-    this.restartButtonX = canvas.width / 2 + this.buttonGap / 2;
-    this.buttonY = this.y + this.height + 20;
-
     this.isMenuHovered = false;
     this.isRestartHovered = false;
+    this.updateButtonPositions();
+  }
 
-    // Animation variables
+  /** Recalculates button X/Y positions based on current image layout. */
+  updateButtonPositions() {
+    this.menuButtonX = this.canvas.width / 2 - this.buttonWidth - this.buttonGap / 2;
+    this.restartButtonX = this.canvas.width / 2 + this.buttonGap / 2;
+    this.buttonY = this.y + this.height + 20;
+  }
+
+  /** Initializes animation time and particle array. */
+  initAnimation() {
     this.animationTime = 0;
     this.particleArray = [];
+  }
 
+  /** Loads the screen image and updates layout after load. */
+  loadScreenImage(imagePath) {
+    this.img = new Image();
+    this.img.src = imagePath;
     this.img.onload = () => {
       this.imageLoaded = true;
-
       const scale = 0.8;
       this.width = this.img.width * scale;
       this.height = this.img.height * scale;
-      this.x = (canvas.width - this.width) / 2;
-      this.y = (canvas.height - this.height) / 2 - 40;
-
-      this.menuButtonX = canvas.width / 2 - this.buttonWidth - this.buttonGap / 2;
-      this.restartButtonX = canvas.width / 2 + this.buttonGap / 2;
-      this.buttonY = this.y + this.height + 20;
+      this.x = (this.canvas.width - this.width) / 2;
+      this.y = (this.canvas.height - this.height) / 2 - 40;
+      this.updateButtonPositions();
     };
   }
 
-  /**
-   * Draws the end screen with overlay, status message and buttons.
-   */
+  /** Draws the end screen with overlay, status message and buttons. */
   draw() {
     if (!this.isVisible) return;
-
     this.animationTime += 0.02;
-
     this.drawBackground();
     this.updateAndDrawParticles();
-
-    if (this.imageLoaded) {
-      this.ctx.save();
-      this.ctx.shadowColor = this.isWinScreen ? 'rgba(255, 215, 0, 0.5)' : 'rgba(255, 0, 0, 0.5)';
-      this.ctx.shadowBlur = 20;
-      this.ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-      this.ctx.restore();
-    }
-
+    if (this.imageLoaded) this.drawScreenImage();
     this.drawStatusMessage();
     this.drawMenuButton();
     this.drawRestartButton();
   }
 
-  /**
-   * Draws the background with color gradient based on win/lose state.
-   */
+  /** Draws the screen image with a colored glow shadow. */
+  drawScreenImage() {
+    this.ctx.save();
+    this.ctx.shadowColor = this.isWinScreen ? 'rgba(255, 215, 0, 0.5)' : 'rgba(255, 0, 0, 0.5)';
+    this.ctx.shadowBlur = 20;
+    this.ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    this.ctx.restore();
+  }
+
+  /** Draws the background gradient based on win/lose state. */
   drawBackground() {
     this.ctx.save();
     const gradient = this.ctx.createLinearGradient(0, 0, this.canvas.width, this.canvas.height);
@@ -85,32 +93,38 @@ class EndScreen {
     this.ctx.restore();
   }
 
-  /**
-   * Creates and animates particles (stars for win, fire for lose).
-   */
+  /** Spawns a new particle and processes all existing particles. */
   updateAndDrawParticles() {
-    if (Math.random() < 0.3) {
-      this.particleArray.push(
-        this.isWinScreen
-          ? {
-              x: Math.random() * this.canvas.width,
-              y: -10,
-              size: Math.random() * 3 + 2,
-              speedY: Math.random() * 2 + 1,
-              opacity: 1,
-              color: '#FFD700',
-            }
-          : {
-              x: Math.random() * this.canvas.width,
-              y: -10,
-              size: Math.random() * 2 + 1,
-              speedY: Math.random() * 1.5 + 0.5,
-              opacity: 1,
-              color: '#FF4500',
-            }
-      );
-    }
+    if (Math.random() < 0.3) this.particleArray.push(this.createParticle());
+    this.processParticles();
+  }
 
+  /**
+   * Creates a new particle based on win/lose screen type.
+   * @returns {object} A particle object with position, size, speed, and color.
+   */
+  createParticle() {
+    return this.isWinScreen
+      ? {
+          x: Math.random() * this.canvas.width,
+          y: -10,
+          size: Math.random() * 3 + 2,
+          speedY: Math.random() * 2 + 1,
+          opacity: 1,
+          color: '#FFD700',
+        }
+      : {
+          x: Math.random() * this.canvas.width,
+          y: -10,
+          size: Math.random() * 2 + 1,
+          speedY: Math.random() * 1.5 + 0.5,
+          opacity: 1,
+          color: '#FF4500',
+        };
+  }
+
+  /** Updates position/opacity of each particle and removes faded ones. */
+  processParticles() {
     for (let i = this.particleArray.length - 1; i >= 0; i--) {
       const p = this.particleArray[i];
       p.y += p.speedY;
@@ -119,29 +133,38 @@ class EndScreen {
         this.particleArray.splice(i, 1);
         continue;
       }
-
-      this.ctx.save();
-      this.ctx.globalAlpha = p.opacity;
-      this.ctx.fillStyle = p.color;
-      if (this.isWinScreen) {
-        this.drawStar(p.x, p.y, p.size);
-      } else {
-        this.ctx.beginPath();
-        this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        this.ctx.fill();
-      }
-      this.ctx.restore();
+      this.drawParticle(p);
     }
   }
 
   /**
-   * Draws a star shape.
+   * Draws a single particle as a star (win) or circle (lose).
+   * @param {object} p - The particle to draw.
+   */
+  drawParticle(p) {
+    this.ctx.save();
+    this.ctx.globalAlpha = p.opacity;
+    this.ctx.fillStyle = p.color;
+    if (this.isWinScreen) {
+      this.drawStar(p.x, p.y, p.size);
+    } else {
+      this.ctx.beginPath();
+      this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      this.ctx.fill();
+    }
+    this.ctx.restore();
+  }
+
+  /**
+   * Draws a 5-pointed star shape.
+   * @param {number} cx - Center X position.
+   * @param {number} cy - Center Y position.
+   * @param {number} size - Outer radius of the star.
    */
   drawStar(cx, cy, size) {
     const spikes = 5;
     const step = (Math.PI * 2) / (spikes * 2);
     let rot = -Math.PI / 2;
-
     this.ctx.beginPath();
     for (let i = 0; i < spikes; i++) {
       this.ctx.lineTo(cx + Math.cos(rot) * size, cy + Math.sin(rot) * size);
@@ -153,24 +176,13 @@ class EndScreen {
     this.ctx.fill();
   }
 
-  /**
-   * Draws the status message (YOU WIN / GAME OVER).
-   */
+  /** Draws the animated YOU WIN / GAME OVER text. */
   drawStatusMessage() {
     this.ctx.save();
     const isMobile = window.innerHeight < 480 || window.innerWidth < 750;
     const fontSize = isMobile ? 48 : 64;
     const scaleAnimation = 0.9 + Math.sin(this.animationTime * 2) * 0.1;
-
-    Object.assign(this.ctx, {
-      shadowColor: this.isWinScreen ? 'rgba(255, 215, 0, 0.8)' : 'rgba(255, 0, 0, 0.8)',
-      shadowBlur: 30,
-      fillStyle: this.isWinScreen ? '#FFD700' : '#FF4500',
-      font: `bold ${fontSize}px Uncial Antiqua`,
-      textAlign: 'center',
-      textBaseline: 'middle',
-    });
-
+    this.applyStatusMessageStyle(fontSize);
     this.ctx.scale(scaleAnimation, scaleAnimation);
     this.ctx.fillText(
       this.isWinScreen ? 'YOU WIN!' : 'GAME OVER!',
@@ -181,22 +193,35 @@ class EndScreen {
   }
 
   /**
-   * Internal helper – draws a single button.
+   * Applies text color, font, and shadow for the status message.
+   * @param {number} fontSize - Font size in pixels.
+   */
+  applyStatusMessageStyle(fontSize) {
+    Object.assign(this.ctx, {
+      shadowColor: this.isWinScreen ? 'rgba(255, 215, 0, 0.8)' : 'rgba(255, 0, 0, 0.8)',
+      shadowBlur: 30,
+      fillStyle: this.isWinScreen ? '#FFD700' : '#FF4500',
+      font: `bold ${fontSize}px Uncial Antiqua`,
+      textAlign: 'center',
+      textBaseline: 'middle',
+    });
+  }
+
+  /**
+   * Internal helper – draws a single styled button with label.
+   * @param {number} bx - Button X position.
+   * @param {boolean} hovered - Whether the button is hovered.
+   * @param {string} label - Button label text.
+   * @param {string} fillColor - Default fill color.
+   * @param {string} hoverColor - Hover fill color.
+   * @param {string} strokeColor - Border color.
    */
   _drawButton(bx, hovered, label, fillColor, hoverColor, strokeColor) {
     const scale = hovered ? 1.1 : 1;
     const offsetX = (this.buttonWidth * (scale - 1)) / 2;
     const offsetY = (this.buttonHeight * (scale - 1)) / 2;
-
     this.ctx.save();
-    Object.assign(this.ctx, {
-      fillStyle: hovered ? hoverColor : fillColor,
-      strokeStyle: strokeColor,
-      lineWidth: 3,
-      shadowColor: 'rgba(0,0,0,0.5)',
-      shadowBlur: 10,
-    });
-
+    this.applyButtonBoxStyle(hovered, fillColor, hoverColor, strokeColor);
     this.roundRect(
       this.ctx,
       bx - offsetX,
@@ -207,7 +232,33 @@ class EndScreen {
       true,
       true
     );
+    this.drawButtonLabel(bx, label);
+    this.ctx.restore();
+  }
 
+  /**
+   * Applies fill, stroke, and shadow style for the button rectangle.
+   * @param {boolean} hovered - Whether the button is hovered.
+   * @param {string} fillColor - Default fill color.
+   * @param {string} hoverColor - Hover fill color.
+   * @param {string} strokeColor - Border stroke color.
+   */
+  applyButtonBoxStyle(hovered, fillColor, hoverColor, strokeColor) {
+    Object.assign(this.ctx, {
+      fillStyle: hovered ? hoverColor : fillColor,
+      strokeStyle: strokeColor,
+      lineWidth: 3,
+      shadowColor: 'rgba(0,0,0,0.5)',
+      shadowBlur: 10,
+    });
+  }
+
+  /**
+   * Draws the centered label text inside a button.
+   * @param {number} bx - Button X position.
+   * @param {string} label - Label text to display.
+   */
+  drawButtonLabel(bx, label) {
     Object.assign(this.ctx, {
       fillStyle: '#fff',
       font: 'bold 18px Uncial Antiqua',
@@ -216,12 +267,9 @@ class EndScreen {
       shadowBlur: 0,
     });
     this.ctx.fillText(label, bx + this.buttonWidth / 2, this.buttonY + this.buttonHeight / 2);
-    this.ctx.restore();
   }
 
-  /**
-   * Draws the Menu button (left).
-   */
+  /** Draws the Menu button on the left side. */
   drawMenuButton() {
     const c = this.isWinScreen
       ? { fill: '#228B22', hover: '#FFD700', stroke: '#FFD700' }
@@ -229,9 +277,7 @@ class EndScreen {
     this._drawButton(this.menuButtonX, this.isMenuHovered, 'MENÜ', c.fill, c.hover, c.stroke);
   }
 
-  /**
-   * Draws the Restart button (right).
-   */
+  /** Draws the Restart button on the right side. */
   drawRestartButton() {
     const c = this.isWinScreen
       ? { fill: '#1a6b1a', hover: '#FFD700', stroke: '#FFD700' }
@@ -240,7 +286,15 @@ class EndScreen {
   }
 
   /**
-   * Draws a rounded rectangle.
+   * Draws a rounded rectangle path and optionally fills/strokes it.
+   * @param {CanvasRenderingContext2D} ctx
+   * @param {number} x
+   * @param {number} y
+   * @param {number} width
+   * @param {number} height
+   * @param {number} radius
+   * @param {boolean} fill
+   * @param {boolean} stroke
    */
   roundRect(ctx, x, y, width, height, radius = 5, fill, stroke) {
     ctx.beginPath();
@@ -306,13 +360,13 @@ class EndScreen {
     return this.isMenuHovered || this.isRestartHovered;
   }
 
-  /** Hides the screen. */
+  /** Hides the screen and clears all particles. */
   hide() {
     this.isVisible = false;
     this.particleArray = [];
   }
 
-  /** Shows the screen. */
+  /** Shows the screen and resets animation state. */
   show() {
     this.isVisible = true;
     this.animationTime = 0;

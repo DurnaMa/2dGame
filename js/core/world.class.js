@@ -27,17 +27,14 @@ class World {
     this.statusBar.setPercentage(this.character.energy);
   }
 
-  /**
-   * Sets the world reference on all game objects.
-   */
+  /** Sets the world reference on all game objects. */
   setWorld() {
     this.character.world = this;
     const setWorldOnArray = (arr) => {
-      if (Array.isArray(arr)) {
+      if (Array.isArray(arr))
         arr.forEach((obj) => {
           if (obj) obj.world = this;
         });
-      }
     };
     this.drawObjectLvel(setWorldOnArray);
     setWorldOnArray(this.throwableObject);
@@ -46,8 +43,8 @@ class World {
   }
 
   /**
-   * Sets the world reference on all level objects.
-   * @param {Function} setWorldOnArray - Function to set world on array elements
+   * Sets the world reference on all level object arrays.
+   * @param {Function} setWorldOnArray - Function to apply world reference.
    */
   drawObjectLvel(setWorldOnArray) {
     if (this.level) {
@@ -60,9 +57,7 @@ class World {
     }
   }
 
-  /**
-   * Starts the main game loop.
-   */
+  /** Starts the main game loop for collisions and shooting. */
   run() {
     this.gameInterval = setTrackedInterval(
       () => {
@@ -74,19 +69,13 @@ class World {
     );
   }
 
-  /**
-   * Checks if the player is firing a projectile.
-   */
+  /** Checks if the player can fire a projectile and fires if so. */
   checkThrowableObject() {
     const canShoot = this.keyboard.X && !this.shootCooldown && this.magicBar.shots > 0;
-    if (canShoot) {
-      this.fireShot();
-    }
+    if (canShoot) this.fireShot();
   }
 
-  /**
-   * Fires a projectile and starts the shoot cooldown.
-   */
+  /** Fires a projectile and starts the shoot cooldown timer. */
   fireShot() {
     this.character.shooting();
     const fire = new ThrowableObject(this.character.x + Config.WORLD.FIRE_OFFSET_X, this.character.y, this);
@@ -98,37 +87,39 @@ class World {
     }, Config.WORLD.SHOOT_COOLDOWN);
   }
 
-  /**
-   * Draws all game objects on the canvas.
-   */
+  /** Draws all game objects on the canvas each frame. */
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.addObjectsToMap(this.backgroundObjects);
+    this.drawUI();
+    this.addToMap(this.character);
+    this.addObjectsToMap(this.throwableObject);
+    this.drawLevelObjects();
+  }
 
+  /** Draws the fixed HUD elements (status bar, magic bar) without camera scroll. */
+  drawUI() {
     this.ctx.translate(-this.camera_x, 0);
     this.addToMap(this.statusBar);
     this.addToMap(this.magicBar);
     this.ctx.translate(this.camera_x, 0);
+  }
 
-    this.addToMap(this.character);
-    this.addObjectsToMap(this.throwableObject);
-
-    if (this.level) {
-      this.addObjectsToMap(this.level.enemies);
-      this.addObjectsToMap(this.level.endBoss);
-      this.addObjectsToMap(this.level.coins);
-      this.addObjectsToMap(this.level.bottles);
-    }
+  /** Draws all level objects: enemies, boss, coins, and bottles. */
+  drawLevelObjects() {
+    if (!this.level) return;
+    this.addObjectsToMap(this.level.enemies);
+    this.addObjectsToMap(this.level.endBoss);
+    this.addObjectsToMap(this.level.coins);
+    this.addObjectsToMap(this.level.bottles);
   }
 
   /**
-   * Adds an object to the canvas map.
-   * @param {MovableObject} movableObject - The object to add to the map
+   * Adds a single object to the canvas map with correct translation.
+   * @param {MovableObject} movableObject - The object to render.
    */
   addToMap(movableObject) {
-    if (movableObject.visible === false || (movableObject.isVisible && movableObject.isVisible() === false)) {
-      return;
-    }
+    if (movableObject.visible === false || (movableObject.isVisible && movableObject.isVisible() === false)) return;
     this.ctx.save();
     if (movableObject instanceof BackgroundObject) {
       this.ctx.translate(this.camera_x * movableObject.parallax, 0);
@@ -140,8 +131,8 @@ class World {
   }
 
   /**
-   * Draws the object mirrored if necessary.
-   * @param {MovableObject} movableObject - The object to draw
+   * Draws the object, mirroring it if facing left.
+   * @param {MovableObject} movableObject - The object to draw.
    */
   updateMovableObjectOtherDirection(movableObject) {
     if (movableObject.otherDirection) {
@@ -160,8 +151,8 @@ class World {
   }
 
   /**
-   * Adds an array of objects to the map.
-   * @param {MovableObject[]} objects - Array of objects to add to the map
+   * Adds an array of objects to the canvas map.
+   * @param {MovableObject[]} objects - Array of objects to render.
    */
   addObjectsToMap(objects) {
     objects.forEach((gameObject) => {
@@ -169,25 +160,23 @@ class World {
     });
   }
 
-  /**
-   * Stops the game loop and all intervals.
-   */
+  /** Stops the draw loop and all tracked intervals. */
   stopGame() {
     this.drawLoopRunning = false;
     stopAllIntervals();
   }
 
   /**
-   * Checks if the game is over.
-   * @returns {boolean} True if the game is over
+   * Checks if the game is over (character energy depleted).
+   * @returns {boolean}
    */
   isGameOver() {
     return this.character.energy <= 0;
   }
 
   /**
-   * Checks if the player has won.
-   * @returns {boolean} True if the player has won
+   * Checks if the player has won (all bosses dead).
+   * @returns {boolean}
    */
   isWin() {
     return this.level && this.level.endBoss && this.level.endBoss.every((boss) => boss.isDead && boss.isDead());

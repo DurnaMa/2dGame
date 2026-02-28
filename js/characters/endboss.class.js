@@ -9,7 +9,6 @@ class Endboss extends Enemy {
 
   otherDirection = true;
   isActive = false;
-
   hadFirstContact = false;
   isIntroAngry = false;
 
@@ -56,19 +55,34 @@ class Endboss extends Enemy {
   constructor() {
     super();
     this.loadImage(this.IMAGES_WALKING[0]);
+    this.loadAllImages();
+    this.x = this.start_x;
+    this.initOffsets();
+    this.initCombatState();
+    this.animate();
+  }
+
+  /** Loads all animation image sets into the cache. */
+  loadAllImages() {
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_HURT);
     this.loadImages(this.IMAGES_DEATH);
     this.loadImages(this.IMAGES_ANGER);
     this.loadImages(this.IMAGES_ATTACK);
+  }
+
+  /** Sets the collision offset from config. */
+  initOffsets() {
     this.offset = {
       top: Config.ENEMY.ENDBOSS.OFFSET.TOP,
       left: Config.ENEMY.ENDBOSS.OFFSET.LEFT,
       right: Config.ENEMY.ENDBOSS.OFFSET.RIGHT,
       bottom: Config.ENEMY.ENDBOSS.OFFSET.BOTTOM,
     };
-    this.x = this.start_x;
-    this.animate();
+  }
+
+  /** Initializes all combat-related state variables. */
+  initCombatState() {
     this.energy = 100;
     this.lastHit = 0;
     this.hitsTaken = 0;
@@ -78,9 +92,7 @@ class Endboss extends Enemy {
     this.isAngry = false;
   }
 
-  /**
-   * Starts animation and movement intervals.
-   */
+  /** Starts animation and movement intervals. */
   animate() {
     this.animationInterval = setTrackedInterval(
       () => this.updateAnimation(),
@@ -90,32 +102,33 @@ class Endboss extends Enemy {
     setTrackedInterval(() => this.updateMovement(), 1000 / Config.FRAME_RATE, 'Endboss Movement');
   }
 
-  /**
-   * Updates the animation based on the current state.
-   */
+  /** Updates the animation based on the current state. */
   updateAnimation() {
     if (this.energy <= 0) {
       this.playAnimation(this.IMAGES_DEATH);
-    } else if (this.isIntroAngry) {
+      return;
+    }
+    if (this.isIntroAngry) {
       this.playAnimation(this.IMAGES_ANGER);
-    } else if (this.isHurt()) {
+      return;
+    }
+    if (this.isHurt()) {
       this.playAnimation(this.IMAGES_HURT);
-    } else if (this.isAttacking) {
-      this.playAnimation(this.IMAGES_ATTACK);
-      if (this.currentImage >= this.IMAGES_ATTACK.length) {
-        this.endAttack();
-      }
-    } else if (this.isInAttackRange() && !this.attackCooldown && this.isActive) {
+      return;
+    }
+    if (this.isAttacking) {
+      this.playAttackAnimation();
+      return;
+    }
+    if (this.isInAttackRange() && !this.attackCooldown && this.isActive) {
       this.startAttack();
       this.playAnimation(this.IMAGES_ATTACK);
-    } else {
-      this.playAnimation(this.IMAGES_WALKING);
+      return;
     }
+    this.playAnimation(this.IMAGES_WALKING);
   }
 
-  /**
-   * Updates the endboss movement per frame.
-   */
+  /** Updates the endboss movement per frame. */
   updateMovement() {
     if (!this.world) return;
     this.checkActivation();
@@ -124,9 +137,7 @@ class Endboss extends Enemy {
     this.updatePosition();
   }
 
-  /**
-   * Updates the speed based on the current health phase.
-   */
+  /** Updates the movement speed based on current health phase. */
   updateSpeed() {
     const healthPercentage = (this.energy / 100) * 100;
     const THRESHOLD_PHASE_2 = Config.ENEMY.ENDBOSS.HEALTH_THRESHOLD_PHASE_2;
@@ -141,9 +152,7 @@ class Endboss extends Enemy {
     }
   }
 
-  /**
-   * Triggers a teleport if not on cooldown.
-   */
+  /** Triggers a positional teleport if the teleport cooldown has expired. */
   triggerTeleport() {
     if (this.teleportCooldown) return;
     this.teleportCooldown = true;
@@ -154,9 +163,7 @@ class Endboss extends Enemy {
     }, Config.ENEMY.ENDBOSS.TELEPORT_INTERVAL);
   }
 
-  /**
-   * Updates the position based on attack range and character proximity.
-   */
+  /** Selects movement mode: stop in range, chase, or patrol. */
   updatePosition() {
     if (this.isInAttackRange() && !this.attackCooldown) {
       return;
@@ -168,31 +175,25 @@ class Endboss extends Enemy {
   }
 
   /**
-   * Checks if the endboss should not move.
-   * @returns {boolean} True if the endboss should not move
+   * Checks if the endboss should skip movement this frame.
+   * @returns {boolean}
    */
   shouldNotMove() {
     return this.energy <= 0 || this.isAngry || this.isAttacking || this.isIntroAngry;
   }
 
-  /**
-   * Triggers the intro anger animation on first contact.
-   */
+  /** Triggers the anger intro animation on first contact with the character. */
   triggerIntroAnger() {
     this.hadFirstContact = true;
     this.isIntroAngry = true;
     this.currentImage = 0;
-
     const introDuration = this.IMAGES_ANGER.length * this.animation_speed;
-
     setTimeout(() => {
       this.isIntroAngry = false;
     }, introDuration);
   }
 
-  /**
-   * Moves the endboss back and forth in the patrol range.
-   */
+  /** Moves the endboss back and forth within the designated patrol section. */
   patrol() {
     if (!this.isActive) return;
     const patrolStart = Config.SECTION_START_ENDBOSS * (Config.LEVEL_END / Config.SECTION_COUNT);
@@ -200,58 +201,59 @@ class Endboss extends Enemy {
     if (this.movingRight) {
       this.moveRight();
       this.otherDirection = false;
-      if (this.x >= patrolEnd) {
-        this.movingRight = false;
-      }
+      if (this.x >= patrolEnd) this.movingRight = false;
     } else {
       this.moveLeft();
       this.otherDirection = true;
-      if (this.x <= patrolStart) {
-        this.movingRight = true;
-      }
+      if (this.x <= patrolStart) this.movingRight = true;
     }
   }
 
-  /**
-   * Checks if the character is close enough to activate the endboss.
-   */
+  /** Activates the endboss when the character comes within range. */
   checkActivation() {
     if (!this.world || !this.world.character || this.energy <= 0) return;
-
     const distance = Math.abs(this.x - this.world.character.x);
-
     if (distance < this.activation_distance) {
-      if (!this.hadFirstContact) {
-        this.triggerIntroAnger();
-      }
+      if (!this.hadFirstContact) this.triggerIntroAnger();
       this.isActive = true;
     }
   }
 
   /**
    * Checks if the endboss is dead.
-   * @returns {boolean} True if the endboss is dead
+   * @returns {boolean}
    */
   isDead() {
     return this.energy <= 0;
   }
 
   /**
-   * Applies damage to the endboss.
-   * @param {number} [damage=Config.ENEMY.ENDBOSS.DAMAGE_PER_HIT] - The amount of damage to apply
+   * Applies damage, triggers anger state, and updates energy.
+   * @param {number} [damage=Config.ENEMY.ENDBOSS.DAMAGE_PER_HIT] - Damage amount.
    */
   hit(damage = Config.ENEMY.ENDBOSS.DAMAGE_PER_HIT) {
     if (this.isDead()) return;
     this.lastHit = new Date().getTime();
     this.hitsTaken++;
+    this.applyHitState();
+    this.updateEnergyAfterHit(damage);
+  }
 
+  /** Sets the angry state and resets attack on hit. */
+  applyHitState() {
     this.isAngry = true;
     this.isAttacking = false;
     this.currentImage = 0;
     setTimeout(() => {
       this.isAngry = false;
     }, Config.ENEMY.ENDBOSS.ANGER_DURATION);
+  }
 
+  /**
+   * Reduces energy or sets it to zero when the hit threshold is reached.
+   * @param {number} damage - Damage amount to subtract.
+   */
+  updateEnergyAfterHit(damage) {
     if (this.hitsTaken >= this.hitsRequired) {
       this.energy = 0;
     } else {
@@ -260,6 +262,7 @@ class Endboss extends Enemy {
     }
   }
 
+  /** Begins an attack and spawns a projectile if in phase 2 or later. */
   startAttack() {
     this.isAttacking = true;
     this.currentImage = 0;

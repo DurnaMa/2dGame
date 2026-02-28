@@ -4,6 +4,10 @@ let soundManager;
 
 /**
  * Sets a setInterval and tracks it globally.
+ * @param {Function} fn - Callback to execute.
+ * @param {number} time - Interval delay in ms.
+ * @param {string} description - Label for debugging.
+ * @returns {number} The interval ID.
  */
 function setTrackedInterval(fn, time, description = '') {
   const id = setInterval(fn, time);
@@ -13,6 +17,10 @@ function setTrackedInterval(fn, time, description = '') {
 
 /**
  * Sets a setTimeout and tracks it globally.
+ * @param {Function} fn - Callback to execute.
+ * @param {number} time - Timeout delay in ms.
+ * @param {string} description - Label for debugging.
+ * @returns {number} The timeout ID.
  */
 function setTrackedTimeout(fn, time, description = '') {
   const id = setTimeout(fn, time);
@@ -20,9 +28,7 @@ function setTrackedTimeout(fn, time, description = '') {
   return id;
 }
 
-/**
- * Stops all tracked intervals and timeouts.
- */
+/** Clears and resets all tracked intervals and timeouts. */
 function stopAllIntervals() {
   globalIntervals.forEach((interval) => clearInterval(interval.id));
   globalTimeouts.forEach((timeout) => clearTimeout(timeout.id));
@@ -39,22 +45,15 @@ let winScreen;
 let gameStarted = false;
 let gameEnded = false;
 
-/**
- * Initializes the game canvas.
- */
+/** Initializes the game canvas element. */
 function initCanvas() {
   canvas = document.getElementById('canvas');
 }
 
-/**
- * Initializes audio and sound manager.
- */
+/** Initializes audio, loads the mute preference, and sets up the sound manager. */
 function initAudio() {
   const savedMuted = localStorage.getItem('fp.soundMuted') === 'true';
-  if (typeof SoundManagerClass !== 'undefined') {
-    SoundManagerClass.setMuted(savedMuted);
-  }
-
+  if (typeof SoundManagerClass !== 'undefined') SoundManagerClass.setMuted(savedMuted);
   soundManager = new SoundManagerClass();
   soundManager.addSound(
     'fantasy-space-atmosphere',
@@ -65,42 +64,31 @@ function initAudio() {
   window.soundManager = soundManager;
 }
 
-/**
- * Initializes the UI screens.
- */
+/** Initializes the UI screens and the sound button. */
 function initUI() {
   startScreen = new StartScreen(canvas);
   gameOverScreen = new GameOverScreen(canvas);
   winScreen = new WinScreen(canvas);
-
   if (soundManager && typeof soundManager.initButton === 'function') {
     soundManager.initButton(canvas);
-    if (typeof soundManager.setButtonMuted === 'function') {
-      soundManager.setButtonMuted(SoundManagerClass.isMuted());
-    }
+    if (typeof soundManager.setButtonMuted === 'function') soundManager.setButtonMuted(SoundManagerClass.isMuted());
   }
 }
 
-/**
- * Initializes the world.
- */
+/** Initializes the world instance and attaches it to the window. */
 function initWorld() {
   window.world = new World(canvas, keyboard);
   world = window.world;
 }
 
-/**
- * Initializes all event listeners.
- */
+/** Binds all canvas event listeners. */
 function initEventListeners() {
   canvas.addEventListener('mousemove', handleMouseMove);
   canvas.addEventListener('pointerdown', handleClick);
   initButtonPressEvents();
 }
 
-/**
- * Main initialization function for the game.
- */
+/** Main initialization function for the game. */
 function init() {
   initLevel1();
   initCanvas();
@@ -111,61 +99,39 @@ function init() {
   animateUI();
 }
 
-/**
- * Central animation loop for both game and UI.
- */
+/** Central animation loop for both game rendering and UI overlays. */
 function animateUI() {
-  if (world) {
-    world.draw();
-  }
-
-  if (gameStarted && !gameEnded) {
-    checkGameState();
-  }
-
+  if (world) world.draw();
+  if (gameStarted && !gameEnded) checkGameState();
   drawScreens();
   drawSoundButton();
   requestAnimationFrame(animateUI);
 }
 
-/**
- * Draws the appropriate screen (start, game over, or win).
- */
+/** Draws the appropriate overlay screen based on game state. */
 function drawScreens() {
   if (!gameStarted && startScreen && startScreen.isVisible) {
     startScreen.draw();
   } else if (gameEnded) {
-    if (gameOverScreen && gameOverScreen.isVisible) {
-      gameOverScreen.draw();
-    } else if (winScreen && winScreen.isVisible) {
-      winScreen.draw();
-    }
+    if (gameOverScreen && gameOverScreen.isVisible) gameOverScreen.draw();
+    else if (winScreen && winScreen.isVisible) winScreen.draw();
   }
 }
 
-/**
- * Draws the sound button on the canvas.
- */
+/** Renders the mute/unmute sound button onto the canvas. */
 function drawSoundButton() {
-  if (soundManager && typeof soundManager.drawButton === 'function') {
-    soundManager.drawButton();
-  }
+  if (soundManager && typeof soundManager.drawButton === 'function') soundManager.drawButton();
 }
 
-/**
- * Checks the current game state and determines win/lose conditions.
- */
+/** Checks win/lose conditions and triggers the correct end screen. */
 function checkGameState() {
-  if (world.isGameOver()) {
-    endGame(gameOverScreen);
-  } else if (world.isWin()) {
-    endGame(winScreen);
-  }
+  if (world.isGameOver()) endGame(gameOverScreen);
+  else if (world.isWin()) endGame(winScreen);
 }
 
 /**
  * Ends the game and displays the specified end screen.
- * @param {EndScreen} screen - The screen to display
+ * @param {EndScreen} screen - The screen to display.
  */
 function endGame(screen) {
   gameEnded = true;
@@ -174,7 +140,10 @@ function endGame(screen) {
 }
 
 /**
- * Converts client coordinates to canvas coordinates.
+ * Converts client pointer coordinates to canvas-relative coordinates.
+ * @param {number} clientX
+ * @param {number} clientY
+ * @returns {{ canvasX: number, canvasY: number }}
  */
 function getCanvasCoordinates(clientX, clientY) {
   const rect = canvas.getBoundingClientRect();
@@ -185,17 +154,16 @@ function getCanvasCoordinates(clientX, clientY) {
 }
 
 /**
- * Updates hover state for all screen buttons.
- * @param {number} x
- * @param {number} y
+ * Updates hover state for all active screen buttons.
+ * @param {number} x - Canvas X coordinate.
+ * @param {number} y - Canvas Y coordinate.
  */
 function updateScreenHover(x, y) {
   if (!gameStarted && startScreen && startScreen.isVisible) {
     startScreen.checkHover(x, y);
     canvas.style.cursor = startScreen.isHovered ? 'pointer' : 'default';
   } else if (gameEnded) {
-    const activeScreen =
-      gameOverScreen && gameOverScreen.isVisible ? gameOverScreen : winScreen && winScreen.isVisible ? winScreen : null;
+    const activeScreen = gameOverScreen?.isVisible ? gameOverScreen : winScreen?.isVisible ? winScreen : null;
     if (activeScreen) {
       activeScreen.checkHover(x, y);
       canvas.style.cursor = activeScreen.isAnyButtonHovered() ? 'pointer' : 'default';
@@ -204,31 +172,27 @@ function updateScreenHover(x, y) {
 }
 
 /**
- * Handles mouse move events for hover effects.
+ * Handles mouse move events for hover effects on buttons.
+ * @param {MouseEvent} event
  */
 function handleMouseMove(event) {
   const { canvasX, canvasY } = getCanvasCoordinates(event.clientX, event.clientY);
-
-  if (soundManager && typeof soundManager.checkButtonHover === 'function') {
+  if (soundManager && typeof soundManager.checkButtonHover === 'function')
     soundManager.checkButtonHover(canvasX, canvasY);
-  }
-
   updateScreenHover(canvasX, canvasY);
-
-  if (soundManager && typeof soundManager.isButtonHovered === 'function' && soundManager.isButtonHovered()) {
-    canvas.style.cursor = 'pointer';
-  }
+  if (soundManager?.isButtonHovered?.()) canvas.style.cursor = 'pointer';
 }
 
 /**
- * Handles sound button click.
+ * Handles a click on the sound toggle button.
+ * @param {number} x - Canvas X coordinate.
+ * @param {number} y - Canvas Y coordinate.
+ * @returns {boolean} True if the sound button was clicked.
  */
 function handleSoundButtonClick(x, y) {
-  if (soundManager && typeof soundManager.isButtonClicked === 'function' && soundManager.isButtonClicked(x, y)) {
+  if (soundManager?.isButtonClicked?.(x, y)) {
     SoundManagerClass.toggleMuted();
-    if (typeof soundManager.setButtonMuted === 'function') {
-      soundManager.setButtonMuted(SoundManagerClass.isMuted());
-    }
+    if (typeof soundManager.setButtonMuted === 'function') soundManager.setButtonMuted(SoundManagerClass.isMuted());
     localStorage.setItem('fp.soundMuted', SoundManagerClass.isMuted());
     return true;
   }
@@ -236,49 +200,41 @@ function handleSoundButtonClick(x, y) {
 }
 
 /**
- * Handles screen button clicks.
- * @param {number} x
- * @param {number} y
+ * Handles clicks on start screen and end screen buttons.
+ * @param {number} x - Canvas X coordinate.
+ * @param {number} y - Canvas Y coordinate.
  */
 function handleScreenButtonClick(x, y) {
-  // Start screen
   if (!gameStarted && startScreen && startScreen.isVisible) {
-    if (startScreen.isButtonClicked(x, y)) {
-      startGame();
-    }
+    if (startScreen.isButtonClicked(x, y)) startGame();
     return;
   }
+  if (gameEnded) handleEndScreenClick(x, y);
+}
 
-  // End screens (Game Over or Win)
-  if (gameEnded) {
-    const activeScreen =
-      gameOverScreen && gameOverScreen.isVisible ? gameOverScreen : winScreen && winScreen.isVisible ? winScreen : null;
-    if (!activeScreen) return;
-
-    if (activeScreen.isMenuButtonClicked(x, y)) {
-      goToMenu(); // 🏠 → Zurück zum Startmenü
-    } else if (activeScreen.isRestartButtonClicked(x, y)) {
-      restartGame(); // 🔄 → Direkt neu starten
-    }
-  }
+/**
+ * Routes clicks on the active end screen to menu or restart actions.
+ * @param {number} x - Canvas X coordinate.
+ * @param {number} y - Canvas Y coordinate.
+ */
+function handleEndScreenClick(x, y) {
+  const activeScreen = gameOverScreen?.isVisible ? gameOverScreen : winScreen?.isVisible ? winScreen : null;
+  if (!activeScreen) return;
+  if (activeScreen.isMenuButtonClicked(x, y)) goToMenu();
+  else if (activeScreen.isRestartButtonClicked(x, y)) restartGame();
 }
 
 /**
  * Handles pointer/click events on the canvas.
+ * @param {PointerEvent} event
  */
 function handleClick(event) {
   const { canvasX, canvasY } = getCanvasCoordinates(event.clientX, event.clientY);
-
-  if (handleSoundButtonClick(canvasX, canvasY)) {
-    return;
-  }
-
+  if (handleSoundButtonClick(canvasX, canvasY)) return;
   handleScreenButtonClick(canvasX, canvasY);
 }
 
-/**
- * Starts the game and hides the start screen.
- */
+/** Starts the game and hides the start screen. */
 function startGame() {
   gameStarted = true;
   gameEnded = false;
@@ -289,51 +245,54 @@ function startGame() {
   soundManager.playSound('fantasy-space-atmosphere');
 }
 
-/**
- * Goes back to the start menu (Menu button).
- */
+/** Returns to the start menu and reinitializes the world. */
 function goToMenu() {
   gameStarted = false;
   gameEnded = false;
   gameOverScreen.hide();
   winScreen.hide();
   startScreen.show();
-
   stopAllIntervals();
   initLevel1();
   window.world = new World(canvas, keyboard);
   world = window.world;
 }
 
-/**
- * Restarts the game directly without showing the menu (Restart button).
- */
+/** Restarts the game directly without showing the menu. */
 function restartGame() {
   gameStarted = true;
   gameEnded = false;
   gameOverScreen.hide();
   winScreen.hide();
-
   stopAllIntervals();
   initLevel1();
   window.world = new World(canvas, keyboard);
   world = window.world;
-
   canvas.style.cursor = 'default';
   soundManager.playSound('fantasy-space-atmosphere');
 }
 
 /**
- * Sets up a single touch control button.
+ * Sets up a single touch control button and binds keyboard state.
+ * @param {string} id - The element ID of the control button.
+ * @param {string} key - The keyboard state key to toggle.
  */
 function setupControl(id, key) {
   const btn = document.getElementById(id);
   if (!btn) return;
-
   const setKey = (value) => {
     keyboard[key] = value;
   };
+  addPointerListeners(btn, setKey);
+  addTouchListeners(btn, setKey);
+}
 
+/**
+ * Binds pointerdown/up/leave events for touch-only interaction.
+ * @param {HTMLElement} btn - The button element.
+ * @param {Function} setKey - Setter that toggles the keyboard state.
+ */
+function addPointerListeners(btn, setKey) {
   btn.addEventListener('pointerdown', (e) => {
     if (e.pointerType === 'touch') {
       e.preventDefault();
@@ -352,6 +311,14 @@ function setupControl(id, key) {
       setKey(false);
     }
   });
+}
+
+/**
+ * Binds touchstart and touchend events for mobile control.
+ * @param {HTMLElement} btn - The button element.
+ * @param {Function} setKey - Setter that toggles the keyboard state.
+ */
+function addTouchListeners(btn, setKey) {
   btn.addEventListener(
     'touchstart',
     (e) => {
@@ -370,9 +337,7 @@ function setupControl(id, key) {
   );
 }
 
-/**
- * Initializes touch controls for mobile buttons.
- */
+/** Binds all four mobile on-screen control buttons. */
 function initButtonPressEvents() {
   setupControl('btnLeft', 'LEFT');
   setupControl('btnRight', 'RIGHT');
@@ -380,18 +345,20 @@ function initButtonPressEvents() {
   setupControl('btnAttack', 'X');
 }
 
+/** Toggles mute state and persists the preference to localStorage. */
+function handleMuteToggle() {
+  SoundManagerClass.toggleMuted();
+  if (soundManager && typeof soundManager.setButtonMuted === 'function')
+    soundManager.setButtonMuted(SoundManagerClass.isMuted());
+  localStorage.setItem('fp.soundMuted', SoundManagerClass.isMuted());
+}
+
 /**
- * Handles keyboard down events.
+ * Handles keyboard key-down events.
+ * @param {KeyboardEvent} e
  */
 function handleKeyDown(e) {
-  if (e.keyCode === Config.KEYS.MUTE) {
-    SoundManagerClass.toggleMuted();
-    if (soundManager && typeof soundManager.setButtonMuted === 'function') {
-      soundManager.setButtonMuted(SoundManagerClass.isMuted());
-    }
-    localStorage.setItem('fp.soundMuted', SoundManagerClass.isMuted());
-  }
-
+  if (e.keyCode === Config.KEYS.MUTE) handleMuteToggle();
   if (e.keyCode === Config.KEYS.ARROW_UP) keyboard.UP = true;
   if (e.keyCode === Config.KEYS.ARROW_RIGHT) keyboard.RIGHT = true;
   if (e.keyCode === Config.KEYS.ARROW_DOWN) keyboard.DOWN = true;
@@ -401,7 +368,8 @@ function handleKeyDown(e) {
 }
 
 /**
- * Handles keyboard up events.
+ * Handles keyboard key-up events.
+ * @param {KeyboardEvent} e
  */
 function handleKeyUp(e) {
   if (e.keyCode === Config.KEYS.ARROW_UP) keyboard.UP = false;
