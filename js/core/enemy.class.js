@@ -52,22 +52,44 @@ class Enemy extends MovableObject {
     }
   }
 
-  /** Starts an attack if not already attacking or on cooldown. */
+  /**
+   * Starts an attack if not already attacking or on cooldown.
+   * Switches to the wider attack collision offset if one is defined.
+   */
   startAttack() {
     if (this.attackCooldown || this.isAttacking) return;
     this.isAttacking = true;
     this.currentImage = 0;
-    const direction = this.getDirectionToCharacter();
-    this.otherDirection = direction < 0;
+    this.otherDirection = this.getDirectionToCharacter() < 0;
+    this.applyAttackOffset();
   }
 
-  /** Ends the attack and starts a phase-dependent cooldown timer. */
+  /**
+   * Ends the attack, restores the default collision offset, and starts the cooldown timer.
+   */
   endAttack() {
     this.isAttacking = false;
     this.attackCooldown = true;
+    this.restoreDefaultOffset();
     setTimeout(() => {
       this.attackCooldown = false;
     }, this.resolveCooldownTime());
+  }
+
+  /**
+   * Switches to the attack offset if the subclass has defined OFFSET_ATTACK.
+   * Called automatically by startAttack().
+   */
+  applyAttackOffset() {
+    if (this.OFFSET_ATTACK) this.offset = this.OFFSET_ATTACK;
+  }
+
+  /**
+   * Restores the default collision offset after an attack ends.
+   * Called automatically by endAttack().
+   */
+  restoreDefaultOffset() {
+    if (this.OFFSET_DEFAULT) this.offset = this.OFFSET_DEFAULT;
   }
 
   /**

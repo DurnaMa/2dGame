@@ -43,26 +43,49 @@ class BigKnight extends Enemy {
 
     this.x = this.start_x + this.min_x_random + Math.random() * this.max_x_random_range;
     this.speed = this.min_speed + Math.random() * this.max_speed_range;
+
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_DEATH);
     this.loadImages(this.IMAGES_ATTACK);
     this.loadImages(this.IMAGES_HURT);
+
     this.isDead = false;
     this.markedForRemoval = false;
     this.isAttacking = false;
     this.attackCooldown = false;
-    this.animate();
-    this.offset = {
-      top: Config.ENEMY.BIGKNIGHT.OFFSET.TOP,
-      left: Config.ENEMY.BIGKNIGHT.OFFSET.LEFT,
-      right: Config.ENEMY.BIGKNIGHT.OFFSET.RIGHT,
-      bottom: Config.ENEMY.BIGKNIGHT.OFFSET.BOTTOM,
-    };
+
+    this.initOffsets();
 
     this.startX = this.x;
     this.patrolDirection = Math.random() > 0.5;
     this.movingRight = this.patrolDirection;
     this.isActive = true;
     this.moveRight();
+    this.animate();
+  }
+
+  /**
+   * Stores both the default and the attack collision offset.
+   * OFFSET_DEFAULT is used during walking and idle.
+   * OFFSET_ATTACK is used while the attack animation plays –
+   * the sword swings further out, so left/right are reduced to widen the hitbox.
+   */
+  initOffsets() {
+    this.OFFSET_DEFAULT = {
+      top: Config.ENEMY.BIGKNIGHT.OFFSET.TOP,
+      left: Config.ENEMY.BIGKNIGHT.OFFSET.LEFT,
+      right: Config.ENEMY.BIGKNIGHT.OFFSET.RIGHT,
+      bottom: Config.ENEMY.BIGKNIGHT.OFFSET.BOTTOM,
+    };
+
+    this.OFFSET_ATTACK = {
+      top: Config.ENEMY.BIGKNIGHT.OFFSET_ATTACK.TOP,
+      left: Config.ENEMY.BIGKNIGHT.OFFSET_ATTACK.LEFT,
+      right: Config.ENEMY.BIGKNIGHT.OFFSET_ATTACK.RIGHT,
+      bottom: Config.ENEMY.BIGKNIGHT.OFFSET_ATTACK.BOTTOM,
+    };
+
+    // Start with the default offset active.
+    this.offset = this.OFFSET_DEFAULT;
   }
 }

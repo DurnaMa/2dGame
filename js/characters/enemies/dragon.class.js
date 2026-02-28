@@ -42,26 +42,47 @@ class Dragon extends Enemy {
 
     this.x = this.start_x + this.min_x_random + Math.random() * this.max_x_random_range;
     this.speed = this.min_speed + Math.random() * this.max_speed_range;
+
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_DEATH);
     this.loadImages(this.IMAGES_ATTACK);
     this.loadImages(this.IMAGES_HURT);
+
     this.isDead = false;
     this.markedForRemoval = false;
     this.isAttacking = false;
     this.attackCooldown = false;
-    this.animate();
-    this.offset = {
-      top: Config.ENEMY.DRAGON.OFFSET.TOP,
-      left: Config.ENEMY.DRAGON.OFFSET.LEFT,
-      right: Config.ENEMY.DRAGON.OFFSET.RIGHT,
-      bottom: Config.ENEMY.DRAGON.OFFSET.BOTTOM,
-    };
+
+    this.initOffsets();
 
     this.startX = this.x;
     this.patrolDirection = Math.random() > 0.5;
     this.movingRight = this.patrolDirection;
     this.isActive = true;
     this.moveRight();
+    this.animate();
+  }
+
+  /**
+   * Stores both the default and the attack collision offset.
+   * OFFSET_DEFAULT is used during walking and idle.
+   * OFFSET_ATTACK is used while the attack animation plays –
+   * the dragon lunges forward with head and claws, so left/right are reduced
+   * to extend the hitbox toward the player.
+   */
+  initOffsets() {
+    this.OFFSET_DEFAULT = {
+      top: Config.ENEMY.DRAGON.OFFSET.TOP,
+      left: Config.ENEMY.DRAGON.OFFSET.LEFT,
+      right: Config.ENEMY.DRAGON.OFFSET.RIGHT,
+      bottom: Config.ENEMY.DRAGON.OFFSET.BOTTOM,
+    };
+    this.OFFSET_ATTACK = {
+      top: Config.ENEMY.DRAGON.OFFSET_ATTACK.TOP,
+      left: Config.ENEMY.DRAGON.OFFSET_ATTACK.LEFT,
+      right: Config.ENEMY.DRAGON.OFFSET_ATTACK.RIGHT,
+      bottom: Config.ENEMY.DRAGON.OFFSET_ATTACK.BOTTOM,
+    };
+    this.offset = this.OFFSET_DEFAULT;
   }
 }

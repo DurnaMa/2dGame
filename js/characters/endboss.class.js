@@ -71,14 +71,30 @@ class Endboss extends Enemy {
     this.loadImages(this.IMAGES_ATTACK);
   }
 
-  /** Sets the collision offset from config. */
+  /**
+   * Stores both the default and the attack collision offset.
+   * OFFSET_DEFAULT is used during walking and idle.
+   * OFFSET_ATTACK is used while the attack animation plays –
+   * the boss reaches further forward, so the hitbox is wider toward the player.
+   * Fine-tune OFFSET_ATTACK values in config.class.js with DEBUG = true.
+   */
   initOffsets() {
-    this.offset = {
+    this.OFFSET_DEFAULT = {
       top: Config.ENEMY.ENDBOSS.OFFSET.TOP,
       left: Config.ENEMY.ENDBOSS.OFFSET.LEFT,
       right: Config.ENEMY.ENDBOSS.OFFSET.RIGHT,
       bottom: Config.ENEMY.ENDBOSS.OFFSET.BOTTOM,
     };
+
+    this.OFFSET_ATTACK = {
+      top: Config.ENEMY.ENDBOSS.OFFSET_ATTACK.TOP,
+      left: Config.ENEMY.ENDBOSS.OFFSET_ATTACK.LEFT,
+      right: Config.ENEMY.ENDBOSS.OFFSET_ATTACK.RIGHT,
+      bottom: Config.ENEMY.ENDBOSS.OFFSET_ATTACK.BOTTOM,
+    };
+
+    // Start with the default offset active.
+    this.offset = this.OFFSET_DEFAULT;
   }
 
   /** Initializes all combat-related state variables. */
@@ -104,28 +120,23 @@ class Endboss extends Enemy {
 
   /** Updates the animation based on the current state. */
   updateAnimation() {
-    if (this.energy <= 0) {
-      this.playAnimation(this.IMAGES_DEATH);
-      return;
-    }
-    if (this.isIntroAngry) {
-      this.playAnimation(this.IMAGES_ANGER);
-      return;
-    }
-    if (this.isHurt()) {
-      this.playAnimation(this.IMAGES_HURT);
-      return;
-    }
-    if (this.isAttacking) {
-      this.playAttackAnimation();
-      return;
-    }
-    if (this.isInAttackRange() && !this.attackCooldown && this.isActive) {
-      this.startAttack();
-      this.playAnimation(this.IMAGES_ATTACK);
-      return;
-    }
+    if (this.energy <= 0) return this.playAnimation(this.IMAGES_DEATH);
+    if (this.isIntroAngry) return this.playAnimation(this.IMAGES_ANGER);
+    if (this.isHurt()) return this.playAnimation(this.IMAGES_HURT);
+    if (this.isAttacking) return this.playAttackAnimation();
+    if (this.tryStartAttack()) return;
     this.playAnimation(this.IMAGES_WALKING);
+  }
+
+  /**
+   * Starts an attack and plays the attack animation if conditions are met.
+   * @returns {boolean} True if an attack was started.
+   */
+  tryStartAttack() {
+    if (!this.isInAttackRange() || this.attackCooldown || !this.isActive) return false;
+    this.startAttack();
+    this.playAnimation(this.IMAGES_ATTACK);
+    return true;
   }
 
   /** Updates the endboss movement per frame. */
@@ -140,12 +151,10 @@ class Endboss extends Enemy {
   /** Updates the movement speed based on current health phase. */
   updateSpeed() {
     const healthPercentage = (this.energy / 100) * 100;
-    const THRESHOLD_PHASE_2 = Config.ENEMY.ENDBOSS.HEALTH_THRESHOLD_PHASE_2;
-    const THRESHOLD_PHASE_3 = Config.ENEMY.ENDBOSS.HEALTH_THRESHOLD_PHASE_3;
-    if (healthPercentage < THRESHOLD_PHASE_3) {
+    if (healthPercentage < Config.ENEMY.ENDBOSS.HEALTH_THRESHOLD_PHASE_3) {
       this.speed = Config.ENEMY.ENDBOSS.SPEED_PHASE_3;
       this.triggerTeleport();
-    } else if (healthPercentage < THRESHOLD_PHASE_2) {
+    } else if (healthPercentage < Config.ENEMY.ENDBOSS.HEALTH_THRESHOLD_PHASE_2) {
       this.speed = Config.ENEMY.ENDBOSS.SPEED_PHASE_2;
     } else {
       this.speed = Config.ENEMY.ENDBOSS.SPEED;
@@ -239,11 +248,15 @@ class Endboss extends Enemy {
     this.updateEnergyAfterHit(damage);
   }
 
-  /** Sets the angry state and resets attack on hit. */
+  /**
+   * Sets the angry state, resets attack, and restores the default offset on hit.
+   * The offset must be restored here too, in case the boss is hit mid-attack.
+   */
   applyHitState() {
     this.isAngry = true;
     this.isAttacking = false;
     this.currentImage = 0;
+    this.restoreDefaultOffset();
     setTimeout(() => {
       this.isAngry = false;
     }, Config.ENEMY.ENDBOSS.ANGER_DURATION);
@@ -262,18 +275,25 @@ class Endboss extends Enemy {
     }
   }
 
-  /** Begins an attack and spawns a projectile if in phase 2 or later. */
+  /**
+   * Begins an attack, applies the attack offset, and spawns a projectile if in phase 2 or later.
+   * Overrides Enemy.startAttack() to add projectile logic while keeping the offset swap.
+   */
   startAttack() {
     this.isAttacking = true;
     this.currentImage = 0;
+    this.applyAttackOffset();
     const isPhase2OrLater = this.hitsTaken >= Config.ENEMY.ENDBOSS.PROJECTILE_UNLOCK_AT_HIT;
-    if (this.world && isPhase2OrLater) {
-      const projectileX = this.x;
-      const projectileY = this.y + Config.ENEMY.ENDBOSS.PROJECTILE_Y_OFFSET;
-      const projectile = new ThrowableObject(projectileX, projectileY, this.world);
-      const direction = this.world.character.x > this.x ? 1 : -1;
-      projectile.speedX = direction * Config.ENEMY.ENDBOSS.PROJECTILE_SPEED;
-      this.world.throwableObject.push(projectile);
-    }
+    if (this.world && isPhase2OrLater) this.spawnProjectile();
+  }
+
+  /** Spawns a projectile aimed at the character's current position. */
+  spawnProjectile() {
+    const projectileX = this.x;
+    const projectileY = this.y + Config.ENEMY.ENDBOSS.PROJECTILE_Y_OFFSET;
+    const projectile = new ThrowableObject(projectileX, projectileY, this.world);
+    const direction = this.world.character.x > this.x ? 1 : -1;
+    projectile.speedX = direction * Config.ENEMY.ENDBOSS.PROJECTILE_SPEED;
+    this.world.throwableObject.push(projectile);
   }
 }

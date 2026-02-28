@@ -1,6 +1,6 @@
 class Config {
   static HALF = 2;
-  static DEBUG = false;
+  static DEBUG = true;
 
   // ===== CANVAS =====
   static CANVAS_WIDTH = 960;
@@ -109,10 +109,17 @@ class Config {
       MIN_SPEED: 1.5,
       MAX_SPEED_RANGE: 2.0,
       ANIMATION_SPEED: 200,
+
       OFFSET: {
         TOP: 95,
         LEFT: 115,
         RIGHT: 105,
+        BOTTOM: 100,
+      },
+      OFFSET_ATTACK: {
+        TOP: 85,
+        LEFT: 50,
+        RIGHT: 40,
         BOTTOM: 100,
       },
       DELAY: 2000,
@@ -140,6 +147,12 @@ class Config {
         RIGHT: 88,
         BOTTOM: 113,
       },
+      OFFSET_ATTACK: {
+        TOP: 100,
+        LEFT: 20,
+        RIGHT: 30,
+        BOTTOM: 113,
+      },
       DELAY: 2000,
       ATTACK_DISTANCE: 200,
       ATTACK_COOLDOWN: 1500,
@@ -165,6 +178,12 @@ class Config {
         TOP: 141,
         LEFT: 79,
         RIGHT: 200,
+        BOTTOM: 76,
+      },
+      OFFSET_ATTACK: {
+        TOP: 120,
+        LEFT: 50,
+        RIGHT: 90,
         BOTTOM: 76,
       },
       ATTACK_DISTANCE: 200,
