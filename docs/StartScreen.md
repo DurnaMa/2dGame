@@ -2,7 +2,7 @@
 
 ## Übersicht
 
-Die `StartScreen` Klasse ist verantwortlich für die Anzeige des Start-Bildschirms im Canvas. Sie zeigt einen "Play"-Button an, der das Spiel startet, wenn darauf geklickt wird.
+Die `StartScreen` Klasse ist verantwortlich für die Anzeige des Start-Bildschirms im Canvas. Sie zeigt einen animierten Pixel-Art Play-Button mit Puls-Animation, einen Titel ("ADVENTURE QUEST") und Steuerungshinweise.
 
 ## Dateipfad
 
@@ -26,24 +26,40 @@ constructor(canvas);
 
 - `this.canvas` - Referenz zum Canvas-Element
 - `this.ctx` - 2D-Rendering-Kontext des Canvas
-- `this.isVisible` - Boolean, der angibt, ob der Start-Screen sichtbar ist (Standard: `true`)
-- `this.buttonWidth` - Breite des Play-Buttons (200px)
-- `this.buttonHeight` - Höhe des Play-Buttons (60px)
-- `this.buttonX` - X-Position des Buttons (zentriert)
-- `this.buttonY` - Y-Position des Buttons (zentriert)
+- `this.isVisible` - Boolean, ob der Start-Screen sichtbar ist (Standard: `true`)
 - `this.isHovered` - Boolean für den Hover-Zustand des Buttons
+- `this.imageLoaded` - Boolean, ob das Button-Bild geladen ist
+- `this.animationTime` - Zeitwert für die Puls-Animation
+- `this.pulseScale` - Aktueller Skalierungsfaktor der Puls-Animation
+- `this.playButtonImg` - Das geladene Play-Button Sprite
 
 ## Methoden
 
+### `initButtonLayout()`
+
+Setzt Standard-Button-Dimensionen (200×80px) und zentriert den Button.
+
+---
+
+### `initAnimationState()`
+
+Initialisiert die Puls-Animationsvariablen (`animationTime`, `pulseScale`).
+
+---
+
+### `loadPlayButtonImage()`
+
+Lädt das Play-Button-Bild aus den Assets. Nach dem Laden wird die Buttongröße basierend auf dem Bildformat und der Bildschirmgröße (Mobile vs. Desktop) angepasst.
+
+---
+
 ### `draw()`
 
-Zeichnet den Start-Screen im Canvas.
-
-**Funktionsweise:**
-
-1. Prüft, ob der Start-Screen sichtbar ist
-2. Füllt den Canvas mit schwarzem Hintergrund
-3. Ruft `drawButton()` auf, um den Play-Button zu zeichnen
+Zeichnet den gesamten Start-Screen:
+1. `drawOverlay()` – Semi-transparentes Overlay mit Farbverlauf
+2. `drawTitle()` – Titel "ADVENTURE" + Untertitel "QUEST" mit Glow-Effekt
+3. `drawButton()` – Play-Button mit Puls- oder Hover-Animation
+4. `drawInstructions()` – "CLICK TO START" / "TAP TO START" mit Blink-Effekt
 
 **Rückgabewert:** Keiner
 
@@ -51,15 +67,9 @@ Zeichnet den Start-Screen im Canvas.
 
 ### `drawButton()`
 
-Zeichnet den Play-Button mit Hover-Effekt.
-
-**Visuelle Elemente:**
-
-- **Hintergrund:** Dunkelgrau (`#333`) normal, heller (`#4a4a4a`) beim Hovern
-- **Rahmen:** Grau (`#666`) normal, weiß (`#fff`) beim Hovern, 3px Linienstärke
-- **Text:** "Play" in weißer Farbe, 32px Arial, zentriert
-
-**Rückgabewert:** Keiner
+Zeichnet den Play-Button. Zeigt "Loading..." solange das Bild nicht geladen ist. Danach:
+- **Hover:** Button vergrößert (1.15x) mit Gold-Glow
+- **Normal:** Sanfte Sinus-Puls-Animation
 
 ---
 
@@ -68,14 +78,10 @@ Zeichnet den Play-Button mit Hover-Effekt.
 Prüft, ob ein Klick innerhalb der Button-Grenzen liegt.
 
 **Parameter:**
-
 - `x` - X-Koordinate des Klicks
 - `y` - Y-Koordinate des Klicks
 
-**Rückgabewert:**
-
-- `true` - wenn der Klick innerhalb des Buttons liegt
-- `false` - wenn der Klick außerhalb des Buttons liegt
+**Rückgabewert:** `{boolean}`
 
 ---
 
@@ -84,33 +90,20 @@ Prüft, ob ein Klick innerhalb der Button-Grenzen liegt.
 Aktualisiert den Hover-Zustand basierend auf der Mausposition.
 
 **Parameter:**
-
 - `x` - X-Koordinate der Maus
 - `y` - Y-Koordinate der Maus
-
-**Rückgabewert:** Keiner
-
-**Seiteneffekt:** Setzt `this.isHovered` auf `true` oder `false`
 
 ---
 
 ### `hide()`
 
-Versteckt den Start-Screen.
-
-**Rückgabewert:** Keiner
-
-**Seiteneffekt:** Setzt `this.isVisible` auf `false`
+Versteckt den Start-Screen (`this.isVisible = false`).
 
 ---
 
 ### `show()`
 
-Zeigt den Start-Screen an.
-
-**Rückgabewert:** Keiner
-
-**Seiteneffekt:** Setzt `this.isVisible` auf `true`
+Zeigt den Start-Screen an und setzt die Animation zurück (`this.animationTime = 0`).
 
 ## Integration in das Spiel
 
@@ -121,39 +114,42 @@ let startScreen;
 let gameStarted = false;
 
 function init() {
-  canvas = document.getElementById('canvas');
+  initLevel1();
+  initCanvas();
+  initAudio();
+  initWorld();
+  initUI();          // ← StartScreen wird hier erstellt
+  initEventListeners();
+  animateUI();
+}
 
-  // Start-Screen initialisieren
+function initUI() {
   startScreen = new StartScreen(canvas);
-  startScreen.draw();
-
-  // Event-Listener hinzufügen
-  canvas.addEventListener('mousemove', handleMouseMove);
-  canvas.addEventListener('click', handleClick);
+  gameOverScreen = new GameOverScreen(canvas);
+  winScreen = new WinScreen(canvas);
+  // Sound-Button initialisieren...
 }
 ```
 
 ### Event-Handling
 
+Alle Events laufen über zentrale Handler in `game.js`:
+
 **Mouse Move:**
 
 ```javascript
 function handleMouseMove(event) {
+  const { canvasX, canvasY } = getCanvasCoordinates(event.clientX, event.clientY);
+  // Sound-Button Hover prüfen...
+  updateScreenHover(canvasX, canvasY);
+}
+
+function updateScreenHover(x, y) {
   if (!gameStarted && startScreen && startScreen.isVisible) {
-    const rect = canvas.getBoundingClientRect();
-    const mouseX = event.clientX - rect.left;
-    const mouseY = event.clientY - rect.top;
-
-    startScreen.checkHover(mouseX, mouseY);
-    startScreen.draw();
-
-    // Cursor-Style ändern
-    if (startScreen.isHovered) {
-      canvas.style.cursor = 'pointer';
-    } else {
-      canvas.style.cursor = 'default';
-    }
+    startScreen.checkHover(x, y);
+    canvas.style.cursor = startScreen.isHovered ? 'pointer' : 'default';
   }
+  // End-Screen Hover...
 }
 ```
 
@@ -161,15 +157,17 @@ function handleMouseMove(event) {
 
 ```javascript
 function handleClick(event) {
-  const rect = canvas.getBoundingClientRect();
-  const clickX = event.clientX - rect.left;
-  const clickY = event.clientY - rect.top;
+  const { canvasX, canvasY } = getCanvasCoordinates(event.clientX, event.clientY);
+  if (handleSoundButtonClick(canvasX, canvasY)) return;
+  handleScreenButtonClick(canvasX, canvasY);
+}
 
+function handleScreenButtonClick(x, y) {
   if (!gameStarted && startScreen && startScreen.isVisible) {
-    if (startScreen.isButtonClicked(clickX, clickY)) {
-      startGame();
-    }
+    if (startScreen.isButtonClicked(x, y)) startGame();
+    return;
   }
+  if (gameEnded) handleEndScreenClick(x, y);
 }
 ```
 
@@ -178,12 +176,34 @@ function handleClick(event) {
 ```javascript
 function startGame() {
   gameStarted = true;
+  gameEnded = false;
   startScreen.hide();
+  gameOverScreen.hide();
+  winScreen.hide();
   canvas.style.cursor = 'default';
+  soundManager.playSound('fantasy-space-atmosphere');
+}
+```
 
-  // World initialisieren
-  window.world = new World(canvas, keyboard);
-  world = window.world;
+### Render-Loop
+
+Der StartScreen wird in der zentralen `animateUI()`-Schleife gerendert:
+
+```javascript
+function animateUI() {
+  if (world) world.draw();
+  if (gameStarted && !gameEnded) checkGameState();
+  drawScreens();       // ← Hier wird der StartScreen gezeichnet
+  drawSoundButton();
+  requestAnimationFrame(animateUI);
+}
+
+function drawScreens() {
+  if (!gameStarted && startScreen && startScreen.isVisible) {
+    startScreen.draw();   // ← StartScreen zeichnen
+  } else if (gameEnded) {
+    // End-Screens zeichnen...
+  }
 }
 ```
 
@@ -196,69 +216,53 @@ function startGame() {
 
 ### Button-Spezifikationen
 
-- **Breite:** 200px
-- **Höhe:** 60px
-- **Position:** Zentriert im Canvas
-- **Berechnung X:** `(960 - 200) / 2 = 380px`
-- **Berechnung Y:** `(540 - 60) / 2 = 240px`
+- **Bild:** `assets/fantasy-platformer-game-ui/PNG/05ogin&pass/play_button.png`
+- **Skalierung Desktop:** 1.5x der Bildgröße
+- **Skalierung Mobile:** 1.0x der Bildgröße
+- **Position:** Zentriert, 80px unterhalb der Canvas-Mitte
+- **Hover-Skalierung:** 1.15x mit Gold-Glow (`rgba(255, 215, 0, 0.8)`)
+- **Puls-Animation:** Sinus-basiert, ±5% Skalierung
 
-### Farben
+### Farben & Effekte
 
-| Element            | Normal | Hover     |
-| ------------------ | ------ | --------- |
-| Button-Hintergrund | `#333` | `#4a4a4a` |
-| Button-Rahmen      | `#666` | `#fff`    |
-| Button-Text        | `#fff` | `#fff`    |
-| Canvas-Hintergrund | `#000` | `#000`    |
+| Element            | Wert                              |
+| ------------------ | --------------------------------- |
+| Overlay            | `rgba(0, 0, 0, 0.6)` + Gradient  |
+| Titel "ADVENTURE"  | `#FFD700` (Gold) mit Glow         |
+| Untertitel "QUEST" | `#FF6400` (Orange) mit Glow       |
+| Instruction-Text   | Weiß mit blinkender Transparenz   |
 
 ### Typografie
 
-- **Schriftart:** Arial
-- **Schriftgröße:** 32px
-- **Textausrichtung:** Zentriert
-- **Textfarbe:** Weiß (`#fff`)
+- **Schriftart:** Uncial Antiqua (Fantasy-Stil)
+- **Titelgröße:** 72px (Desktop) / 48px (Mobile)
+- **Untertitelgröße:** 50% der Titelgröße
+- **Instruction-Text:** 24px (Desktop) / 18px (Mobile)
+
+### Mobile-Erkennung
+
+Wird als Mobile erkannt wenn: `window.innerHeight < 480 || window.innerWidth < 750`
 
 ## Ablaufdiagramm
 
 ```
 Seite laden
     ↓
-init() wird aufgerufen
+init() → initUI() → new StartScreen(canvas)
     ↓
-StartScreen erstellen
+Play-Button laden (async)
     ↓
-StartScreen.draw() - Zeigt Play-Button
+animateUI() → drawScreens() → startScreen.draw()
     ↓
 Warten auf Benutzer-Interaktion
     ↓
-    ├─→ Maus bewegen → checkHover() → Button neu zeichnen
-    │                                      ↓
-    │                                  Cursor ändern
-    │                                      ↓
-    │                                  Zurück zu Warten
+    ├─→ Maus bewegen → handleMouseMove() → checkHover()
+    │                    → Cursor ändern
+    │                    → Zurück zu Warten
     │
-    └─→ Klick auf Play-Button → startGame()
-                                      ↓
-                                 StartScreen verstecken
-                                      ↓
-                                 World initialisieren
-                                      ↓
-                                 Spiel läuft
+    └─→ Klick auf Play-Button → handleClick() → startGame()
+                                       ↓
+                                  StartScreen verstecken
+                                       ↓
+                                  Spiel läuft
 ```
-
-## Vorteile dieser Implementierung
-
-1. **Canvas-basiert:** Der Start-Screen wird direkt im Canvas gezeichnet, nicht als HTML-Overlay
-2. **Einfach:** Nur ein Button, keine unnötigen Elemente
-3. **Interaktiv:** Hover-Effekt für bessere Benutzererfahrung
-4. **Wiederverwendbar:** Die Klasse kann leicht erweitert werden
-5. **Performant:** Minimale DOM-Manipulation
-
-## Mögliche Erweiterungen
-
-- Titel/Logo hinzufügen
-- Animationen für den Button
-- Hintergrundbilder statt schwarzem Hintergrund
-- Mehrere Buttons (z.B. Settings, Credits)
-- Fade-In/Fade-Out Effekte beim Übergang
-- Tastatur-Support (Enter-Taste zum Starten)

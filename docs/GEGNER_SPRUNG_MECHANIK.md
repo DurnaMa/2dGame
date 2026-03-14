@@ -3,110 +3,138 @@
 ## 1. Beteiligte Klassen und ihre Rollen
 
 ```
-CollisionManager
+CollisionManager (js/core/collision-manager.class.js)
 ├── Prüft ob Spieler von oben auf Gegner springt
-├── Löst Tod des Gegners aus
-└── Gibt kleinen Aufwärts-Impuls an Spieler
+├── Löst Tod des Gegners aus (stompEnemy)
+└── Gibt Aufwärts-Impuls an Spieler (JUMP_BOUNCE_POWER)
 
-Character
+Character (js/characters/character.class.js)
 ├── Position (x, y)
 ├── Geschwindigkeit (speedY)
+├── Offset-Werte für präzise Hitbox
 └── Ist am Fallen? (speedY < 0)
 
-EnemiesAnt
-├── Leben/Status
-└── Animation für Tod
+Enemy (js/core/enemy.class.js)
+├── isDead Status
+├── Offset-Werte für präzise Hitbox
+└── handleDeathAnimation() für Todes-Animation
 ```
 
 ## 2. Logik der Kollisionsprüfung
 
+Die Sprung-Kill-Erkennung besteht aus **drei einzelnen Prüfungen**, die alle `true` ergeben müssen:
+
 ```javascript
-// Pseudocode für die Kollisionsprüfung
 isJumpingOnEnemy(character, enemy) {
-    return (
-        character.speedY < 0 &&           // Spieler fällt nach unten
-        character.y + character.height    // Spielerfüße
-        < enemy.y + enemy.height/3 &&    // Oberes Drittel des Gegners
-        character.isColliding(enemy)     // Normale Kollision
-    );
+  const falling    = this.isPlayerFalling(character);        // 1. Spieler fällt
+  const aboveMiddle = this.isPlayerAboveFalling(character, enemy); // 2. Über Gegnermitte
+  const feetHitHead = this.isFeetHitEnemyHead(character, enemy);  // 3. Füße treffen Kopf
+  return falling && aboveMiddle && feetHitHead;
 }
 ```
 
-## 3. Implementierungsschritte
-
-1. EnemiesAnt erweitern:
-   - isDead Status hinzufügen
-   - Todes-Animation hinzufügen
-   - Kollisionsbox anpassen
-
-2. CollisionManager erweitern:
-   - Neue Methode für Sprung-Kollision
-   - Unterscheidung zwischen normalem Treffer und Sprung
-
-3. Character erweitern:
-   - Aufwärts-Impuls nach Gegner-Sprung
-   - Unverwundbarkeit für kurze Zeit
-
-## 4. Beispiel-Implementation
+### 2.1 Spieler fällt (`isPlayerFalling`)
 
 ```javascript
-// In CollisionManager:
-checkEnemyCollisions() {
-    this.world.level.enemiesAnt.forEach((enemy) => {
-        if (this.world.character.isColliding(enemy)) {
-            if (this.isJumpingOnEnemy(this.world.character, enemy)) {
-                this.handleEnemyJumpKill(enemy);
-            } else {
-                this.handleEnemyDamage();
-            }
-        }
-    });
-}
-
-handleEnemyJumpKill(enemy) {
-    enemy.die();                         // Gegner stirbt
-    this.world.character.bounce();       // Spieler springt hoch
-    // Optional: Punkte vergeben
-}
-
-// In EnemiesAnt:
-die() {
-    this.isDead = true;
-    this.playAnimation(this.IMAGES_DEATH);
-    // Nach Animation: this.remove();
-}
-
-// In Character:
-bounce() {
-    this.speedY = 15;  // Kleiner Aufwärts-Impuls
-    this.isInvulnerable = true;
-    setTimeout(() => {
-        this.isInvulnerable = false;
-    }, 500);
+isPlayerFalling(character) {
+  return character.speedY < 0;
 }
 ```
 
-## 5. Animationen und Feedback
+### 2.2 Spieler ist über der Gegnermitte (`isPlayerAboveFalling`)
 
-- Todes-Animation für Gegner
-- Aufsprung-Animation für Spieler
-- Sound-Effekt beim erfolgreichen Sprung
-- Kleine Partikel-Effekte
-- Optional: Punkte-Popup
+```javascript
+isPlayerAboveFalling(character, enemy) {
+  const playerMiddle = character.y + character.height / Config.HALF;
+  const enemyMiddle  = enemy.y + enemy.height / Config.HALF;
+  return playerMiddle < enemyMiddle;
+}
+```
 
-## 6. Zu beachtende Details
+### 2.3 Füße treffen Gegnerkopf (`isFeetHitEnemyHead`)
 
-1. Timing:
-   - Kollisionserkennung muss präzise sein
-   - Todes-Animation muss vollständig ablaufen
-   - Aufwärts-Impuls muss sich natürlich anfühlen
+Berücksichtigt die **Offset-Werte** beider Objekte für eine präzise Hitbox:
 
-2. Spielgefühl:
-   - Sprung sollte sich befriedigend anfühlen
-   - Kollisionsbox muss fair sein
-   - Feedback durch Animation/Sound wichtig
+```javascript
+isFeetHitEnemyHead(character, enemy) {
+  const enemyTop       = enemy.y + enemy.offset.top;
+  const characterFeet  = character.y + character.height - character.offset.bottom;
+  const distanceFeetToHead = characterFeet - enemyTop;
+  return distanceFeetToHead >= 0 && distanceFeetToHead <= Config.COLLISION.JUMP_KILL_HEIGHT_MAX;
+}
+```
 
-3. Edge Cases:
-   - Was passiert bei mehreren Gegnern?
-   - Wie verhält es sich mit anderen Kollisionen?
-   - Spezialfall: Gegner an Kanten
+## 3. Kollisionsbehandlung
+
+### Sprung-Kill (`stompEnemy`)
+
+Wenn der Spieler erfolgreich auf einen Gegner springt:
+
+```javascript
+stompEnemy(enemy, character) {
+  enemy.isDead = true;                                    // Gegner stirbt
+  character.speedY += Config.COLLISION.JUMP_BOUNCE_POWER; // Aufwärts-Impuls
+  character.hit = true;                                   // Kurze Unverwundbarkeit
+  setTimeout(() => {
+    character.hit = false;
+  }, Config.COLLISION.INVULNERABILITY_SHORT);
+}
+```
+
+### Normaler Treffer (`applyEnemyDamage`)
+
+Bei seitlicher Kollision erleidet der Spieler Schaden:
+
+```javascript
+applyEnemyDamage(character) {
+  if (!character.hit && !character.isDeath()) {
+    character.hit = true;
+    this.world.statusBar.reduceHealthBy(character, Config.COLLISION.DAMAGE_NORMAL);
+    character.lastHit = new Date().getTime();
+    setTimeout(() => {
+      character.hit = false;
+    }, Config.COLLISION.INVULNERABILITY_LONG);
+  }
+}
+```
+
+## 4. Gesamter Ablauf
+
+```
+Spieler kollidiert mit Gegner
+    ↓
+handleEnemyCollision(enemy)
+    ↓
+Gegner schon tot? → Ja → Nichts tun
+    ↓ Nein
+isJumpingOnEnemy() prüft 3 Bedingungen:
+    ├── isPlayerFalling()        → speedY < 0?
+    ├── isPlayerAboveFalling()   → Spielermitte < Gegnermitte?
+    └── isFeetHitEnemyHead()     → Füße-zu-Kopf Abstand ≤ MAX?
+    ↓
+    ├── Alle 3 = true  → stompEnemy() → Gegner stirbt + Bounce
+    └── Sonst          → applyEnemyDamage() → Spieler verliert HP
+```
+
+## 5. Cleanup
+
+Tote Gegner werden regelmäßig aus dem Level entfernt:
+
+```javascript
+cleanupDeadEnemies() {
+  this.world.level.enemies = this.world.level.enemies.filter(
+    (enemy) => !enemy.markedForRemoval
+  );
+}
+```
+
+## 6. Wichtige Config-Werte
+
+| Config-Schlüssel                         | Bedeutung                                       |
+| :--------------------------------------- | :---------------------------------------------- |
+| `Config.COLLISION.JUMP_KILL_HEIGHT_MAX`  | Max. Abstand Füße-zu-Kopf für gültigen Sprung   |
+| `Config.COLLISION.JUMP_BOUNCE_POWER`     | Aufwärts-Impuls nach Sprung-Kill                 |
+| `Config.COLLISION.INVULNERABILITY_SHORT` | Kurze Unverwundbarkeit nach Sprung-Kill (ms)     |
+| `Config.COLLISION.INVULNERABILITY_LONG`  | Längere Unverwundbarkeit nach Treffer (ms)       |
+| `Config.COLLISION.DAMAGE_NORMAL`         | Schaden durch normalen Gegner                    |
+| `Config.COLLISION.DAMAGE_BOSS`           | Schaden durch Endboss                            |
